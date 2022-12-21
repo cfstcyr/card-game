@@ -1,0 +1,102 @@
+@import '../../styles/index.scss';
+
+.button {
+    @include no-select;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white !important;
+    font-weight: 700;
+    font-size: 1.2em;
+    gap: 12px;
+    padding: 8px 18px;
+    border-radius: 4px;
+    box-shadow: 0px 5px 2px -4px rgba(0, 0, 0, 0.4), 0px 8px 16px rgba(0, 0, 0, 0.1);
+    cursor: pointer !important;
+    border: 0;
+    text-decoration: none;
+    appearance: none;
+    margin: 0;
+    transition: ease-in transform 0.1s;
+
+    &--content {
+        &-horizontal {
+            flex-direction: row;
+        }
+        &-vertical {
+            flex-direction: column;
+        }
+    }
+
+    &--disabled,
+    &:disabled {
+        opacity: 0.55;
+        cursor: inherit !important;
+    }
+
+    &:not(.button--disabled):not(:disabled) {
+        @media (hover: hover) {
+            &:hover {
+                opacity: 1 !important;
+                transform: scale(1.05);
+                transition: ease-in transform 0.1s;
+            }
+        }
+
+        &:active,
+        &.button--active {
+            transform: scale(0.95) !important;
+            transition: ease-in transform 0.1s;
+        }
+    }
+
+    &--large {
+        padding: 24px;
+        font-size: 1.5em;
+    }
+
+    &--small {
+        padding: 6px 12px;
+        font-size: 1em;
+    }
+
+    &--theme {
+        &-1 {
+            @include bg-secondary-1(false);
+        }
+        &-2 {
+            @include bg-secondary-2(false);
+        }
+        &-3 {
+            @include bg-secondary-3(false);
+        }
+        &-4 {
+            @include bg-secondary-4(false);
+        }
+        &-5 {
+            @include bg-secondary-5(false);
+        }
+    }
+}
+
+.button-list {
+    display: flex;
+
+    &--orientation {
+        &-vertical {
+            flex-direction: column;
+        }
+        &-horizontal {
+            flex-direction: row;
+        }
+    }
+
+    &--size {
+        &-default {
+            gap: 12px;
+        }
+        &-large {
+            gap: 24px;
+        }
+    }
+}

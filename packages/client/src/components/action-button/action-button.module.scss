@@ -1,0 +1,14 @@
+.action-button {
+    border: none;
+    background: none;
+    margin: 0;
+    padding: 6px;
+    font-size: inherit;
+    color: rgba(white, 0.55);
+    cursor: pointer;
+    appearance: none;
+
+    &:not(:disabled):hover {
+        color: rgba(white, 0.75);
+    }
+}

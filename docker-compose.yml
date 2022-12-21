@@ -1,0 +1,35 @@
+version: '3.3'
+
+services:
+  server:
+    build:
+      context: ./packages/server/
+      target: prod
+    ports:
+      - ${SERVER_PORT:-5500}:3000
+    environment:
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_DATABASE=${DB_DATABASE}
+
+  client:
+    build:
+      context: ./packages/client/
+      target: prod
+      args:
+        # - SERVER_URL=http://cfstcyr-macbook-air.local:${SERVER_PORT:-5500}
+        - SERVER_URL=api.card.cfstcyr.com
+    ports:
+      - ${CLIENT_PORT:-3000}:80
+
+  admin:
+    build:
+      context: ./packages/admin/
+      target: prod
+      args:
+        # - SERVER_URL=http://cfstcyr-macbook-air.local:${SERVER_PORT:-5500}
+        - SERVER_URL=api.card.cfstcyr.com
+    ports:
+      - ${ADMIN_PORT:-3003}:80

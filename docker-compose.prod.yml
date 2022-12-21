@@ -1,0 +1,23 @@
+version: '3.3'
+
+services:
+  server:
+    image: cfstcyr/card-game-server
+    ports:
+      - ${SERVER_PORT:-5500}:3000
+    environment:
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_DATABASE=${DB_DATABASE}
+
+  client:
+    image: cfstcyr/card-game-client
+    ports:
+      - ${CLIENT_PORT:-3000}:80
+
+  admin:
+    image: cfstcyr/card-game-admin
+    ports:
+      - ${ADMIN_PORT:-3003}:80

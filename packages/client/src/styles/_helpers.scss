@@ -1,0 +1,70 @@
+@mixin no-select {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+
+@mixin bg($color, $vertical: true) {
+    background: linear-gradient(if($vertical, 180deg, 90deg), $color, lighten($color, 10));
+}
+
+@mixin bg-primary($vertical: true) {
+    @include bg($primary-color, $vertical);
+}
+@mixin bg-secondary-1($vertical: true) {
+    @include bg($secondary-color-1, $vertical);
+}
+@mixin bg-secondary-2($vertical: true) {
+    @include bg($secondary-color-2, $vertical);
+}
+@mixin bg-secondary-3($vertical: true) {
+    @include bg($secondary-color-3, $vertical);
+}
+@mixin bg-secondary-4($vertical: true) {
+    @include bg($secondary-color-4, $vertical);
+}
+@mixin bg-secondary-5($vertical: true) {
+    @include bg($secondary-color-5, $vertical);
+}
+
+.bg-primary {
+    @include bg-primary;
+}
+.bg-primary-h {
+    @include bg-primary(false);
+}
+
+.bg-secondary-1 {
+    @include bg-secondary-1;
+}
+.bg-secondary-1-h {
+    @include bg-secondary-1(false);
+}
+.bg-secondary-2 {
+    @include bg-secondary-2;
+}
+.bg-secondary-2-h {
+    @include bg-secondary-2(false);
+}
+.bg-secondary-3 {
+    @include bg-secondary-3;
+}
+.bg-secondary-3-h {
+    @include bg-secondary-3(false);
+}
+.bg-secondary-4 {
+    @include bg-secondary-4;
+}
+.bg-secondary-4-h {
+    @include bg-secondary-4(false);
+}
+.bg-secondary-5 {
+    @include bg-secondary-5;
+}
+.bg-secondary-5-h {
+    @include bg-secondary-5(false);
+}

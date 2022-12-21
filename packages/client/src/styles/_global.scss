@@ -1,0 +1,42 @@
+@font-face {
+    font-family: nunito;
+    src: local('nunito'),
+        url('../fonts/Nunito/Nunito-VariableFont_wght.ttf') format('truetype-variations');
+    font-weight: 100 1000;
+    font-stretch: 25% 151%;
+}
+
+html, body {
+    font-family: nunito;
+    margin: 0;
+    // display: flex;
+    width: 100%;
+    height: 100%;
+    background-color: $primary-color;
+}
+
+#root {
+    min-height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: stretch;
+    align-items: stretch;
+    @include bg-primary;
+
+    & > div {
+        width: 100%;
+    }
+}
+
+h1, h2, h3, h4, h5, h6, p, a {
+    color: white;
+}
+
+small {
+    opacity: 0.55;
+}
+
+.no-select {
+    @include no-select;
+    cursor: default;
+}
