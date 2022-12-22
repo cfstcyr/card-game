@@ -2,6 +2,7 @@ version: '3.3'
 
 services:
   server:
+    image: card-game-server:dev
     build:
       context: ./packages/server/
       target: dev
@@ -15,8 +16,10 @@ services:
       DB_USER: main
       DB_PASSWORD: main
       DB_DATABASE: card_game
+      JWT_SECRET: 123
 
   client:
+    image: card-game-client:dev
     build:
       context: ./packages/client/
       target: dev
@@ -28,6 +31,7 @@ services:
       - REACT_APP_SERVER_URL=http://localhost:${SERVER_PORT:-5500}
 
   admin:
+    image: card-game-admin:dev
     build:
       context: ./packages/admin/
       target: dev

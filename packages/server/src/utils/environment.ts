@@ -12,6 +12,8 @@ const env = cleanEnv(process.env, {
     DB_PASSWORD: str(),
     DB_DATABASE: str(),
 
+    JWT_SECRET: str(),
+
     CORS: str({ default: '*' }),
     LOG_DIR: str({ default: './logs' }),
 });

@@ -2,19 +2,22 @@ version: '3.3'
 
 services:
   server:
+    image: card-game-server:staging
     build:
       context: ./packages/server/
       target: prod
     ports:
       - ${SERVER_PORT:-5500}:3000
     environment:
-      - DB_HOST=${DB_HOST}
-      - DB_PORT=${DB_PORT}
-      - DB_USER=${DB_USER}
-      - DB_PASSWORD=${DB_PASSWORD}
-      - DB_DATABASE=${DB_DATABASE}
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_DATABASE: ${DB_DATABASE}
+      JWT_SECRET: ${JWT_SECRET}
 
   client:
+    image: card-game-client:staging
     build:
       context: ./packages/client/
       target: prod
@@ -24,6 +27,7 @@ services:
       - ${CLIENT_PORT:-3000}:80
 
   admin:
+    image: card-game-admin:staging
     build:
       context: ./packages/admin/
       target: prod

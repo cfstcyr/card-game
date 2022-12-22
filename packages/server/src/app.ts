@@ -13,6 +13,7 @@ import { env } from './utils/environment';
 import { resolve } from 'path';
 import { logger } from './utils/logger';
 import helmet from 'helmet';
+import { UserService } from './services/user-service/user-service';
 
 @singleton()
 export class Application {
@@ -21,11 +22,14 @@ export class Application {
     constructor(
         @injectAll(SYMBOLS.controller)
         private readonly controllers: AbstractController[],
+        private readonly userService: UserService,
     ) {
         this.app = express();
 
         this.configureMiddlewares();
         this.configureRoutes();
+
+        this.userService.configure();
     }
 
     listen(port: number | string) {
