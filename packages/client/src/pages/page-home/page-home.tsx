@@ -20,7 +20,7 @@ export const PageHome: React.FC = () => {
                         <GameButton
                             key={game.id}
                             game={game}
-                            className="w:100% max-w:400"
+                            className={styles['page-home__games__button']}
                             theme={(i % 5) + 1}
                         />
                     ))
