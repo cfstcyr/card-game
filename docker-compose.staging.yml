@@ -22,7 +22,7 @@ services:
       context: ./packages/client/
       target: prod
       args:
-        - SERVER_URL=${SERVER_URL:-http://cfstcyr-macbook-air.local:${SERVER_PORT:-5500}}
+        - SERVER_URL=${SERVER_URL}
     ports:
       - ${CLIENT_PORT:-3000}:80
 
@@ -32,6 +32,6 @@ services:
       context: ./packages/admin/
       target: prod
       args:
-        - SERVER_URL=${SERVER_URL:-http://cfstcyr-macbook-air.local:${SERVER_PORT:-5500}}
+        - SERVER_URL=${SERVER_URL}
     ports:
       - ${ADMIN_PORT:-3003}:80
