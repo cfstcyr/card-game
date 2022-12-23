@@ -5,12 +5,22 @@ import { useDataMap } from '../../hooks/useDataMap';
 import { Card } from '../../models/card';
 import { Game, GameWithCards } from '../../models/game';
 import { useApi } from '../api-context';
+import { useLoadingBar } from '../loading-bar-context';
 import { DataContext } from './context';
 
 export const GameDataProvider: React.FC<PropsWithChildren> = ({ children }) => {
+    const { continuousStart, complete } = useLoadingBar();
     const { get } = useApi();
     const games = useData<Game[]>([]);
     const cards = useDataMap<Omit<Card, 'gameId'>[]>([]);
+
+    useEffect(() => {
+        if (games.loading || cards.isLoading) {
+            continuousStart?.();
+        } else {
+            complete?.();
+        }
+    }, [games.loading, cards.isLoading, continuousStart, complete]);
 
     const fetchGames = useCallback(async () => {
         games.setLoading(true);
@@ -41,6 +51,8 @@ export const GameDataProvider: React.FC<PropsWithChildren> = ({ children }) => {
             }
             cards.setError(gameId, String(e), status);
         }
+
+        cards.setLoading(gameId, false);
     }, []);
 
     useEffect(() => {
@@ -49,7 +61,12 @@ export const GameDataProvider: React.FC<PropsWithChildren> = ({ children }) => {
 
     return (
         <DataContext.Provider
-            value={{ games: games.self, cards: cards.self, fetchCards }}
+            value={{
+                games: games.self,
+                cards: cards.self,
+                fetchGames,
+                fetchCards,
+            }}
         >
             {children}
         </DataContext.Provider>

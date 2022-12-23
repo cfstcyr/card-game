@@ -1,3 +1,6 @@
+SERVER_URL: ${SERVER_URL}
+SERVER_URL ?= http://api.card.cfstcyr.com
+
 dev:
 	docker-compose -f docker-compose.dev.yml up --build --attach server --attach client --attach admin
 
@@ -18,13 +21,13 @@ build-server:
 
 build-client:
 	docker build\
-		--build-arg SERVER_URL=${SERVER_URL:-http://api.card.cfstcyr.com}\
+		--build-arg SERVER_URL="$(SERVER_URL)"\
 		--target prod\
 		-t card-game-client ./packages/client
 
 build-admin:
 	docker build\
-		--build-arg SERVER_URL=${SERVER_URL:-http://api.card.cfstcyr.com}\
+		--build-arg SERVER_URL=$(SERVER_URL)\
 		--target prod\
 		-t card-game-admin ./packages/admin
 

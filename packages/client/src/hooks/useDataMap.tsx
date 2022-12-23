@@ -3,6 +3,7 @@ import { Data } from '../models/data';
 
 export const useDataMap = <T,>(defaultValue: T) => {
     const [map, setMap] = useState<{ [K: string]: Data<T> }>({});
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const get = useCallback(
         (key: string): Data<T> => {
@@ -31,6 +32,8 @@ export const useDataMap = <T,>(defaultValue: T) => {
     };
 
     const setLoading = (key: string, loading: boolean) => {
+        setIsLoading(loading);
+        console.log('set is loading', loading, key);
         setMap((m) => ({
             ...m,
             [key]: (m[key] ?? new Data(defaultValue))
@@ -61,5 +64,6 @@ export const useDataMap = <T,>(defaultValue: T) => {
         setValue,
         setLoading,
         setError,
+        isLoading,
     };
 };

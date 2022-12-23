@@ -7,6 +7,7 @@ interface GameDataContextInterface {
     games: Data<Game[]>;
     cards: { [K: string]: Data<Omit<Card, 'gameId'>[]> };
     fetchCards: (gameId: string) => Promise<void>;
+    fetchGames: () => Promise<void>;
 }
 
 const GameDataContext = React.createContext<GameDataContextInterface>(

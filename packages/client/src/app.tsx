@@ -1,11 +1,13 @@
 import React, { ComponentProps, useEffect, useState } from 'react';
 import { RouterProvider } from 'react-router-dom';
+import LoadingBar from 'react-top-loading-bar';
 import { ActionPopup } from './components/action-popup/action-popup';
-import { useEvent } from './contexts/event-context/context';
+import { useEvent, useLoadingBar } from './contexts';
 import { router } from './modules/routing';
 
 export const App: React.FC = () => {
     const { on, off } = useEvent();
+    const { ref: loadingBarRef } = useLoadingBar();
     const [actionPopup, setActionPopup] = useState<
         ComponentProps<typeof ActionPopup>[]
     >([]);
@@ -30,6 +32,7 @@ export const App: React.FC = () => {
 
     return (
         <>
+            <LoadingBar color="white" ref={loadingBarRef} />
             <RouterProvider router={router} />
             <div className="position:absolute">
                 {actionPopup.map((action, i) => (

@@ -1,0 +1,21 @@
+.page-home {
+    &__container {
+        display: grid;
+        grid-template-rows: auto 1fr;
+        gap: 24px;
+        padding: 24px;
+    }
+
+    &__actions {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    &__games {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        justify-content: center;
+        align-items: center;
+    }
+}

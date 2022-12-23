@@ -1,7 +1,6 @@
 import styles from './page-game.module.scss';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useData } from '../../contexts/game-data-context/context';
 import { Card } from '../../models/card';
 import { shuffle } from '../../utils/random';
 import { SimpleButton } from '../../components';
@@ -10,7 +9,7 @@ import { Swiper as SwiperClass } from 'swiper';
 import { useKeys } from '../../hooks/useKeys';
 import { GameSlide } from '../../components/game-slide/game-slide';
 import { ActionButton } from '../../components/action-button/action-button';
-import { useEvent } from '../../contexts/event-context/context';
+import { useData, useEvent } from '../../contexts';
 
 export const PageGame: React.FC = () => {
     const keys = useKeys();
