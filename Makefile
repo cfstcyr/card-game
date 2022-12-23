@@ -14,6 +14,9 @@ build: build-server build-client build-admin
 
 push: push-server push-client push-admin
 
+pull:
+	docker-compose -f docker-compose.prod.yml pull
+
 build-server:
 	docker build\
 		--target prod\
