@@ -18,13 +18,15 @@ build-server:
 
 build-client:
 	docker build\
+		--build-arg SERVER_URL=${SERVER_URL:-http://api.card.cfstcyr.com}\
 		--target prod\
 		-t card-game-client ./packages/client
 
 build-admin:
 	docker build\
+		--build-arg SERVER_URL=${SERVER_URL:-http://api.card.cfstcyr.com}\
 		--target prod\
-		-t card-game-client ./packages/admin
+		-t card-game-admin ./packages/admin
 
 push-server:
 	docker tag card-game-server cfstcyr/card-game-server
@@ -35,5 +37,5 @@ push-client:
 	docker push cfstcyr/card-game-client
 
 push-admin:
-	docker tag card-game-client cfstcyr/card-game-client
+	docker tag card-game-admin cfstcyr/card-game-admin
 	docker push cfstcyr/card-game-admin
