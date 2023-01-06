@@ -8,15 +8,12 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { EffectCards, Swiper as SwiperClass } from 'swiper';
 import { useKeys } from '../../hooks/useKeys';
 import { GameSlide } from '../../components/game-slide/game-slide';
-import { ActionButton } from '../../components/action-button/action-button';
-import { useData, useEvent } from '../../contexts';
+import { useData } from '../../contexts';
 
 export const PageGame: React.FC = () => {
     const keys = useKeys();
     const { id } = useParams();
-    const { next } = useEvent();
     const swiper = useRef<SwiperClass>();
-    const copyToClipboardButton = useRef<HTMLDivElement>(null);
     const { games, cards, fetchCards } = useData();
     const [gameCards, setGameCards] = useState<
         Omit<Card, 'gameId'>[] | undefined
@@ -51,21 +48,6 @@ export const PageGame: React.FC = () => {
         return () => off();
     }, [keys, swiper]);
 
-    // const copyToClipboard = useCallback(() => {
-    //     const content = gameCards?.[slideIndex];
-    //     if (content) {
-    //         navigator.clipboard.writeText(content.content);
-    //     }
-
-    //     if (copyToClipboardButton.current) {
-    //         next('action-popup', {
-    //             children: 'Copied to clipboard!',
-    //             posX: copyToClipboardButton.current.offsetLeft,
-    //             posY: copyToClipboardButton.current.offsetTop,
-    //         });
-    //     }
-    // }, [gameCards, slideIndex]);
-
     const share = useCallback(() => {
         if (!id || !games[id]?.value) return;
 
@@ -95,21 +77,6 @@ export const PageGame: React.FC = () => {
                         color={id && games[id]?.value?.color}
                     />
                 </div>
-                {/* <div>
-                    <p className="m:0 opacity:0.55 f:bold no-select">
-                        {Math.min(slideIndex + 1, totalSlides - 1)}
-                        {'/'}
-                        {totalSlides - 1}
-                    </p>
-                </div> */}
-                {/* <div className="d:flex gap:3">
-                    <div ref={copyToClipboardButton}>
-                        <ActionButton
-                            icon={{ icon: 'clipboard', styling: 'solid' }}
-                            onClick={copyToClipboard}
-                        />
-                    </div>
-                </div> */}
             </div>
             <div className={styles['page-game__game']}>
                 {id && gameCards && (
