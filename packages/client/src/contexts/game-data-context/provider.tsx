@@ -1,6 +1,5 @@
 import { AxiosError } from 'axios';
 import React, { PropsWithChildren, useCallback, useEffect } from 'react';
-import { useData } from '../../hooks/useData';
 import { useDataMap } from '../../hooks/useDataMap';
 import { Card } from '../../models/card';
 import { Game, GameWithCards } from '../../models/game';
@@ -11,31 +10,36 @@ import { DataContext } from './context';
 export const GameDataProvider: React.FC<PropsWithChildren> = ({ children }) => {
     const { continuousStart, complete } = useLoadingBar();
     const { get } = useApi();
-    const games = useData<Game[]>([]);
+    const games = useDataMap<Game | undefined>(undefined);
     const cards = useDataMap<Omit<Card, 'gameId'>[]>([]);
 
     useEffect(() => {
-        if (games.loading || cards.isLoading) {
+        if (games.isLoading || cards.isLoading) {
             continuousStart?.();
         } else {
             complete?.();
         }
-    }, [games.loading, cards.isLoading, continuousStart, complete]);
+    }, [games.isLoading, cards.isLoading, continuousStart, complete]);
 
     const fetchGames = useCallback(async () => {
-        games.setLoading(true);
+        games.setLoadingAll(true);
 
         try {
             const res = await get<Game[]>('/game');
-            games.setValue(res.data);
+
+            for (const game of res.data) {
+                games.setValue(String(game.id), game);
+            }
         } catch (e) {
             let status: number | undefined = undefined;
             if (e instanceof AxiosError) {
                 status = e.response?.status;
             }
 
-            games.setError(String(e), status);
+            games.setErrorAll(String(e), status);
         }
+
+        games.setLoadingAll(false);
     }, []);
 
     const fetchCards = useCallback(async (gameId: string) => {

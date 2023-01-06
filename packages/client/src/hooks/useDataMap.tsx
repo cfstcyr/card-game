@@ -12,13 +12,6 @@ export const useDataMap = <T,>(defaultValue: T) => {
         [map],
     );
 
-    const getOrDefault = useCallback(
-        (key: string): Data<T> => {
-            return map[key] ?? new Data<T>(defaultValue);
-        },
-        [map],
-    );
-
     const setValue = (key: string, value: T) => {
         setMap((m) => ({
             ...m,
@@ -33,13 +26,22 @@ export const useDataMap = <T,>(defaultValue: T) => {
 
     const setLoading = (key: string, loading: boolean) => {
         setIsLoading(loading);
-        console.log('set is loading', loading, key);
         setMap((m) => ({
             ...m,
             [key]: (m[key] ?? new Data(defaultValue))
                 .setLoading(loading)
                 .clone(),
         }));
+    };
+
+    const setLoadingAll = (loading: boolean) => {
+        setIsLoading(loading);
+        setMap((m) => {
+            for (const k of Object.keys(m)) {
+                m[k].setLoading(true).clone();
+            }
+            return { ...m };
+        });
     };
 
     const setError = (
@@ -56,14 +58,24 @@ export const useDataMap = <T,>(defaultValue: T) => {
         }));
     };
 
+    const setErrorAll = (error: string | undefined, errorStatus?: number) => {
+        setMap((m) => {
+            for (const k of Object.keys(m)) {
+                m[k].setLoading(false).setError(error, errorStatus).clone();
+            }
+            return { ...m };
+        });
+    };
+
     return {
         ...map,
         self: map,
         get,
-        getOrDefault,
         setValue,
         setLoading,
+        setLoadingAll,
         setError,
+        setErrorAll,
         isLoading,
     };
 };

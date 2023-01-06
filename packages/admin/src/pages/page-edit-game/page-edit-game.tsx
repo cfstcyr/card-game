@@ -1,6 +1,8 @@
+import { FileInfo, Widget } from '@uploadcare/react-widget';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
+import { UPLOADCARE_API_KEY } from '../../constants/keys';
 import { useData } from '../../contexts/data-context/context';
 import { Game } from '../../models/game';
 import { Layout } from '../layout';
@@ -11,6 +13,8 @@ export const PageEditGame: React.FC = () => {
     const [game, setGame] = useState<Game>();
     const [name, setName] = useState(game?.name);
     const [description, setDescription] = useState(game?.description);
+    const [image, setImage] = useState(game?.image);
+    const [color, setColor] = useState(game?.image);
     const [cardsChanged, setCardChanged] = useState(false);
     const [cardsValue, setCardsValue] = useState<string>('');
 
@@ -28,6 +32,8 @@ export const PageEditGame: React.FC = () => {
         if (game) {
             setName(game.name);
             setDescription(game.description);
+            setImage(game.image);
+            setColor(game.color);
         }
     }, [game]);
 
@@ -54,6 +60,22 @@ export const PageEditGame: React.FC = () => {
         [game],
     );
 
+    const onChangeImage = useCallback(
+        (file: FileInfo) => {
+            if (!game) return;
+            setImage(file.cdnUrl ?? undefined);
+        },
+        [game],
+    );
+
+    const onChangeColor = useCallback(
+        (e: React.ChangeEvent<HTMLInputElement>) => {
+            if (!game) return;
+            setColor(e.target.value);
+        },
+        [game],
+    );
+
     const onChangeCards = useCallback(
         (e: React.ChangeEvent<HTMLInputElement>) => {
             setCardChanged(true);
@@ -67,9 +89,11 @@ export const PageEditGame: React.FC = () => {
         return (
             cardsChanged ||
             game?.name !== name ||
-            game?.description !== description
+            game?.description !== description ||
+            game?.image !== image ||
+            game?.color !== color
         );
-    }, [cardsChanged, game, name, description]);
+    }, [cardsChanged, game, name, image, color, description]);
 
     const onSubmit = useCallback(
         async (e: React.FormEvent) => {
@@ -80,12 +104,14 @@ export const PageEditGame: React.FC = () => {
             updateGame(game.id, {
                 name,
                 description,
+                image,
+                color,
                 cards: cardsChanged
                     ? cardsValue?.split('\n').filter((l) => l.trim().length > 0)
                     : undefined,
             });
         },
-        [game, name, description, cardsValue],
+        [game, name, description, image, color, cardsValue],
     );
 
     return game ? (
@@ -107,6 +133,25 @@ export const PageEditGame: React.FC = () => {
                         value={description}
                         onChange={onChangeDescription}
                     />
+                </Form.Group>
+
+                <Form.Group className="mb:12">
+                    <Form.Label>Image</Form.Label>
+                    <div className="d:flex gap:12 align-items:start">
+                        <Form.Control value={image} readOnly />
+                        <Widget
+                            publicKey={UPLOADCARE_API_KEY}
+                            onChange={onChangeImage}
+                        />
+                    </div>
+                    {image && (
+                        <img src={image} height={200} className="mt:12" />
+                    )}
+                </Form.Group>
+
+                <Form.Group className="mb:12">
+                    <Form.Label>Color</Form.Label>
+                    <Form.Control value={color} onChange={onChangeColor} />
                 </Form.Group>
 
                 <hr />

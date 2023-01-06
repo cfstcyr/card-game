@@ -5,7 +5,7 @@ import { Card } from '../../models/card';
 import { shuffle } from '../../utils/random';
 import { SimpleButton } from '../../components';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Swiper as SwiperClass } from 'swiper';
+import { EffectCards, Swiper as SwiperClass } from 'swiper';
 import { useKeys } from '../../hooks/useKeys';
 import { GameSlide } from '../../components/game-slide/game-slide';
 import { ActionButton } from '../../components/action-button/action-button';
@@ -51,20 +51,37 @@ export const PageGame: React.FC = () => {
         return () => off();
     }, [keys, swiper]);
 
-    const copyToClipboard = useCallback(() => {
-        const content = gameCards?.[slideIndex];
-        if (content) {
-            navigator.clipboard.writeText(content.content);
-        }
+    // const copyToClipboard = useCallback(() => {
+    //     const content = gameCards?.[slideIndex];
+    //     if (content) {
+    //         navigator.clipboard.writeText(content.content);
+    //     }
 
-        if (copyToClipboardButton.current) {
-            next('action-popup', {
-                children: 'Copied to clipboard!',
-                posX: copyToClipboardButton.current.offsetLeft,
-                posY: copyToClipboardButton.current.offsetTop,
-            });
+    //     if (copyToClipboardButton.current) {
+    //         next('action-popup', {
+    //             children: 'Copied to clipboard!',
+    //             posX: copyToClipboardButton.current.offsetLeft,
+    //             posY: copyToClipboardButton.current.offsetTop,
+    //         });
+    //     }
+    // }, [gameCards, slideIndex]);
+
+    const share = useCallback(() => {
+        if (!id || !games[id]?.value) return;
+
+        const content = gameCards?.[slideIndex];
+
+        if (!content) return;
+
+        const data = {
+            text: content.content,
+            title: games[id]?.value?.name,
+        };
+
+        if (navigator.canShare(data)) {
+            navigator.share(data);
         }
-    }, [gameCards, slideIndex]);
+    }, [gameCards, slideIndex, id, games]);
 
     return games.loading || cardsLoading ? (
         <p>loading</p>
@@ -73,32 +90,34 @@ export const PageGame: React.FC = () => {
             <div className="page-game__top d:flex p:24 align-items:center justify-content:space-between">
                 <div className="page-game__buttons d:flex">
                     <SimpleButton
-                        text="Home"
-                        icon={{ icon: 'arrow-left', styling: 'solid' }}
-                        size="small"
+                        icon={{ icon: 'times', styling: 'solid' }}
                         to="/"
+                        color={id && games[id]?.value?.color}
                     />
                 </div>
-                <div>
+                {/* <div>
                     <p className="m:0 opacity:0.55 f:bold no-select">
                         {Math.min(slideIndex + 1, totalSlides - 1)}
                         {'/'}
                         {totalSlides - 1}
                     </p>
-                </div>
-                <div className="d:flex gap:3">
+                </div> */}
+                {/* <div className="d:flex gap:3">
                     <div ref={copyToClipboardButton}>
                         <ActionButton
                             icon={{ icon: 'clipboard', styling: 'solid' }}
                             onClick={copyToClipboard}
                         />
                     </div>
-                </div>
+                </div> */}
             </div>
             <div className={styles['page-game__game']}>
                 {id && gameCards && (
                     <Swiper
                         className={styles['page-game__swiper']}
+                        effect="cards"
+                        modules={[EffectCards]}
+                        grabCursor
                         spaceBetween={50}
                         onBeforeInit={(s) => {
                             swiper.current = s;
@@ -116,7 +135,7 @@ export const PageGame: React.FC = () => {
                             <SwiperSlide>
                                 <GameSlide isSystemSlide>
                                     <p>
-                                        {games.errorStatus === 404 ||
+                                        {games[id]?.errorStatus === 404 ||
                                         cards[id].errorStatus === 404
                                             ? 'Game not found'
                                             : 'Error loading game'}
@@ -141,18 +160,36 @@ export const PageGame: React.FC = () => {
                 )}
             </div>
             <div className="page-game__bottom">
-                <div className="d:flex padding:24 gap:12 justify-content:center">
-                    <SimpleButton
-                        icon={{ icon: 'arrow-left', styling: 'solid' }}
-                        onClick={() => swiper.current?.slidePrev()}
-                        disabled={slideIndex === 0}
-                    />
-                    <SimpleButton
-                        icon={{ icon: 'arrow-right', styling: 'solid' }}
-                        text="Next"
-                        onClick={() => swiper.current?.slideNext()}
-                        disabled={slideIndex === totalSlides - 1}
-                    />
+                <div className="d:flex padding:24 mb:12 gap:12 justify-content:space-between">
+                    <div className="d:flex">
+                        <SimpleButton
+                            icon={{ icon: 'arrow-left', styling: 'solid' }}
+                            onClick={() => swiper.current?.slidePrev()}
+                            disabled={slideIndex === 0}
+                            color={id && games[id]?.value?.color}
+                        />
+                        <SimpleButton
+                            icon={{ icon: 'arrow-right', styling: 'solid' }}
+                            onClick={() => swiper.current?.slideNext()}
+                            disabled={slideIndex === totalSlides - 1}
+                            color={id && games[id]?.value?.color}
+                        />
+                    </div>
+
+                    <p className="opacity:0.55 font-weight:600">
+                        {totalSlides -
+                            1 -
+                            Math.min(slideIndex + 1, totalSlides - 1)}{' '}
+                        cards left
+                    </p>
+
+                    {navigator.canShare({ text: '', title: '' }) && (
+                        <SimpleButton
+                            icon={{ icon: 'share', styling: 'solid' }}
+                            color={id && games[id]?.value?.color}
+                            onClick={share}
+                        />
+                    )}
                 </div>
             </div>
         </div>

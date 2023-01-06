@@ -1,6 +1,7 @@
 import './styles/index.scss';
 import '@master/css';
 import 'swiper/css';
+import 'swiper/css/effect-cards';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Providers } from './modules/providers';

@@ -42,6 +42,7 @@ services:
     environment:
       - PORT=3003
       - REACT_APP_SERVER_URL=http://localhost:${SERVER_PORT:-5500}
+      - REACT_APP_UPLOADCARE_API_KEY=94946bce4985d9873f34
 
   db:
     image: mysql

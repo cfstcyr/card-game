@@ -1,6 +1,8 @@
 @import '../../styles/index.scss';
 
 .page-game {
+    $spacing: 24px;
+
     display: grid;
     grid-template-rows: auto minmax(0, 1fr) auto;
     width: 100%;
@@ -8,10 +10,16 @@
 
     &__game {
         width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow-x: hidden;
     }
 
     &__swiper {
-        height: 100%;
-        width: 100vw;
+        height: calc(100% - $spacing * 2);
+        width: calc(100vw - $spacing * 2);
+        max-width: 300px;
+        max-height: 400px;
     }
 }

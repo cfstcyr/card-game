@@ -4,7 +4,7 @@ import { Data } from '../../models/data';
 import { Game } from '../../models/game';
 
 interface GameDataContextInterface {
-    games: Data<Game[]>;
+    games: { [K: string]: Data<Game | undefined> | undefined };
     cards: { [K: string]: Data<Omit<Card, 'gameId'>[]> };
     fetchCards: (gameId: string) => Promise<void>;
     fetchGames: () => Promise<void>;

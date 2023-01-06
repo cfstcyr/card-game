@@ -17,6 +17,7 @@ interface Props extends Omit<ElementProps, 'to'> {
     content?: 'vertical' | 'horizontal';
     size?: 'default' | 'large' | 'small';
     theme?: 1 | 2 | 3 | 4 | 5 | number;
+    color?: string;
 }
 
 const Button: React.FC<PropsWithChildren<Props>> = ({
@@ -26,6 +27,7 @@ const Button: React.FC<PropsWithChildren<Props>> = ({
     content = 'horizontal',
     size = 'default',
     theme = 1,
+    color = 'white',
     ...props
 }) => {
     const classname = classNames(
@@ -38,23 +40,21 @@ const Button: React.FC<PropsWithChildren<Props>> = ({
         },
     );
 
-    return to && !disabled ? (
-        <Link
-            to={to}
-            {...props}
-            className={classNames(classname, props.className)}
-        >
-            {children}
-        </Link>
-    ) : (
-        <button
-            disabled={disabled}
-            {...props}
-            type="button"
-            className={classNames(classname, props.className)}
-        >
-            {children}
-        </button>
+    const Wrapper: React.FC<PropsWithChildren> = ({ children }) =>
+        to ? <Link to={to}>{children}</Link> : <>{children}</>;
+
+    return (
+        <Wrapper>
+            <button
+                disabled={disabled}
+                {...props}
+                type="button"
+                className={classNames(classname, props.className)}
+                style={{ color: color ?? 'white' }}
+            >
+                {children}
+            </button>
+        </Wrapper>
     );
 };
 

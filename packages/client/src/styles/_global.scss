@@ -6,13 +6,22 @@
     font-stretch: 25% 151%;
 }
 
+@font-face {
+    font-family: changa;
+    src: local('changa'),
+        url('../fonts/Changa/Changa-VariableFont_wght.ttf') format('truetype-variations');
+    font-weight: 100 1000;
+    font-stretch: 25% 151%;
+}
+
 html, body {
     font-family: nunito;
     margin: 0;
     // display: flex;
     width: 100%;
     height: 100%;
-    background-color: $primary-color;
+    // background-color: $primary-color;
+    background-color: black;
 }
 
 #root {
@@ -21,7 +30,7 @@ html, body {
     display: flex;
     justify-content: stretch;
     align-items: stretch;
-    @include bg-primary;
+    // @include bg-primary;
 
     & > div {
         width: 100%;
@@ -30,6 +39,10 @@ html, body {
 
 h1, h2, h3, h4, h5, h6, p, a {
     color: white;
+}
+
+a {
+    text-decoration: none;
 }
 
 small {

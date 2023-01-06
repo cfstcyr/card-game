@@ -3,13 +3,16 @@
 .game-slide {
     @include no-select;
     height: 100%;
-    color: white;
-    font-size: 2.5em;
+    color: black;
+    background-color: white;
+    font-size: 2em;
     font-weight: bold;
-    padding: 0 24px;
+    padding: 24px;
     text-align: center;
     overflow-y: auto;
-    cursor: default;
+    border-radius: 12px;
+    box-sizing: border-box;
+    border: solid 1px lightgray;
 
     &__content {
         min-height: 100%;
@@ -20,7 +23,11 @@
 
     &--system {
         font-size: 1.7em;
-        opacity: 0.55;
         font-style: italic;
+        color: rgba(black, 0.55);
+    }
+
+    &__next {
+        background-color: red;
     }
 }

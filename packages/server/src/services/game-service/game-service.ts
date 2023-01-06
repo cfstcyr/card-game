@@ -50,10 +50,10 @@ export class GameService {
         gameId: number | string,
         game: Partial<Omit<Game, 'id'>> & { cards?: string[] },
     ): Promise<Game> {
-        const { name, description, cards } = game;
+        const { name, description, image, color, cards } = game;
 
         await this.db
-            .update({ name, description })
+            .update({ name, description, image, color })
             .where({ id: Number(gameId) });
 
         if (cards) await this.cardService.updateAllCardsForGame(gameId, cards);

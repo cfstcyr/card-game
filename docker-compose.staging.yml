@@ -35,3 +35,5 @@ services:
         - SERVER_URL=${SERVER_URL}
     ports:
       - ${ADMIN_PORT:-3003}:80
+    environment:
+      - REACT_APP_UPLOADCARE_API_KEY=eda49b76d2c205c9fbb0

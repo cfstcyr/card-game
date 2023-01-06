@@ -1,0 +1,33 @@
+.game-card {
+    scale: 4/3;
+    transition: ease-in transform 0.1s;
+
+    &__image {
+        width: 100%;
+    }
+
+    &--no-image {
+        border: solid 2px white;
+        border-radius: 6px;
+        padding: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    &__title {
+        font-family: changa;
+        margin: 0;
+        font-size: 1.3em;
+        word-break: break-all;
+        font-weight: 600;
+    }
+
+    @media (hover: hover) {
+        &:hover {
+            opacity: 1 !important;
+            transform: scale(1.05);
+            transition: ease-in transform 0.1s;
+        }
+    }
+}
