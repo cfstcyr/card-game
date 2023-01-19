@@ -22,7 +22,6 @@
 
     &__bottom {
         padding: 24px;
-        margin-bottom: 12px;
     }
 
     &__close {
@@ -51,6 +50,12 @@
     
         &__bottom {
             padding: 12px;
+        }
+    }
+
+    @media all and (display-mode: standalone) {
+        &__bottom {
+            margin-bottom: 12px;
         }
     }
 }

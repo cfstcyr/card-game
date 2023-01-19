@@ -70,22 +70,14 @@ export const PageGame: React.FC = () => {
     ) : (
         <div className={styles['page-game']}>
             <div className={styles['page-game__top']}>
-                <div className="d:flex align-items:center justify-content:space-between">
+                <div className="align-items:center justify-content:space-between">
                     <div className="page-game__buttons d:flex">
                         <SimpleButton
                             icon={{ icon: 'times', styling: 'solid' }}
                             to="/"
                             color={id && games[id]?.value?.color}
-                            className={styles['page-game__close']}
                         />
                     </div>
-
-                    <p className="opacity:0.55 font-weight:600 my:0 mx:18">
-                        {totalSlides -
-                            1 -
-                            Math.min(slideIndex + 1, totalSlides - 1)}{' '}
-                        cards left
-                    </p>
                 </div>
             </div>
 
@@ -137,7 +129,7 @@ export const PageGame: React.FC = () => {
                     </Swiper>
                 )}
             </div>
-            {/* <div className={styles['page-game__bottom']}>
+            <div className={styles['page-game__bottom']}>
                 <div className="d:flex gap:12 justify-content:space-between">
                     <div className="d:flex">
                         <SimpleButton
@@ -169,7 +161,7 @@ export const PageGame: React.FC = () => {
                         />
                     )}
                 </div>
-            </div> */}
+            </div>
         </div>
     );
 };
