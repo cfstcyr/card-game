@@ -19,22 +19,24 @@ export const PageHome: React.FC = () => {
                 </div>
             </div>
 
-            <div className={styles['page-home__games']}>
-                {games.error ? (
-                    <p>Error loading games</p>
-                ) : (
-                    Object.values(games).map(
-                        (game) =>
-                            game &&
-                            game.value && (
-                                <GameCard
-                                    key={game.value.id}
-                                    game={game.value}
-                                    classname={styles['page-home__game']}
-                                />
-                            ),
-                    )
-                )}
+            <div className={styles['page-home__games-container']}>
+                <div className={styles['page-home__games']}>
+                    {games.error ? (
+                        <p>Error loading games</p>
+                    ) : (
+                        Object.values(games).map(
+                            (game) =>
+                                game &&
+                                game.value && (
+                                    <GameCard
+                                        key={game.value.id}
+                                        game={game.value}
+                                        classname={styles['page-home__game']}
+                                    />
+                                ),
+                        )
+                    )}
+                </div>
             </div>
         </div>
     );

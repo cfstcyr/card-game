@@ -16,7 +16,7 @@ export const GameCard: React.FC<Props> = ({ game, classname }) => {
                 className={classNames(styles['game-card'], classname, {
                     [styles['game-card--no-image']]: true,
                 })}
-                style={{ borderColor: game.color }}
+                // style={{ borderColor: game.color }}
             >
                 <p className={styles['game-card__title']}>{game.name}</p>
             </div>

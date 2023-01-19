@@ -4,6 +4,7 @@ import React, {
     DetailedHTMLProps,
     HTMLAttributes,
     PropsWithChildren,
+    useCallback,
 } from 'react';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
@@ -41,7 +42,7 @@ const Button: React.FC<PropsWithChildren<Props>> = ({
     );
 
     const Wrapper: React.FC<PropsWithChildren> = ({ children }) =>
-        to ? <Link to={to}>{children}</Link> : <>{children}</>;
+        to && !disabled ? <Link to={to}>{children}</Link> : <>{children}</>;
 
     return (
         <Wrapper>

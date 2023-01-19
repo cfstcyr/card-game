@@ -28,7 +28,7 @@ services:
     ports:
       - ${CLIENT_PORT:-3000}:3000
     environment:
-      - REACT_APP_SERVER_URL=http://localhost:${SERVER_PORT:-5500}
+      - REACT_APP_SERVER_URL=http://cfstcyr-macbook-air.local:${SERVER_PORT:-5500}
 
   admin:
     image: card-game-admin:dev

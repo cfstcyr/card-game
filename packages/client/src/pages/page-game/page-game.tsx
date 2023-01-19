@@ -65,17 +65,20 @@ export const PageGame: React.FC = () => {
         }
     }, [gameCards, slideIndex, id, games]);
 
-    return games.loading || cardsLoading ? (
-        <p>loading</p>
-    ) : (
+    const isLoading = useCallback(
+        (): boolean => !!games.loading || cardsLoading,
+        [(games.loading, cardsLoading)],
+    );
+
+    return (
         <div className={styles['page-game']}>
             <div className={styles['page-game__top']}>
                 <div className="align-items:center justify-content:space-between">
                     <div className="page-game__buttons d:flex">
                         <SimpleButton
-                            icon={{ icon: 'times', styling: 'solid' }}
+                            icon={{ icon: 'times', styling: 'regular' }}
                             to="/"
-                            color={id && games[id]?.value?.color}
+                            // color={id && games[id]?.value?.color}
                         />
                     </div>
                 </div>
@@ -101,12 +104,14 @@ export const PageGame: React.FC = () => {
                             setSlideIndex(s.activeIndex);
                         }}
                     >
-                        {games.error || cards[id].error ? (
+                        {isLoading() ? (
+                            <></>
+                        ) : games.error || cards[id!].error ? (
                             <SwiperSlide>
                                 <GameSlide isSystemSlide>
                                     <p>
-                                        {games[id]?.errorStatus === 404 ||
-                                        cards[id].errorStatus === 404
+                                        {games[id!]?.errorStatus === 404 ||
+                                        cards[id!].errorStatus === 404
                                             ? 'Game not found'
                                             : 'Error loading game'}
                                     </p>
@@ -114,14 +119,14 @@ export const PageGame: React.FC = () => {
                             </SwiperSlide>
                         ) : (
                             <>
-                                {gameCards.map((card) => (
+                                {gameCards?.map((card) => (
                                     <SwiperSlide key={card.id}>
                                         <GameSlide>{card.content}</GameSlide>
                                     </SwiperSlide>
                                 ))}
                                 <SwiperSlide>
                                     <GameSlide isSystemSlide>
-                                        All done
+                                        You&apos;ve reached the end
                                     </GameSlide>
                                 </SwiperSlide>
                             </>
@@ -133,31 +138,40 @@ export const PageGame: React.FC = () => {
                 <div className="d:flex gap:12 justify-content:space-between">
                     <div className="d:flex">
                         <SimpleButton
-                            icon={{ icon: 'arrow-left', styling: 'solid' }}
+                            icon={{ icon: 'arrow-left', styling: 'regular' }}
                             onClick={() => swiper.current?.slidePrev()}
-                            disabled={slideIndex === 0}
-                            color={id && games[id]?.value?.color}
+                            disabled={slideIndex === 0 || isLoading()}
+                            // color={id && games[id]?.value?.color}
                         />
                         <SimpleButton
-                            icon={{ icon: 'arrow-right', styling: 'solid' }}
+                            icon={{ icon: 'arrow-right', styling: 'regular' }}
                             onClick={() => swiper.current?.slideNext()}
-                            disabled={slideIndex === totalSlides - 1}
-                            color={id && games[id]?.value?.color}
+                            disabled={
+                                slideIndex === totalSlides - 1 || isLoading()
+                            }
+                            // color={id && games[id]?.value?.color}
                         />
                     </div>
 
                     <p className="opacity:0.55 font-weight:600 mx:6">
-                        {totalSlides -
+                        {isLoading() ? (
+                            <span className={styles['page-game__loading']}>
+                                Loading...
+                            </span>
+                        ) : (
+                            totalSlides -
                             1 -
-                            Math.min(slideIndex + 1, totalSlides - 1)}{' '}
-                        cards left
+                            Math.min(slideIndex + 1, totalSlides - 1) +
+                            ' cards left'
+                        )}
                     </p>
 
                     {navigator.canShare?.({ text: '', title: '' }) && (
                         <SimpleButton
                             icon={{ icon: 'share', styling: 'solid' }}
-                            color={id && games[id]?.value?.color}
+                            // color={id && games[id]?.value?.color}
                             onClick={share}
+                            disabled={isLoading()}
                         />
                     )}
                 </div>

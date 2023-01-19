@@ -14,17 +14,32 @@
     font-stretch: 25% 151%;
 }
 
+html {
+    background-color: black;
+}
+
 html, body {
     font-family: nunito;
     margin: 0;
     width: 100%;
     height: 100%;
-    background-color: black;
+    // background-color: black;
     overflow: hidden;
 }
 
+// body::after {
+//     content: '';
+//     position: absolute;
+//     top: 0;
+//     left: 0;
+//     height: 100%;
+//     width: 100%;
+//     background: radial-gradient(rgba(70, 230, 133, 0.18), transparent);
+//     z-index: -1;
+// }
+
 #root {
-    min-height: 100%;
+    height: 100%;
     width: 100%;
     display: flex;
     justify-content: stretch;
