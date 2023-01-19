@@ -8,34 +8,34 @@ import { router } from './modules/routing';
 export const App: React.FC = () => {
     const { on, off } = useEvent();
     const { ref: loadingBarRef } = useLoadingBar();
-    const [actionPopup, setActionPopup] = useState<
-        ComponentProps<typeof ActionPopup>[]
-    >([]);
+    const [alerts, setAlerts] = useState<ComponentProps<typeof ActionPopup>[]>(
+        [],
+    );
 
-    const onActionPopup = (popup: ComponentProps<typeof ActionPopup>) => {
-        setActionPopup((a) => [...a, popup]);
+    const onAlert = (popup: ComponentProps<typeof ActionPopup>) => {
+        setAlerts((a) => [...a, popup]);
 
         const timeout = setTimeout(() => {
-            setActionPopup((a) => {
+            setAlerts((a) => {
                 const index = a.indexOf(popup);
                 if (index >= 0) a.splice(index, 1);
                 return [...a];
             });
             clearTimeout(timeout);
-        }, 1000);
+        }, 1500);
     };
 
     useEffect(() => {
-        on('action-popup', onActionPopup);
-        return () => off('action-popup', onActionPopup);
+        on('alert', onAlert);
+        return () => off('alert', onAlert);
     }, []);
 
     return (
         <>
             <LoadingBar color="white" ref={loadingBarRef} />
             <RouterProvider router={router} />
-            <div className="position:absolute">
-                {actionPopup.map((action, i) => (
+            <div className="position:absolute h:100% pointer-events:none">
+                {alerts.map((action, i) => (
                     <ActionPopup key={i} {...action} />
                 ))}
             </div>

@@ -24,12 +24,12 @@
     z-index: 1000;
     user-select: none;
     pointer-events: none;
+    translate: -50% -50%;
     scale: 0.5;
     opacity: 0;
-    animation: action 1s linear 0s 1 forwards;
-    font-size: 0.9em;
-    font-weight: 600;
-    padding: 2px 4px;
+    animation: action 1.5s linear 0s 1 forwards;
+    font-weight: 700;
+    padding: 8px 12px;
     border-radius: 2px;
     white-space: nowrap;
 

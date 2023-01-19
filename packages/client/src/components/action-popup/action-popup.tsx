@@ -9,11 +9,10 @@ import React, {
 import _, { size } from 'lodash';
 
 interface Props {
-    posX: number;
-    posY: number;
+    posX?: number;
+    posY?: number;
     marginX?: number;
     marginY?: number;
-    maxRotation?: number;
 }
 
 export const ActionPopup: React.FC<PropsWithChildren<Props>> = ({
@@ -22,7 +21,6 @@ export const ActionPopup: React.FC<PropsWithChildren<Props>> = ({
     posY,
     marginX = 24,
     marginY = 24,
-    maxRotation = 5,
 }) => {
     const ref = useRef<HTMLDivElement>(null);
 
@@ -35,30 +33,24 @@ export const ActionPopup: React.FC<PropsWithChildren<Props>> = ({
     }, []);
 
     const getPosition = useCallback(() => {
-        const top = _.clamp(
-            posY,
-            marginY,
-            window.innerHeight - marginY - (height ?? 0),
-        );
-        const left = _.clamp(
-            posX,
-            marginX,
-            window.innerWidth - marginY - (width ?? 0),
-        );
+        const top = posY
+            ? _.clamp(
+                  posY,
+                  marginY,
+                  window.innerHeight - marginY - (height ?? 0),
+              )
+            : '25%';
+        const left = posX
+            ? _.clamp(posX, marginX, window.innerWidth - marginY - (width ?? 0))
+            : '50%';
 
         return { top, left };
     }, [posX, posY, height, size]);
 
-    const getRotation = useCallback(() => {
-        return `${
-            Math.floor(Math.random() * maxRotation * 2) - maxRotation
-        }deg`;
-    }, []);
-
     return (
         <div
             className={styles['action-popup']}
-            style={{ ...getPosition(), rotate: getRotation() }}
+            style={{ ...getPosition() }}
             ref={ref}
         >
             {children}

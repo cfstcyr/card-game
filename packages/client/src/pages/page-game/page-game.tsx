@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import styles from './page-game.module.scss';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -8,13 +9,15 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { EffectCards, Swiper as SwiperClass } from 'swiper';
 import { useKeys } from '../../hooks/useKeys';
 import { GameSlide } from '../../components/game-slide/game-slide';
-import { useData } from '../../contexts';
+import { useData, useEvent } from '../../contexts';
+import copy from 'copy-to-clipboard';
 
 export const PageGame: React.FC = () => {
     const keys = useKeys();
     const { id } = useParams();
     const swiper = useRef<SwiperClass>();
     const { games, cards, fetchCards } = useData();
+    const { next } = useEvent();
     const [gameCards, setGameCards] = useState<
         Omit<Card, 'gameId'>[] | undefined
     >();
@@ -48,6 +51,12 @@ export const PageGame: React.FC = () => {
         return () => off();
     }, [keys, swiper]);
 
+    const copyCard = useCallback(() => {
+        if (!gameCards) return;
+        copy(gameCards[slideIndex].content);
+        next('alert', { children: 'Copied to clipboard!' });
+    }, [gameCards, slideIndex]);
+
     const share = useCallback(() => {
         if (!id || !games[id]?.value) return;
 
@@ -73,7 +82,7 @@ export const PageGame: React.FC = () => {
     return (
         <div className={styles['page-game']}>
             <div className={styles['page-game__top']}>
-                <div className="align-items:center justify-content:space-between">
+                <div className="d:flex align-items:center justify-content:space-between">
                     <div className="page-game__buttons d:flex">
                         <SimpleButton
                             icon={{ icon: 'times', styling: 'regular' }}
@@ -81,6 +90,19 @@ export const PageGame: React.FC = () => {
                             // color={id && games[id]?.value?.color}
                         />
                     </div>
+
+                    <p className="opacity:0.55 font-weight:600 mx:6 no-select">
+                        {isLoading() ? (
+                            <span className={styles['page-game__loading']}>
+                                Loading...
+                            </span>
+                        ) : (
+                            totalSlides -
+                            1 -
+                            Math.min(slideIndex + 1, totalSlides - 1) +
+                            ' cards left'
+                        )}
+                    </p>
                 </div>
             </div>
 
@@ -153,27 +175,25 @@ export const PageGame: React.FC = () => {
                         />
                     </div>
 
-                    <p className="opacity:0.55 font-weight:600 mx:6 no-select">
-                        {isLoading() ? (
-                            <span className={styles['page-game__loading']}>
-                                Loading...
-                            </span>
-                        ) : (
-                            totalSlides -
-                            1 -
-                            Math.min(slideIndex + 1, totalSlides - 1) +
-                            ' cards left'
+                    <div className="d:flex">
+                        {navigator.canShare?.({ text: '', title: '' }) && (
+                            <SimpleButton
+                                icon={{ icon: 'share', styling: 'solid' }}
+                                // color={id && games[id]?.value?.color}
+                                onClick={share}
+                                disabled={isLoading()}
+                            />
                         )}
-                    </p>
-
-                    {navigator.canShare?.({ text: '', title: '' }) && (
                         <SimpleButton
-                            icon={{ icon: 'share', styling: 'solid' }}
-                            // color={id && games[id]?.value?.color}
-                            onClick={share}
-                            disabled={isLoading()}
+                            icon={{ icon: 'clipboard' }}
+                            onClick={copyCard}
+                            disabled={
+                                isLoading() ||
+                                !gameCards ||
+                                slideIndex === totalSlides - 1
+                            }
                         />
-                    )}
+                    </div>
                 </div>
             </div>
         </div>
