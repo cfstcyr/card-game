@@ -60,8 +60,8 @@ export const PageGame: React.FC = () => {
             title: games[id]?.value?.name,
         };
 
-        if (navigator.canShare(data)) {
-            navigator.share(data);
+        if (navigator.canShare?.(data)) {
+            navigator.share?.(data);
         }
     }, [gameCards, slideIndex, id, games]);
 
@@ -150,7 +150,7 @@ export const PageGame: React.FC = () => {
                         cards left
                     </p>
 
-                    {navigator.canShare({ text: '', title: '' }) && (
+                    {navigator.canShare?.({ text: '', title: '' }) && (
                         <SimpleButton
                             icon={{ icon: 'share', styling: 'solid' }}
                             color={id && games[id]?.value?.color}
