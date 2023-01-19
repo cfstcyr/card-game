@@ -153,7 +153,7 @@ export const PageGame: React.FC = () => {
                         />
                     </div>
 
-                    <p className="opacity:0.55 font-weight:600 mx:6">
+                    <p className="opacity:0.55 font-weight:600 mx:6 no-select">
                         {isLoading() ? (
                             <span className={styles['page-game__loading']}>
                                 Loading...
