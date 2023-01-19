@@ -146,7 +146,7 @@ export const PageGame: React.FC = () => {
                         />
                     </div>
 
-                    <p className="opacity:0.55 font-weight:600">
+                    <p className="opacity:0.55 font-weight:600 mx:6">
                         {totalSlides -
                             1 -
                             Math.min(slideIndex + 1, totalSlides - 1)}{' '}
