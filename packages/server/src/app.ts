@@ -14,6 +14,7 @@ import { resolve } from 'path';
 import { logger } from './utils/logger';
 import helmet from 'helmet';
 import { UserService } from './services/user-service/user-service';
+import { DatabaseService } from './services';
 
 @singleton()
 export class Application {
@@ -23,10 +24,11 @@ export class Application {
         @injectAll(SYMBOLS.controller)
         private readonly controllers: AbstractController[],
         private readonly userService: UserService,
+        private readonly databaseService: DatabaseService,
     ) {
         this.app = express();
 
-        this.configureMiddlewares();
+        this.configureMiddleware();
         this.configureRoutes();
 
         this.userService.configure();
@@ -41,7 +43,11 @@ export class Application {
         });
     }
 
-    private configureMiddlewares() {
+    async configureDatabase() {
+        this.databaseService.client.migrate.latest();
+    }
+
+    private configureMiddleware() {
         this.app.use(
             morgan('dev', {
                 skip: function (req, res) {
