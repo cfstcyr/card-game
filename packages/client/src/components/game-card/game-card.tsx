@@ -14,21 +14,11 @@ export const GameCard: React.FC<Props> = ({ game, classname }) => {
         <Link to={`/game/${game.id}`}>
             <div
                 className={classNames(styles['game-card'], classname, {
-                    [styles['game-card--no-image']]: !game.image,
+                    [styles['game-card--no-image']]: true,
                 })}
+                style={{ borderColor: game.color }}
             >
-                {game.image ? (
-                    <img
-                        src={game.image}
-                        className={styles['game-card__image']}
-                    />
-                ) : (
-                    <>
-                        <p className={styles['game-card__title']}>
-                            {game.name}
-                        </p>
-                    </>
-                )}
+                <p className={styles['game-card__title']}>{game.name}</p>
             </div>
         </Link>
     );

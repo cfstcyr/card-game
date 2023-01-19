@@ -17,11 +17,10 @@
 html, body {
     font-family: nunito;
     margin: 0;
-    // display: flex;
     width: 100%;
     height: 100%;
-    // background-color: $primary-color;
     background-color: black;
+    overflow: hidden;
 }
 
 #root {

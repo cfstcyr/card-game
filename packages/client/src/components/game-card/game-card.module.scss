@@ -1,20 +1,13 @@
 .game-card {
-    scale: 4/3;
+    // scale: 4/3;
+    border: solid 4px white;
+    border-radius: 6px;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
     transition: ease-in transform 0.1s;
-
-    &__image {
-        width: 100%;
-    }
-
-    &--no-image {
-        border: solid 2px white;
-        border-radius: 6px;
-        padding: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-    }
 
     &__title {
         font-family: changa;

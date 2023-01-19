@@ -1,7 +1,7 @@
 @import '../../styles/index.scss';
 
 .page-game {
-    $spacing: 24px;
+    $spacing: 12px;
 
     display: grid;
     grid-template-rows: auto minmax(0, 1fr) auto;
@@ -16,10 +16,36 @@
         overflow-x: hidden;
     }
 
+    &__top {
+        padding: 24px;
+    }
+
+    &__bottom {
+        padding: 24px;
+    }
+
     &__swiper {
-        height: calc(100% - $spacing * 2);
-        width: calc(100vw - $spacing * 2);
-        max-width: 300px;
-        max-height: 400px;
+        height: 100%;
+        width: 100%;
+    }
+
+    @media (max-width: 600px) {
+        &__top {
+            padding: 12px;
+        }
+    
+        &__bottom {
+            padding: 12px;
+        }
+    }
+
+    @media (max-height: 600px) {
+        &__top {
+            padding: 12px;
+        }
+    
+        &__bottom {
+            padding: 12px;
+        }
     }
 }

@@ -69,20 +69,23 @@ export const PageGame: React.FC = () => {
         <p>loading</p>
     ) : (
         <div className={styles['page-game']}>
-            <div className="page-game__top d:flex p:24 align-items:center justify-content:space-between">
-                <div className="page-game__buttons d:flex">
-                    <SimpleButton
-                        icon={{ icon: 'times', styling: 'solid' }}
-                        to="/"
-                        color={id && games[id]?.value?.color}
-                    />
+            <div className={styles['page-game__top']}>
+                <div className="align-items:center justify-content:space-between">
+                    <div className="page-game__buttons d:flex">
+                        <SimpleButton
+                            icon={{ icon: 'times', styling: 'solid' }}
+                            to="/"
+                            color={id && games[id]?.value?.color}
+                        />
+                    </div>
                 </div>
             </div>
+
             <div className={styles['page-game__game']}>
                 {id && gameCards && (
                     <Swiper
                         className={styles['page-game__swiper']}
-                        effect="cards"
+                        // effect="cards"
                         modules={[EffectCards]}
                         grabCursor
                         spaceBetween={50}
@@ -126,8 +129,8 @@ export const PageGame: React.FC = () => {
                     </Swiper>
                 )}
             </div>
-            <div className="page-game__bottom">
-                <div className="d:flex padding:24 mb:12 gap:12 justify-content:space-between">
+            <div className={styles['page-game__bottom']}>
+                <div className="d:flex gap:12 justify-content:space-between">
                     <div className="d:flex">
                         <SimpleButton
                             icon={{ icon: 'arrow-left', styling: 'solid' }}

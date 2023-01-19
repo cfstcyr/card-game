@@ -44,7 +44,7 @@ export class Application {
     }
 
     async configureDatabase() {
-        this.databaseService.client.migrate.latest();
+        await this.databaseService.client.migrate.latest();
     }
 
     private configureMiddleware() {
