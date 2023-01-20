@@ -11,12 +11,17 @@ interface Props {
 
 export const GameCard: React.FC<Props> = ({ game, classname }) => {
     return (
-        <Link to={`/game/${game.id}`}>
+        <Link
+            to={
+                game.instructions
+                    ? `/instructions/${game.id}`
+                    : `/game/${game.id}`
+            }
+        >
             <div
                 className={classNames(styles['game-card'], classname, {
                     [styles['game-card--no-image']]: true,
                 })}
-                // style={{ borderColor: game.color }}
             >
                 <p className={styles['game-card__title']}>{game.name}</p>
             </div>

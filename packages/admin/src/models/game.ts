@@ -4,6 +4,9 @@ export interface Game {
     id: number;
     name: string;
     description?: string;
+    instructions?: string;
+    nsfw: boolean;
+    mode: string;
     image?: string;
     color?: string;
 }

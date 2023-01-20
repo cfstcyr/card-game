@@ -16,9 +16,13 @@ export const PageCreateGame: React.FC = () => {
 
         const name = (e.target as any).name.value;
         const description = (e.target as any).description.value;
+        const mode = (e.target as any).mode.value;
+        const nsfw = (e.target as any).nsfw.value === 'on' ? true : false;
         (e.target as any).reset();
 
-        await createGame({ name, description });
+        console.log(nsfw);
+
+        await createGame({ name, description, mode, nsfw });
 
         setLoading(false);
         navigate('/');
@@ -34,6 +38,16 @@ export const PageCreateGame: React.FC = () => {
                 <Form.Group className="mb:12">
                     <Form.Label>Description</Form.Label>
                     <Form.Control name="description" as="textarea" />
+                </Form.Group>
+                <Form.Group className="mb:12">
+                    <Form.Label>Mode</Form.Label>
+                    <Form.Select name="mode">
+                        <option value="default">Default</option>
+                        <option value="vs">VS</option>
+                    </Form.Select>
+                </Form.Group>
+                <Form.Group className="mb:12">
+                    <Form.Check type="checkbox" label="NSFW" name="nsfw" />
                 </Form.Group>
                 <div className="d:flex justify-content:end">
                     <Button type="submit" disabled={loading}>

@@ -3,10 +3,11 @@ import React, {
     ComponentProps,
     DetailedHTMLProps,
     HTMLAttributes,
+    MouseEvent,
     PropsWithChildren,
     useCallback,
 } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import classNames from 'classnames';
 
 type ElementProps = ComponentProps<typeof Link> &
@@ -19,6 +20,7 @@ interface Props extends Omit<ElementProps, 'to'> {
     size?: 'default' | 'large' | 'small';
     theme?: 1 | 2 | 3 | 4 | 5 | number;
     color?: string;
+    bordered?: boolean;
 }
 
 const Button: React.FC<PropsWithChildren<Props>> = ({
@@ -29,8 +31,12 @@ const Button: React.FC<PropsWithChildren<Props>> = ({
     size = 'default',
     theme = 1,
     color = 'white',
+    bordered = false,
+    onClick,
     ...props
 }) => {
+    const navigate = useNavigate();
+
     const classname = classNames(
         styles.button,
         styles[`button--content-${content}`],
@@ -38,24 +44,29 @@ const Button: React.FC<PropsWithChildren<Props>> = ({
         styles[`button--theme-${theme}`],
         {
             [styles['button--disabled']]: disabled,
+            [styles['button--bordered']]: bordered,
         },
     );
 
-    const Wrapper: React.FC<PropsWithChildren> = ({ children }) =>
-        to && !disabled ? <Link to={to}>{children}</Link> : <>{children}</>;
+    const handleOnClick = useCallback(
+        (e: MouseEvent<HTMLButtonElement>) => {
+            if (to) navigate(to);
+            onClick?.(e);
+        },
+        [to, onClick],
+    );
 
     return (
-        <Wrapper>
-            <button
-                disabled={disabled}
-                {...props}
-                type="button"
-                className={classNames(classname, props.className)}
-                style={{ color: color ?? 'white' }}
-            >
-                {children}
-            </button>
-        </Wrapper>
+        <button
+            disabled={disabled}
+            {...props}
+            type="button"
+            className={classNames(classname, props.className)}
+            style={{ color: color ?? 'white' }}
+            onClick={handleOnClick}
+        >
+            {children}
+        </button>
     );
 };
 

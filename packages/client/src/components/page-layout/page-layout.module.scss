@@ -1,0 +1,24 @@
+.page-layout {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    padding: 24px;
+    gap: 24px;
+    height: 100%;
+    box-sizing: border-box;
+
+    &__content {
+        overflow-y: auto;
+    }
+
+    &__top,
+    &__bottom {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    @media (max-width: 600px) {
+        padding: 12px;
+        gap: 12px;
+    }
+}

@@ -2,6 +2,7 @@
 
 .button {
     @include no-select;
+    font-family: 'Changa';
     display: flex;
     justify-content: center;
     align-items: center;
@@ -9,7 +10,7 @@
     font-size: 1.6em;
     gap: 12px;
     padding: 8px 18px;
-    border-radius: 4px;
+    border-radius: 8px;
     cursor: pointer !important;
     border: 0;
     text-decoration: none;
@@ -55,13 +56,18 @@
     }
 
     &--large {
-        padding: 24px;
+        padding: 24px 36px;
         font-size: 1.5em;
     }
 
     &--small {
         padding: 6px 12px;
         font-size: 1em;
+    }
+
+    &--bordered {
+        border: solid 3px white;
+        padding: 8px 36px;
     }
 
     // &--theme {

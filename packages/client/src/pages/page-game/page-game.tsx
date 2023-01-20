@@ -11,6 +11,7 @@ import { useKeys } from '../../hooks/useKeys';
 import { GameSlide } from '../../components/game-slide/game-slide';
 import { useData, useEvent } from '../../contexts';
 import copy from 'copy-to-clipboard';
+import { PageLayout } from '../../components/page-layout/page-layout';
 
 export const PageGame: React.FC = () => {
     const keys = useKeys();
@@ -79,33 +80,73 @@ export const PageGame: React.FC = () => {
         [(games.loading, cardsLoading)],
     );
 
-    return (
-        <div className={styles['page-game']}>
-            <div className={styles['page-game__top']}>
-                <div className="d:flex align-items:center justify-content:space-between">
-                    <div className="page-game__buttons d:flex">
-                        <SimpleButton
-                            icon={{ icon: 'times', styling: 'regular' }}
-                            to="/"
-                            // color={id && games[id]?.value?.color}
-                        />
-                    </div>
+    const topLayout = useCallback(
+        () => (
+            <>
+                <SimpleButton
+                    icon={{ icon: 'times', styling: 'regular' }}
+                    to="/"
+                />
+                <p className="opacity:0.55 font-weight:600 mx:6 my:0 no-select">
+                    {isLoading() ? (
+                        <span className={styles['page-game__loading']}>
+                            Loading...
+                        </span>
+                    ) : (
+                        totalSlides -
+                        1 -
+                        Math.min(slideIndex + 1, totalSlides - 1) +
+                        ' cards left'
+                    )}
+                </p>
+            </>
+        ),
+        [isLoading, totalSlides, slideIndex],
+    );
 
-                    <p className="opacity:0.55 font-weight:600 mx:6 no-select">
-                        {isLoading() ? (
-                            <span className={styles['page-game__loading']}>
-                                Loading...
-                            </span>
-                        ) : (
-                            totalSlides -
-                            1 -
-                            Math.min(slideIndex + 1, totalSlides - 1) +
-                            ' cards left'
-                        )}
-                    </p>
+    const bottomLayout = useCallback(
+        () => (
+            <>
+                <div className="d:flex">
+                    <SimpleButton
+                        icon={{ icon: 'arrow-left', styling: 'regular' }}
+                        onClick={() => swiper.current?.slidePrev()}
+                        disabled={slideIndex === 0 || isLoading()}
+                        // color={id && games[id]?.value?.color}
+                    />
+                    <SimpleButton
+                        icon={{ icon: 'arrow-right', styling: 'regular' }}
+                        onClick={() => swiper.current?.slideNext()}
+                        disabled={slideIndex === totalSlides - 1 || isLoading()}
+                        // color={id && games[id]?.value?.color}
+                    />
                 </div>
-            </div>
 
+                <div className="d:flex">
+                    {navigator.canShare?.({ text: '', title: '' }) && (
+                        <SimpleButton
+                            icon={{ icon: 'share', styling: 'solid' }}
+                            onClick={share}
+                            disabled={isLoading()}
+                        />
+                    )}
+                    <SimpleButton
+                        icon={{ icon: 'clipboard' }}
+                        onClick={copyCard}
+                        disabled={
+                            isLoading() ||
+                            !gameCards ||
+                            slideIndex === totalSlides - 1
+                        }
+                    />
+                </div>
+            </>
+        ),
+        [],
+    );
+
+    return (
+        <PageLayout top={topLayout()} bottom={bottomLayout()}>
             <div className={styles['page-game__game']}>
                 {id && gameCards && (
                     <Swiper
@@ -156,46 +197,6 @@ export const PageGame: React.FC = () => {
                     </Swiper>
                 )}
             </div>
-            <div className={styles['page-game__bottom']}>
-                <div className="d:flex gap:12 justify-content:space-between">
-                    <div className="d:flex">
-                        <SimpleButton
-                            icon={{ icon: 'arrow-left', styling: 'regular' }}
-                            onClick={() => swiper.current?.slidePrev()}
-                            disabled={slideIndex === 0 || isLoading()}
-                            // color={id && games[id]?.value?.color}
-                        />
-                        <SimpleButton
-                            icon={{ icon: 'arrow-right', styling: 'regular' }}
-                            onClick={() => swiper.current?.slideNext()}
-                            disabled={
-                                slideIndex === totalSlides - 1 || isLoading()
-                            }
-                            // color={id && games[id]?.value?.color}
-                        />
-                    </div>
-
-                    <div className="d:flex">
-                        {navigator.canShare?.({ text: '', title: '' }) && (
-                            <SimpleButton
-                                icon={{ icon: 'share', styling: 'solid' }}
-                                // color={id && games[id]?.value?.color}
-                                onClick={share}
-                                disabled={isLoading()}
-                            />
-                        )}
-                        <SimpleButton
-                            icon={{ icon: 'clipboard' }}
-                            onClick={copyCard}
-                            disabled={
-                                isLoading() ||
-                                !gameCards ||
-                                slideIndex === totalSlides - 1
-                            }
-                        />
-                    </div>
-                </div>
-            </div>
-        </div>
+        </PageLayout>
     );
 };

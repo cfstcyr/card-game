@@ -1,0 +1,40 @@
+.page-instructions {
+    // max-width: 600px;
+
+    // display: grid;
+    // grid-template-rows: auto 1fr auto;
+    // padding: 12px;
+    // height: 100%;
+    // box-sizing: border-box;
+
+    &__content {
+        max-width: 600px;
+        justify-self: center;
+        margin: 0 auto;
+    }
+
+    &__title {
+        font-family: 'Changa';
+        font-size: 2.5em;
+        text-align: center;
+        line-height: 1em;
+        margin-top: 0;
+    }
+
+    &__subtitle {
+        font-family: 'Changa';
+        text-align: center;
+        font-size: 2em;
+        opacity: 0.55;
+        line-height: 1em;
+    }
+
+    &__instructions {
+        color: white;
+        overflow-y: auto;
+    }
+
+    &__button {
+        margin: 0 auto;
+    }
+}
