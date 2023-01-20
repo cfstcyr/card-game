@@ -1,12 +1,13 @@
 .page-layout {
-    display: grid;
-    grid-template-rows: auto 1fr auto;
+    display: flex;
+    flex-direction: column;
     padding: 24px;
     gap: 24px;
     height: 100%;
     box-sizing: border-box;
 
     &__content {
+        flex-grow: 1;
         overflow-y: auto;
     }
 
@@ -15,6 +16,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+        flex-grow: 0;
     }
 
     @media (max-width: 600px) {

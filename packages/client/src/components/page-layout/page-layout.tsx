@@ -18,7 +18,7 @@ export const PageLayout: React.FC<PropsWithChildren<Props>> = ({
 }) => {
     return (
         <div className={classNames(styles['page-layout'], className)}>
-            <div className={styles['page-layout__top']}>{top}</div>
+            {top && <div className={styles['page-layout__top']}>{top}</div>}
             <div
                 className={classNames(
                     styles['page-layout__content'],
@@ -27,7 +27,9 @@ export const PageLayout: React.FC<PropsWithChildren<Props>> = ({
             >
                 {children}
             </div>
-            <div className={styles['page-layout__bottom']}>{bottom}</div>
+            {bottom && (
+                <div className={styles['page-layout__bottom']}>{bottom}</div>
+            )}
         </div>
     );
 };
