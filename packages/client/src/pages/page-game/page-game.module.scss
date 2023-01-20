@@ -22,23 +22,6 @@
         width: 100%;
     }
 
-    &__loading {
-        @keyframes pulse {
-            0% {
-                scale: 1.05;
-            }
-            50% {
-                scale: 0.95;
-            }
-            100% {
-                scale: 1.05;
-            }
-        }
-
-        display: block;
-        animation: pulse 1.5s ease-in-out 0s infinite;
-    }
-
     @media all and (display-mode: standalone) {
         &__bottom {
             margin-bottom: 16px;

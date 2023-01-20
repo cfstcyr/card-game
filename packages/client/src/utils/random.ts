@@ -14,3 +14,32 @@ export function shuffle<T>(array: T[]): T[] {
 
     return array;
 }
+
+export function popRandom<T>(array: T[]): T | undefined {
+    if (array.length === 0) return;
+
+    const index = Math.floor(Math.random() * array.length);
+    const [res] = array.splice(index, 1);
+
+    return res;
+}
+
+export function randomGroups<T>(array: T[], groupsSize = 2): T[][] {
+    const copy = [...array];
+    const groups: T[][] = [];
+
+    while (copy.length >= groupsSize) {
+        const group: T[] = [];
+
+        for (let i = 0; i < groupsSize; ++i) {
+            const item = popRandom(copy);
+            if (item) group.push(item);
+        }
+
+        groups.push(group);
+
+        console.log(copy, array.length >= groupsSize, groupsSize);
+    }
+
+    return groups;
+}

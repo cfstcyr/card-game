@@ -61,8 +61,6 @@ export const DataProvider: React.FC<PropsWithChildren> = ({ children }) => {
         async (gameId: string | number, game: Partial<Omit<Game, 'id'>>) => {
             setGames((g) => loading(g));
 
-            console.log('update game', game);
-
             try {
                 await patch<Game>(`/game/${gameId}`, game);
                 await fetchGames();

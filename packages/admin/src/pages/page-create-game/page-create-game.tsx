@@ -20,8 +20,6 @@ export const PageCreateGame: React.FC = () => {
         const nsfw = (e.target as any).nsfw.value === 'on' ? true : false;
         (e.target as any).reset();
 
-        console.log(nsfw);
-
         await createGame({ name, description, mode, nsfw });
 
         setLoading(false);

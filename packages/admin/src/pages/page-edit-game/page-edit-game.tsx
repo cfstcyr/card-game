@@ -110,7 +110,6 @@ export const PageEditGame: React.FC = () => {
     const onChangeCards = useCallback(
         (e: React.ChangeEvent<HTMLInputElement>) => {
             setCardChanged(true);
-            console.log(e.target.value);
             setCardsValue(e.target.value);
         },
         [],

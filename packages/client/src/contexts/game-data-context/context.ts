@@ -6,6 +6,10 @@ import { Game } from '../../models/game';
 interface GameDataContextInterface {
     games: { [K: string]: Data<Game | undefined> | undefined };
     cards: { [K: string]: Data<Omit<Card, 'gameId'>[]> };
+
+    isGamesLoading: boolean;
+    isCardsLoading: boolean;
+
     fetchCards: (gameId: string) => Promise<void>;
     fetchGames: () => Promise<void>;
 }

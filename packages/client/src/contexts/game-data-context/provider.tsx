@@ -68,6 +68,8 @@ export const GameDataProvider: React.FC<PropsWithChildren> = ({ children }) => {
             value={{
                 games: games.self,
                 cards: cards.self,
+                isGamesLoading: games.isLoading,
+                isCardsLoading: games.isLoading,
                 fetchGames,
                 fetchCards,
             }}
