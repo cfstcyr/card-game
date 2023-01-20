@@ -42,9 +42,6 @@ export const PageInstructions: React.FC = () => {
                 <h1 className={styles['page-instructions__title']}>
                     {game?.value?.name}
                 </h1>
-                <h2 className={styles['page-instructions__subtitle']}>
-                    Instructions
-                </h2>
 
                 <div className={styles['page-instructions__instructions']}>
                     <ReactMarkdown>
