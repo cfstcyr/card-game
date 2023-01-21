@@ -22,42 +22,25 @@ export const PageHome: React.FC = () => {
                 </div>
             }
         >
-            <div className={styles['page-home__container']}>
-                <div className={styles['page-home__games-container']}>
-                    <div className={styles['page-home__games']}>
-                        {games.error ? (
-                            <p>Error loading games</p>
-                        ) : (
-                            Object.values(games).map(
-                                (game) =>
-                                    game &&
-                                    game.value && (
-                                        <GameCard
-                                            key={game.value.id}
-                                            game={game.value}
-                                            className={
-                                                styles['page-home__game']
-                                            }
-                                        />
-                                    ),
-                            )
-                        )}
-                    </div>
+            <div className={styles['page-home__games-container']}>
+                <div className={styles['page-home__games']}>
+                    {games.error ? (
+                        <p>Error loading games</p>
+                    ) : (
+                        Object.values(games).map(
+                            (game) =>
+                                game &&
+                                game.value && (
+                                    <GameCard
+                                        key={game.value.id}
+                                        game={game.value}
+                                        className={styles['page-home__game']}
+                                    />
+                                ),
+                        )
+                    )}
                 </div>
             </div>
         </PageLayout>
-        // <div className={styles['page-home__container']}>
-        // <div className={styles['page-home__header']}>
-        //     <h1 className={styles['page-home__title']}>Card Games</h1>
-        //     <div className={styles['page-home__actions']}>
-        //         <ActionButton
-        //             icon={{ icon: 'sync' }}
-        //             onClick={fetchGames}
-        //         />
-        //     </div>
-        // </div>
-
-        //
-        // </div>
     );
 };

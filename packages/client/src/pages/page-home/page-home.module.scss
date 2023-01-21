@@ -1,14 +1,4 @@
 .page-home {
-    &__container {
-        display: grid;
-        grid-template-rows: auto 1fr;
-        gap: 24px;
-        flex-direction: column;
-        height: 100%;
-        box-sizing: border-box;
-        overflow-y: auto;
-    }
-
     &__header {
         display: grid;
         grid-template-columns: 1fr auto 1fr;
