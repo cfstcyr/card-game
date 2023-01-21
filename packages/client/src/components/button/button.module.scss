@@ -43,14 +43,14 @@
         @media (hover: hover) {
             &:hover {
                 opacity: 1 !important;
-                transform: scale(1.05);
+                transform: scale(0.97);
                 transition: ease-in transform 0.1s;
             }
         }
 
         &:active,
         &.button--active {
-            transform: scale(0.95) !important;
+            transform: scale(0.90) !important;
             transition: ease-in transform 0.1s;
         }
     }

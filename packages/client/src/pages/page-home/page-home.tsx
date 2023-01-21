@@ -35,7 +35,7 @@ export const PageHome: React.FC = () => {
                                         <GameCard
                                             key={game.value.id}
                                             game={game.value}
-                                            classname={
+                                            className={
                                                 styles['page-home__game']
                                             }
                                         />

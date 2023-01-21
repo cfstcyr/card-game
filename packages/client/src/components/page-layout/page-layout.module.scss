@@ -1,10 +1,17 @@
 .page-layout {
     display: flex;
     flex-direction: column;
-    padding: 24px;
+    padding: 24px 0;
     gap: 24px;
     height: 100%;
     box-sizing: border-box;
+
+    &__content,
+    &__top,
+    &__bottom {
+        padding-left: 24px;
+        padding-right: 24px;
+    }
 
     &__content {
         flex-grow: 1;
@@ -20,8 +27,15 @@
     }
 
     @media (max-width: 600px) {
-        padding: 12px;
+        padding: 12px 0;
         gap: 12px;
+
+        &__content,
+        &__top,
+        &__bottom {
+            padding-left: 12px;
+            padding-right: 12px;
+        }
     }
 
     @media all and (display-mode: standalone) {

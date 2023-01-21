@@ -3,7 +3,7 @@ import React, { PropsWithChildren, useCallback, useEffect } from 'react';
 import { useDataMap } from '../../hooks/useDataMap';
 import { Card } from '../../models/card';
 import { Data } from '../../models/data';
-import { Game, GameWithCards } from '../../models/game';
+import { GameListItem, GameWithCards } from '../../models/game';
 import { useApi } from '../api-context';
 import { useLoadingBar } from '../loading-bar-context';
 import { DataContext } from './context';
@@ -11,7 +11,7 @@ import { DataContext } from './context';
 export const GameDataProvider: React.FC<PropsWithChildren> = ({ children }) => {
     const { continuousStart, complete } = useLoadingBar();
     const { get } = useApi();
-    const games = useDataMap<Game>(undefined);
+    const games = useDataMap<GameListItem>(undefined);
     const cards = useDataMap<Omit<Card, 'gameId'>[]>([]);
 
     useEffect(() => {
@@ -26,7 +26,7 @@ export const GameDataProvider: React.FC<PropsWithChildren> = ({ children }) => {
         games.setLoadingAll(true);
 
         try {
-            const res = await get<Game[]>('/game');
+            const res = await get<GameListItem[]>('/game');
 
             for (const game of res.data) {
                 games.setValue(String(game.id), game);
@@ -61,7 +61,7 @@ export const GameDataProvider: React.FC<PropsWithChildren> = ({ children }) => {
     }, []);
 
     const getGame = useCallback(
-        (gameId: string): Data<Game> | undefined => {
+        (gameId: string): Data<GameListItem> | undefined => {
             return games.get(gameId);
         },
         [games],

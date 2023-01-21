@@ -1,6 +1,7 @@
 import { StatusCodes } from 'http-status-codes';
 import { singleton } from 'tsyringe';
-import { Game, GameWithCards } from '../../models/game';
+import { Card } from '../../models/card';
+import { Game, GameListItem, GameWithCards } from '../../models/game';
 import { HttpException } from '../../models/http-exception';
 import { CardService } from '../card-service/card-service';
 import { DatabaseService } from '../database-service/database-service';
@@ -16,8 +17,12 @@ export class GameService {
         return this.databaseService.client<Game>('Game');
     }
 
-    async getGames(): Promise<Game[]> {
-        return await this.db.select('*');
+    async getGames(): Promise<GameListItem[]> {
+        return await this.db
+            .select('Game.*')
+            .leftJoin<Card>('Card', 'Card.gameId', 'Game.id')
+            .count('Card.id as cardsCount')
+            .groupBy('Game.id');
     }
 
     async getGame(id: number | string): Promise<GameWithCards> {

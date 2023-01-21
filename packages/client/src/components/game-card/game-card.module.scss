@@ -1,28 +1,42 @@
 .game-card {
-    border: solid 3px rgba(white, 1);
-    height: 100%;
-    border-radius: 18px;
-    padding: 18px 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    box-sizing: border-box;
+    width: 100%;
+    flex-direction: column;
     font-size: 1.1em;
-    transition: ease-in transform 0.1s;
+    padding: 24px;
+
+    p {
+        margin: 0;
+    }
 
     &__title {
         font-family: changa;
         margin: 0;
-        font-size: 1.3em;
+        font-size: 1.45em;
         font-weight: 600;
+        line-height: 1em;
     }
 
-    @media (hover: hover) {
-        &:hover {
-            opacity: 1 !important;
-            transform: scale(1.05);
-            transition: ease-in transform 0.1s;
-        }
+    &__description {
+        line-height: 1em;
+        font-weight: 500;
+        opacity: 0.55;
+        font-family: 'Nunito';
+    }
+
+    &__pills {
+        display: flex;
+        gap: 6px;
+    }
+
+    &__pill {
+        background-color: rgba(white, 0.2);
+        color: rgba(white, 0.55);
+        font-size: 0.8em;
+        padding: 2px 12px;
+        border-radius: 3px;
+        font-family: 'Nunito';
+        display: flex;
+        gap: 6px;
+        align-items: center;
     }
 }

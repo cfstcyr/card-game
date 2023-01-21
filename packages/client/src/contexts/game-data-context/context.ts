@@ -1,13 +1,13 @@
 import React from 'react';
 import { Card } from '../../models/card';
 import { Data } from '../../models/data';
-import { Game } from '../../models/game';
+import { GameListItem } from '../../models/game';
 
 interface GameDataContextInterface {
-    games: { [K: string]: Data<Game> | undefined };
+    games: { [K: string]: Data<GameListItem> | undefined };
     cards: { [K: string]: Data<Omit<Card, 'gameId'>[]> };
 
-    getGame: (gameId: string) => Data<Game> | undefined;
+    getGame: (gameId: string) => Data<GameListItem> | undefined;
     getGameCards: (gameId: string) => Data<Omit<Card, 'gameId'>[]> | undefined;
 
     isGamesLoading: boolean;
