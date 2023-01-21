@@ -2,7 +2,7 @@ import styles from './page-instructions.module.scss';
 import React, { useEffect, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { useParams } from 'react-router-dom';
-import { useData } from '../../contexts';
+import { useGameData } from '../../contexts';
 import { Data } from '../../models/data';
 import { Game } from '../../models/game';
 import { SimpleButton } from '../../components';
@@ -10,7 +10,7 @@ import { PageLayout } from '../../components/page-layout/page-layout';
 
 export const PageInstructions: React.FC = () => {
     const { id } = useParams();
-    const { games } = useData();
+    const { games } = useGameData();
     const [game, setGame] = useState<Data<Game | undefined>>();
 
     useEffect(() => {

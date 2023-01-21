@@ -5,8 +5,8 @@ import { Data } from '../../models/data';
 import { Game } from '../../models/game';
 
 interface GameContextInterface {
-    game: Data<Game | undefined> | undefined;
-    cards: Data<Omit<Card, 'gameId'>[] | undefined> | undefined;
+    game: Data<Game> | undefined;
+    cards: Data<Omit<Card, 'gameId'>[]> | undefined;
 
     swiper: React.MutableRefObject<SwiperClass | undefined>;
     currentIndex: number;

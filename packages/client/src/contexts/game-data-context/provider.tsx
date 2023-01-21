@@ -2,6 +2,7 @@ import { AxiosError } from 'axios';
 import React, { PropsWithChildren, useCallback, useEffect } from 'react';
 import { useDataMap } from '../../hooks/useDataMap';
 import { Card } from '../../models/card';
+import { Data } from '../../models/data';
 import { Game, GameWithCards } from '../../models/game';
 import { useApi } from '../api-context';
 import { useLoadingBar } from '../loading-bar-context';
@@ -10,7 +11,7 @@ import { DataContext } from './context';
 export const GameDataProvider: React.FC<PropsWithChildren> = ({ children }) => {
     const { continuousStart, complete } = useLoadingBar();
     const { get } = useApi();
-    const games = useDataMap<Game | undefined>(undefined);
+    const games = useDataMap<Game>(undefined);
     const cards = useDataMap<Omit<Card, 'gameId'>[]>([]);
 
     useEffect(() => {
@@ -59,6 +60,20 @@ export const GameDataProvider: React.FC<PropsWithChildren> = ({ children }) => {
         cards.setLoading(gameId, false);
     }, []);
 
+    const getGame = useCallback(
+        (gameId: string): Data<Game> | undefined => {
+            return games.get(gameId);
+        },
+        [games],
+    );
+
+    const getGameCards = useCallback(
+        (gameId: string): Data<Omit<Card, 'gameId'>[]> | undefined => {
+            return cards.get(gameId);
+        },
+        [cards],
+    );
+
     useEffect(() => {
         fetchGames();
     }, []);
@@ -68,6 +83,8 @@ export const GameDataProvider: React.FC<PropsWithChildren> = ({ children }) => {
             value={{
                 games: games.self,
                 cards: cards.self,
+                getGame,
+                getGameCards,
                 isGamesLoading: games.isLoading,
                 isCardsLoading: games.isLoading,
                 fetchGames,

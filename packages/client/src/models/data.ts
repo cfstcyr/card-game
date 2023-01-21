@@ -1,11 +1,11 @@
 export class Data<T> {
-    value: T;
+    value: T | undefined;
     error: string | undefined;
     errorStatus: number | undefined;
     loading: boolean;
     updatedAt: Date;
 
-    constructor(value: T) {
+    constructor(value: T | undefined) {
         this.value = value;
         this.error = undefined;
         this.errorStatus = undefined;

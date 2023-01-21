@@ -1,8 +1,5 @@
 import React, { PropsWithChildren, useEffect, useRef, useState } from 'react';
-import { Card } from '../../models/card';
-import { Data } from '../../models/data';
-import { Game } from '../../models/game';
-import { useData } from '../game-data-context';
+import { useGameData } from '../game-data-context';
 import { GameContext } from './context';
 import { Swiper as SwiperClass } from 'swiper';
 
@@ -14,10 +11,7 @@ export const GameProvider: React.FC<PropsWithChildren<Props>> = ({
     children,
     id,
 }) => {
-    const { games, cards, fetchCards } = useData();
-    const [game, setGame] = useState<Data<Game | undefined>>();
-    const [gameCards, setGameCards] =
-        useState<Data<Omit<Card, 'gameId'>[] | undefined>>();
+    const { cards, getGame, getGameCards, fetchCards } = useGameData();
     const swiper = useRef<SwiperClass>();
     const [currentIndex, setCurrentIndex] = useState(0);
     const [slidesCount, setSlidesCount] = useState(0);
@@ -29,19 +23,11 @@ export const GameProvider: React.FC<PropsWithChildren<Props>> = ({
         }
     }, [id, cards]);
 
-    useEffect(() => {
-        setGameCards(cards[id]);
-    }, [cards]);
-
-    useEffect(() => {
-        setGame(games[id]);
-    }, [id, games]);
-
     return (
         <GameContext.Provider
             value={{
-                game,
-                cards: gameCards,
+                game: getGame(id),
+                cards: getGameCards(id),
                 swiper,
                 currentIndex,
                 setCurrentIndex,

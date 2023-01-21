@@ -1,12 +1,12 @@
 import styles from './page-home.module.scss';
 import React from 'react';
 import { ActionButton } from '../../components/action-button/action-button';
-import { useData } from '../../contexts';
+import { useGameData } from '../../contexts';
 import { GameCard } from '../../components/game-card/game-card';
 import { PageLayout } from '../../components/page-layout/page-layout';
 
 export const PageHome: React.FC = () => {
-    const { games, fetchGames } = useData();
+    const { games, fetchGames } = useGameData();
 
     return (
         <PageLayout

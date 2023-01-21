@@ -26,7 +26,7 @@ export const useData = <T,>(initialValue: T) => {
     };
 
     return {
-        ...data,
+        // ...data,
         self: data,
         setValue,
         setLoading,

@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 import { Data } from '../models/data';
 
-export const useDataMap = <T,>(defaultValue: T) => {
+export const useDataMap = <T,>(defaultValue: T | undefined) => {
     const [map, setMap] = useState<{ [K: string]: Data<T> }>({});
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
