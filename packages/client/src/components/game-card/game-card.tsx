@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 import { Button } from '../button';
 import { Icon } from '../icon';
+import { GamePills } from './game-pills';
 
 interface Props {
     game: GameListItem;
@@ -32,22 +33,7 @@ export const GameCard: React.FC<Props> = ({ game, className }) => {
                         {game.description}
                     </p>
                 )}
-                <div className={styles['game-card__pills']}>
-                    <div className={styles['game-card__pill']}>
-                        <Icon icon="credit-card-blank" /> {game.cardsCount}{' '}
-                        {game.cardsCount > 1 ? 'cards' : 'card'}
-                    </div>
-                    <div className={styles['game-card__pill']}>
-                        <Icon icon="game-console-handheld" /> {game.mode}
-                    </div>
-                    {game.nsfw ? (
-                        <span className={styles['game-card__pill']}>
-                            <Icon icon="exclamation-square" /> NSFW
-                        </span>
-                    ) : (
-                        <></>
-                    )}
-                </div>
+                <GamePills game={game} />
             </Button>
         </Link>
     );

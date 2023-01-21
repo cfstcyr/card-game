@@ -3,6 +3,9 @@
         max-width: 600px;
         justify-self: center;
         margin: 0 auto;
+        gap: 12px;
+        display: flex;
+        flex-direction: column;
     }
 
     &__title {
@@ -10,7 +13,7 @@
         font-size: 2.5em;
         text-align: center;
         line-height: 1em;
-        margin-top: 0;
+        margin: 0;
     }
 
     &__instructions {
