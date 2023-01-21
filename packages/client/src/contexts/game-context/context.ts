@@ -14,6 +14,8 @@ interface GameContextInterface {
     slidesCount: number;
     setSlidesCount(c: number): void;
 
+    slidesContent: string[];
+    setSlidesContent(content: string[]): void;
     cardSlides: React.ReactNode;
     setCardSlides(slide: React.ReactNode): void;
 }

@@ -1,18 +1,18 @@
-// import copy from 'copy-to-clipboard';
-import React /* useCallback  */ from 'react';
-// import { useEvent } from '../../contexts';
-// import { useGame } from '../../contexts/game-context/context';
-// import { SimpleButton } from '../button';
+import copy from 'copy-to-clipboard';
+import React, { useCallback } from 'react';
+import { useEvent } from '../../contexts';
+import { useGame } from '../../contexts/game-context/context';
+import { SimpleButton } from '../button';
 
 export const GameSwiperActions: React.FC = () => {
-    // const { game, cards, slidesCount, currentIndex, swiper } = useGame();
-    // const { next } = useEvent();
+    const { cards, slidesContent, slidesCount, currentIndex } = useGame();
+    const { next } = useEvent();
 
-    // const copyCard = useCallback(() => {
-    //     if (!cards?.value) return;
-    //     copy(cards.value[currentIndex].content);
-    //     next('alert', { children: 'Copied to clipboard!' });
-    // }, [cards, currentIndex]);
+    const copyCard = useCallback(() => {
+        if (slidesContent.length === 0) return;
+        copy(slidesContent[currentIndex]);
+        next('alert', { children: 'Copied to clipboard!' });
+    }, [slidesContent, currentIndex]);
 
     // const share = useCallback(() => {
     //     if (!game) return;
@@ -39,7 +39,7 @@ export const GameSwiperActions: React.FC = () => {
                     onClick={share}
                     disabled={cards?.loading}
                 />
-            )}
+            )} */}
             <SimpleButton
                 icon={{ icon: 'clipboard' }}
                 onClick={copyCard}
@@ -48,7 +48,7 @@ export const GameSwiperActions: React.FC = () => {
                     !cards?.value ||
                     currentIndex === slidesCount - 1
                 }
-            /> */}
+            />
         </div>
     );
 };

@@ -5,13 +5,21 @@ import { randomGroups } from '../../../utils/random';
 import { GameSlide } from '../../game-slide/game-slide';
 
 export const GameCardsVS: React.FC = () => {
-    const { cards, setCardSlides } = useGame();
+    const { cards, setCardSlides, setSlidesContent } = useGame();
 
     useEffect(() => {
         if (!cards || !cards.value) return;
 
+        const content = randomGroups(cards.value);
+
+        setSlidesContent(
+            content.map(
+                ([card1, card2]) => `${card1.content} vs ${card2.content}`,
+            ),
+        );
+
         setCardSlides(
-            randomGroups(cards.value).map(([card1, card2]) => (
+            content.map(([card1, card2]) => (
                 <SwiperSlide key={card1.id + card2.id}>
                     <GameSlide>
                         <div className="d:flex flex-direction:column">

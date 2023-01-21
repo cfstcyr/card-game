@@ -15,6 +15,7 @@ export const GameProvider: React.FC<PropsWithChildren<Props>> = ({
     const swiper = useRef<SwiperClass>();
     const [currentIndex, setCurrentIndex] = useState(0);
     const [slidesCount, setSlidesCount] = useState(0);
+    const [slidesContent, setSlidesContent] = useState<string[]>([]);
     const [cardSlides, setCardSlides] = useState<React.ReactNode>(undefined);
 
     useEffect(() => {
@@ -33,6 +34,8 @@ export const GameProvider: React.FC<PropsWithChildren<Props>> = ({
                 setCurrentIndex,
                 slidesCount,
                 setSlidesCount,
+                slidesContent,
+                setSlidesContent,
                 cardSlides,
                 setCardSlides,
             }}
