@@ -1,0 +1,78 @@
+version: '3.8'
+
+services:
+  app:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ../..:/workspaces:cached
+    command: sleep infinity
+
+  server:
+    image: node:20
+    command: npm run dev
+    working_dir: /app
+    restart: unless-stopped
+    volumes:
+      - ../packages/server:/app
+    network_mode: service:app
+    environment:
+      PORT: 5500
+      DB_HOST: 0.0.0.0
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB_DATABASE: card_game
+      JWT_SECRET: 123
+
+  client:
+    image: node:20
+    command: npm start
+    working_dir: /app
+    restart: unless-stopped
+    volumes:
+      - ../packages/client:/app
+    network_mode: service:app
+
+  admin:
+    image: node:20
+    command: npm start
+    working_dir: /app
+    restart: unless-stopped
+    volumes:
+      - ../packages/admin:/app
+    network_mode: service:app
+    environment:
+      PORT: 3001
+      REACT_APP_SERVER_URL: http://localhost:${SERVER_PORT:-5500}
+      REACT_APP_UPLOADCARE_API_KEY: 94946bce4985d9873f34
+
+  db:
+    image: postgres:latest
+    restart: unless-stopped
+    network_mode: service:app
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: card_game
+
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: unless-stopped
+    network_mode: service:app
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@pg.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+      PGADMIN_LISTEN_PORT: 5501
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+
+    # Add "forwardPorts": ["5432"] to **devcontainer.json** to forward PostgreSQL locally.
+    # (Adding the "ports" property to this file will not forward from a Codespace.)
+
+volumes:
+  postgres-data:
+  pgadmin-data:
