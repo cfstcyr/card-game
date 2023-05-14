@@ -8,7 +8,7 @@ export class DatabaseService {
 
     constructor() {
         this.client = knex({
-            client: 'mysql',
+            client: 'pg',
             connection: {
                 host: env.DB_HOST,
                 port: env.DB_PORT,
@@ -16,6 +16,10 @@ export class DatabaseService {
                 password: env.DB_PASSWORD,
                 database: env.DB_DATABASE,
                 multipleStatements: true,
+            },
+            pool: {
+                min: 2,
+                max: 10,
             },
         });
     }

@@ -20,12 +20,12 @@ const env = cleanEnv(process.env, {
  */
 module.exports = {
     development: {
-        client: 'mysql',
+        client: 'postgres',
         connection: {
-            host: '127.0.0.1',
-            port: 3306,
-            user: 'main',
-            password: 'main',
+            host: '0.0.0.0',
+            port: 5432,
+            user: 'postgres',
+            password: 'postgres',
             database: 'card_game',
         },
     },
