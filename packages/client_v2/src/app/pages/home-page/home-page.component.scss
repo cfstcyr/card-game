@@ -1,29 +1,4 @@
 .home-page {
-    // &__header {
-    //     position: fixed;
-    //     width: 100%;
-    //     padding: 12px 16px;
-    //     display: grid;
-    //     grid-template-columns: repeat(2, auto);
-    //     justify-content: space-between;
-    //     align-items: center;
-    //     box-sizing: border-box;
-    //     background-color: black;
-    //     z-index: 10;
-    //     overflow: hidden;
-        
-    //     &__title {
-    //         margin: 0;
-    //         line-height: 0;
-    //         font-family: 'Changa';
-    //         transition: ease-in translate 0.1s;
-
-    //         &--hidden {
-    //             translate: 0 50px;
-    //         }
-    //     }
-    // }
-
     &__head-title {
         margin: 0;
         line-height: 1em;
@@ -31,14 +6,12 @@
         transition: ease-in translate 0.1s;
 
         &--hidden {
-            translate: 0 50px;
+            translate: 0 70px;
         }
     }
 
     &__content {
         min-height: 100%;
-        // padding: 66px 24px 24px 24px;
-        // position: relative;
         box-sizing: border-box;
         display: grid;
         grid-template-rows: auto 1fr;
