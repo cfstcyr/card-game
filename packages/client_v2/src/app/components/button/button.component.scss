@@ -1,4 +1,8 @@
+@import '../../../styles/helper';
+
 button.button {
+    @include no-select;
+
     color: white;
     display: flex;
     font-family: 'Changa';

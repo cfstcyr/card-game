@@ -1,22 +1,20 @@
 <ng-container *ngIf="games | async; let games">
     <ul class="game-list">
-        <li *ngFor="let game of games.value" class="game-list__item interactable">
-            <a [routerLink]="'/game/' + game.id">
-                <p class="game-list__item__title">{{game.name}}</p>
-                <p class="game-list__item__description">{{game.description}}</p>
-                <div class="game-list__item__pills">
-                    <div class="game-list__item__pills__pill">
-                        <i class="icon fas fa-credit-card-blank"></i>
-                        <span>{{game.cardsCount}} card<ng-container *ngIf="game.cardsCount > 1">s</ng-container></span>
-                    </div>
-                    <div class="game-list__item__pills__pill">
-                        <i class="icon fas fa-game-console-handheld"></i> {{game.mode}}
-                    </div>
-                    <div class="game-list__item__pills__pill" *ngIf="game.nsfw">
-                        <i class="icon far fa-exclamation-square "></i> NSFW
-                    </div>
+        <li *ngFor="let game of games.value" [routerLink]="'/game/' + game.id" class="game-list__item interactable">
+            <p class="game-list__item__title">{{game.name}}</p>
+            <p class="game-list__item__description">{{game.description}}</p>
+            <div class="game-list__item__pills">
+                <div class="game-list__item__pills__pill">
+                    <i class="icon fas fa-credit-card-blank"></i>
+                    <span>{{game.cardsCount}} card<ng-container *ngIf="game.cardsCount > 1">s</ng-container></span>
                 </div>
-            </a>
+                <div class="game-list__item__pills__pill">
+                    <i class="icon fas fa-game-console-handheld"></i> {{game.mode}}
+                </div>
+                <div class="game-list__item__pills__pill" *ngIf="game.nsfw">
+                    <i class="icon far fa-exclamation-square "></i> NSFW
+                </div>
+            </div>
         </li>
     </ul>
 </ng-container>

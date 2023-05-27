@@ -1,13 +1,3 @@
-<ng-template #content>
-    <button class="button interactable" [disabled]="disabled" (click)="click">
-        <ng-content></ng-content>
-    </button>
-</ng-template>
-
-<ng-container *ngIf="!href">
-    <ng-container *ngTemplateOutlet="content"></ng-container>
-</ng-container>
-
-<ng-container *ngIf="href">
-    <a [routerLink]="href" [href]="href"><ng-container *ngTemplateOutlet="content"></ng-container></a>
-</ng-container>
+<button [routerLink]="href" class="button interactable" [disabled]="disabled" (click)="click">
+    <ng-content></ng-content>
+</button>

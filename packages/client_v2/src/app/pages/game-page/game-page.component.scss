@@ -1,4 +1,8 @@
+@import '../../../styles/helper';
+
 .cards-left {
+    @include no-select;
+
     font-size: 1.2em;
     opacity: 0.55;
 }
