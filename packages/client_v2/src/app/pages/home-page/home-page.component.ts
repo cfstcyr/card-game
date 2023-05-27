@@ -22,7 +22,6 @@ export class HomePageComponent {
     handleScroll(event: Event): void {
         if (event.target instanceof Element) {
             this.isTitleVisible = event.target.scrollTop < TITLE_VISIBLE_BREAKPOINT;
-            console.log(this.isTitleVisible, event.target.scrollTop)
         }
     }
 }
