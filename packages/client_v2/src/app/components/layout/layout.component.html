@@ -1,0 +1,22 @@
+<div class="layout">
+    <div class="layout__head">
+        <span><ng-content select="[title]"></ng-content></span>
+
+        <div class="layout__head__actions">
+            <ng-content select="[head-action]"></ng-content>
+        </div>
+    </div>
+
+    <div class="layout__content" [ngClass]="{ 'layout__content--no-scroll': disabledScroll }" (scroll)="scroll.emit($event)">
+        <ng-content></ng-content>
+    </div>
+
+    <div class="layout__foot">
+        <div class="layout__foot__actions layout__foot__actions__left">
+            <ng-content select="[foot-action-left]"></ng-content>
+        </div>
+        <div class="layout__foot__actions layout__foot__actions__right">
+            <ng-content select="[foot-action-right]"></ng-content>
+        </div>
+    </div>
+</div>

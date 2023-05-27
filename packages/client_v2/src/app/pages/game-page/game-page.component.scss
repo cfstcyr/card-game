@@ -1,33 +1,38 @@
-.game-page {
-    $spacing: 24px;
+// .game-page {
+//     $spacing: 24px;
 
-    display: grid;
-    grid-template-rows: auto 1fr auto;
-    grid-template-columns: minmax(0, 1fr);
-    height: 100%;
-    gap: $spacing;
+//     display: grid;
+//     grid-template-rows: auto 1fr auto;
+//     grid-template-columns: minmax(0, 1fr);
+//     height: 100%;
+//     gap: $spacing;
 
-    &__header,
-    &__footer {
-        padding-left: $spacing;
-        padding-right: $spacing;
-        display: grid;
-        grid-template-columns: repeat(2, auto);
-        justify-content: space-between;
+//     &__header,
+//     &__footer {
+//         padding-left: $spacing;
+//         padding-right: $spacing;
+//         display: grid;
+//         grid-template-columns: repeat(2, auto);
+//         justify-content: space-between;
 
-        & > div {
-            display: flex;
-            align-items: center;
-        }
-    }
+//         & > div {
+//             display: flex;
+//             align-items: center;
+//         }
+//     }
 
-    &__header {
-        padding-top: $spacing;
-    }
+//     &__header {
+//         padding-top: $spacing;
+//     }
 
-    // &__content {}
+//     // &__content {}
 
-    &__footer {
-        padding-bottom: $spacing;
-    }
+//     &__footer {
+//         padding-bottom: $spacing;
+//     }
+// }
+
+.cards-left {
+    font-size: 1.2em;
+    opacity: 0.55;
 }

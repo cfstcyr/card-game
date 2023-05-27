@@ -27,7 +27,11 @@
             "inlineStyleLanguage": "scss",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/manifest.json",
+              "src/logo192.png",
+              "src/logo521.png",
+              "src/robots.txt"
             ],
             "styles": [
               "src/styles.scss",

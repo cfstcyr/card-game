@@ -19,6 +19,8 @@ export class GamePageComponent implements AfterViewInit {
     cards: Subject<Omit<Card, "gameId">[]> = new BehaviorSubject<Omit<Card, "gameId">[]>([]);
     canSwipeNext: Subject<boolean> = new Subject();
     canSwipePrevious: Subject<boolean> = new Subject();
+    currentIndex: Subject<number> = new Subject();
+    cardsLeft: Subject<number> = new Subject();
 
     constructor(private readonly gamesService: GamesService, private readonly route: ActivatedRoute) {
         this.route.params.subscribe((params) => {
@@ -41,6 +43,8 @@ export class GamePageComponent implements AfterViewInit {
 
     ngAfterViewInit(): void {
         this.swiper && combineLatest([this.swiper.currentIndex, this.cards]).subscribe(([index, cards]) => {
+            this.currentIndex.next(index);
+            this.cardsLeft.next(Math.max(0, cards.length - index - 1));
             this.canSwipeNext.next(index < cards.length);
             this.canSwipePrevious.next(index > 0);
         });

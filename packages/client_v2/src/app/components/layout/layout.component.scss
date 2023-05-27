@@ -1,0 +1,33 @@
+.layout {
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    height: 100%;
+
+    &__head,
+    &__foot {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 16px;
+        overflow: hidden;
+
+        &__actions {
+            display: flex;
+            gap: 12px;
+            padding: 12px 0;
+
+            &:empty {
+                display: none;
+            }
+        }
+    }
+
+    &__content {
+        overflow-y: auto;
+        padding: 24px 0;
+        
+        &--no-scroll {
+            overflow: hidden;
+        }
+    }
+}

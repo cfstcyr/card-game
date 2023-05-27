@@ -1,9 +1,23 @@
-<div class="home-page">
+<!-- <div class="home-page" (scroll)="handleScroll($event)">
     <div class="home-page__header">
-        <!-- <i></i>
-        <i class="far fa-ellipsis-v home-page__header__button interactable"></i> -->
+        
+        <app-button><i class="far fa-ellipsis-v"></i></app-button>
     </div>
     <div class="home-page__content">
+        
+
         <app-game-list></app-game-list>
     </div>
-</div>
+</div> -->
+
+<app-layout [disabledScroll]="false" class="home-page" (scroll)="handleScroll($event)">
+    <h2 title class="home-page__head-title" [ngClass]="{ 'home-page__head-title--hidden': isTitleVisible }">Card Game</h2>
+
+    <app-button head-action><i class="far fa-ellipsis-v"></i></app-button>
+
+    <div class="home-page__content">
+        <h1 class="home-page__title">Card Game</h1>
+
+        <app-game-list></app-game-list>
+    </div>
+</app-layout>

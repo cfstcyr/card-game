@@ -20,9 +20,9 @@ services:
     environment:
       PORT: 5500
       DB_HOST: 0.0.0.0
-      DB_PORT: 5432
-      DB_USER: postgres
-      DB_PASSWORD: postgres
+      DB_PORT: 3306
+      DB_USER: admin
+      DB_PASSWORD: admin
       DB_DATABASE: card_game
       JWT_SECRET: 123
 
@@ -49,30 +49,17 @@ services:
       REACT_APP_UPLOADCARE_API_KEY: 94946bce4985d9873f34
 
   db:
-    image: postgres:latest
+    platform: linux/x86_64
+    image: mysql:5.7
     restart: unless-stopped
     network_mode: service:app
     volumes:
-      - postgres-data:/var/lib/postgresql/data
+      - db:/var/lib/mysql
     environment:
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_USER: postgres
-      POSTGRES_DB: card_game
-
-  pgadmin:
-    image: dpage/pgadmin4
-    restart: unless-stopped
-    network_mode: service:app
-    environment:
-      PGADMIN_DEFAULT_EMAIL: admin@pg.com
-      PGADMIN_DEFAULT_PASSWORD: admin
-      PGADMIN_LISTEN_PORT: 5501
-    volumes:
-      - pgadmin-data:/var/lib/pgadmin
-
-    # Add "forwardPorts": ["5432"] to **devcontainer.json** to forward PostgreSQL locally.
-    # (Adding the "ports" property to this file will not forward from a Codespace.)
+      MYSQL_DATABASE: card_game
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: admin
+      MYSQL_ROOT_PASSWORD: admin
 
 volumes:
-  postgres-data:
-  pgadmin-data:
+  db:

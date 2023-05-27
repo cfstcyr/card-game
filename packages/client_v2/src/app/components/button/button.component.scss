@@ -11,7 +11,7 @@ button.button {
     text-decoration: none;
     appearance: none;
     margin: 0;
-    background-color: transparent;
+    background-color: rgb(17, 17, 17);
     transition: ease-in transform 0.1s;
 
     &:disabled,

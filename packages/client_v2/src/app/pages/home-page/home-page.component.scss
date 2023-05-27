@@ -1,32 +1,55 @@
 .home-page {
-    height: 100%;
-    overflow-y: auto;
+    // &__header {
+    //     position: fixed;
+    //     width: 100%;
+    //     padding: 12px 16px;
+    //     display: grid;
+    //     grid-template-columns: repeat(2, auto);
+    //     justify-content: space-between;
+    //     align-items: center;
+    //     box-sizing: border-box;
+    //     background-color: black;
+    //     z-index: 10;
+    //     overflow: hidden;
+        
+    //     &__title {
+    //         margin: 0;
+    //         line-height: 0;
+    //         font-family: 'Changa';
+    //         transition: ease-in translate 0.1s;
 
-    &__header {
-        position: fixed;
-        width: 100%;
-        padding: 12px 16px;
-        display: grid;
-        grid-template-columns: repeat(2, auto);
-        justify-content: space-between;
-        align-items: center;
-        box-sizing: border-box;
-        z-index: 10;
+    //         &--hidden {
+    //             translate: 0 50px;
+    //         }
+    //     }
+    // }
 
-        &__button {
-            opacity: 0.75;
-            font-size: 1.1em;
-            padding: 4px;
-            min-width: 12px;
-            text-align: center;
+    &__head-title {
+        margin: 0;
+        line-height: 1em;
+        font-family: 'Changa';
+        transition: ease-in translate 0.1s;
+
+        &--hidden {
+            translate: 0 50px;
         }
     }
 
     &__content {
-        $padding: 36px;
+        min-height: 100%;
+        // padding: 66px 24px 24px 24px;
+        // position: relative;
+        box-sizing: border-box;
+        display: grid;
+        grid-template-rows: auto 1fr;
+        justify-content: stretch;
+    }
 
-        min-height: calc(100% - $padding);
-        padding-top: $padding;
-        position: relative;
+    &__title {
+        font-family: 'Changa';
+        text-align: center;
+        font-size: 3em;
+        margin: 36px 0;
+        line-height: 1em;
     }
 }

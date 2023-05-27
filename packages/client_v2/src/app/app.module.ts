@@ -14,6 +14,7 @@ import { SlideComponent } from './modules/swiper/components/slide/slide.componen
 import { ButtonComponent } from './components/button/button.component';
 import { GameCardComponent } from './components/game-card/game-card.component';
 import { LoadingBarModule } from '@ngx-loading-bar/core';
+import { LayoutComponent } from './components/layout/layout.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { LoadingBarModule } from '@ngx-loading-bar/core';
     GameListComponent,
     ButtonComponent,
     GameCardComponent,
+    LayoutComponent,
   ],
   imports: [
     BrowserModule,
