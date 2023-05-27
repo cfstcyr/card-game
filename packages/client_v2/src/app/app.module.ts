@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './modules/app-routing.module';
@@ -15,6 +15,7 @@ import { ButtonComponent } from './components/button/button.component';
 import { GameCardComponent } from './components/game-card/game-card.component';
 import { LoadingBarModule } from '@ngx-loading-bar/core';
 import { LayoutComponent } from './components/layout/layout.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,12 @@ import { LayoutComponent } from './components/layout/layout.component';
     SwiperComponent,
     SlideComponent,
     LoadingBarModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    }),
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,
