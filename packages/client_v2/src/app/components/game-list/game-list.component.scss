@@ -1,5 +1,13 @@
 @import '../../../styles/helper';
 
+.error-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.3em;
+    opacity: 0.55;
+}
+
 .game-list {
     @include no-select;
 

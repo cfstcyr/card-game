@@ -1,9 +1,4 @@
 .game-card {
-    // background: linear-gradient(90deg, red, orange);
-    // height: 100%;
-    // display: flex;
-    // align-items: center;
-    // justify-content: center;
     height: 100%;
     color: white;
     font-size: 2em;
@@ -26,9 +21,9 @@
 
     &--system {
         font-size: 1.7em;
-        font-style: italic;
         color: rgba(white, 0.55);
         font-family: nunito;
+        font-weight: 500;
     }
     
     &:active {

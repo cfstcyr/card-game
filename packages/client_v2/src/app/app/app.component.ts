@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
-import { DataService } from '../services/data-service/data.service';
-import { LoadingBarService } from '@ngx-loading-bar/core';
+// import { DataService } from '../services/data-service/data.service';
+// import { LoadingBarService } from '@ngx-loading-bar/core';
 
 @Component({
     selector: 'app-root',
@@ -10,13 +10,13 @@ import { LoadingBarService } from '@ngx-loading-bar/core';
 export class AppComponent {
     title = 'card-game';
 
-    constructor(dataService: DataService, loadingBarService: LoadingBarService) {
-        dataService.isLoading.subscribe((isLoading) => {
-            if (isLoading) {
-                loadingBarService.useRef().start();
-            } else {
-                loadingBarService.useRef().complete();
-            }
-        });
-    }
+    // constructor(dataService: DataService, loadingBarService: LoadingBarService) {
+    //     dataService.isLoading.subscribe((isLoading) => {
+    //         if (isLoading) {
+    //             loadingBarService.useRef().start();
+    //         } else {
+    //             loadingBarService.useRef().complete();
+    //         }
+    //     });
+    // }
 }

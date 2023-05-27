@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, catchError, delay, map, retry, tap } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, delay, forkJoin, map, retry, tap } from 'rxjs';
 import { Data } from '../../models/data';
 import { Game, GameWithCards } from '../../models/game';
 import { DataService } from '../data-service/data.service';
@@ -28,6 +28,10 @@ export class GamesService {
         return this.dataService.get<Game[]>('/game').pipe(
             tap((games) => {
                 this.gameList$.next(games);
+
+                if (games.value) {
+                    this.fetchAll(games.value).subscribe();
+                }
             }),
         );
     }
@@ -40,6 +44,10 @@ export class GamesService {
                 this.updateGame(id, game);
             }),
         );
+    }
+
+    private fetchAll(games: Game[]): Observable<Data<GameWithCards>[]> {
+        return forkJoin(games.map(({ id }) => this.fetchGame(`${id}`)));
     }
 
     private updateGame(id: string, data: Data<GameWithCards>): void {

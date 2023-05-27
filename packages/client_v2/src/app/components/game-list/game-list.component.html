@@ -1,4 +1,8 @@
 <ng-container *ngIf="games | async; let games">
+    <div *ngIf="games.error" class="error-container">
+        <p>Erreur lors du chargement</p> 
+    </div>
+
     <ul class="game-list">
         <li *ngFor="let game of games.value" [routerLink]="'/game/' + game.id" class="game-list__item interactable">
             <p class="game-list__item__title">{{game.name}}</p>

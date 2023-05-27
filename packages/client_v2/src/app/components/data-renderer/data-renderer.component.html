@@ -3,7 +3,7 @@
 </ng-container> -->
 
 <ng-container *ngIf="data && data.error">
-    <p>Error: {{data.error}}</p>
+    <ng-content select="[error]"></ng-content>
 </ng-container>
 
 <ng-container *ngIf="data && data.value || (data && (!data.loading && !data.error))">
