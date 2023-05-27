@@ -44,6 +44,10 @@
     </app-data-renderer>
 
     <span foot-action-left></span>
-    <app-button foot-action-right (click)="previous()" [disabled]="!(canSwipePrevious | async)"><i class="far fa-arrow-left"></i></app-button>
-    <app-button foot-action-right (click)="next()" [disabled]="!(canSwipeNext | async)"><i class="far fa-arrow-right"></i></app-button>
+    <app-button foot-action-right (click)="previous()" [disabled]="!(canSwipePrevious | async)">
+        <i class="far fa-chevron-left"></i>
+    </app-button>
+    <app-button foot-action-right (click)="next()" [disabled]="!(canSwipeNext | async)">
+        <i class="far fa-chevron-right"></i>
+    </app-button>
 </app-layout>

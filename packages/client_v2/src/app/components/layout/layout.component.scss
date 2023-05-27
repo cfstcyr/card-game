@@ -8,13 +8,13 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 0 16px;
+        padding: 0 24px;
         overflow: hidden;
 
         &__actions {
             display: flex;
             gap: 12px;
-            padding: 12px 0;
+            padding: 24px 0;
 
             &:empty {
                 display: none;
@@ -29,5 +29,20 @@
         &--no-scroll {
             overflow: hidden;
         }
+    }
+
+    @media (max-width: 600px) {
+        &__head,
+        &__foot {
+            padding: 0 12px;
+
+            &__actions {
+                padding: 12px 0;
+            }
+        }
+    }
+
+    @media all and (display-mode: standalone) {
+        padding-bottom: 24px;
     }
 }
