@@ -4,6 +4,7 @@
         line-height: 1em;
         font-family: 'Changa';
         transition: ease-in translate 0.1s;
+        padding: 12px 0;
 
         &--hidden {
             translate: 0 70px;
