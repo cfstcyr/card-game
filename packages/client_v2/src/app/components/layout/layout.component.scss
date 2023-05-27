@@ -43,6 +43,6 @@
     }
 
     @media all and (display-mode: standalone) {
-        padding-bottom: 24px;
+        height: calc(100% - 24px);
     }
 }
