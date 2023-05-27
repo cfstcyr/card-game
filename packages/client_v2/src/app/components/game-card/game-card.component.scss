@@ -1,0 +1,37 @@
+.game-card {
+    // background: linear-gradient(90deg, red, orange);
+    // height: 100%;
+    // display: flex;
+    // align-items: center;
+    // justify-content: center;
+    height: 100%;
+    color: white;
+    font-size: 2em;
+    font-weight: bold;
+    padding: 24px;
+    text-align: center;
+    overflow-y: auto;
+    box-sizing: border-box;
+    font-family: changa;
+    cursor: grab;
+
+    &__content {
+        min-height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        max-width: 500px;
+        margin: 0 auto;
+    }
+
+    &--system {
+        font-size: 1.7em;
+        font-style: italic;
+        color: rgba(white, 0.55);
+        font-family: nunito;
+    }
+    
+    &:active {
+        cursor: grabbing;
+    }
+}

@@ -1,0 +1,29 @@
+<div class="game-page">
+    <div class="game-page__header">
+        <div></div>
+        <div>
+            <app-button href="/"><i class="far fa-times"></i></app-button>
+        </div>
+    </div>
+
+    <div class="game-page__content">
+        <app-data-renderer [data]="game | async">
+            <sw-swiper>
+                <sw-slide *ngFor="let card of cards | async">
+                    <app-game-card [card]="card"></app-game-card>
+                </sw-slide>
+                <sw-slide>
+                    <app-game-card [isSystem]="true">You've reached the end</app-game-card>
+                </sw-slide>
+            </sw-swiper>
+        </app-data-renderer>
+    </div>
+
+    <div class="game-page__footer">
+        <div></div>
+        <div>
+            <app-button (click)="previous()" [disabled]="!(canSwipePrevious | async)"><i class="far fa-arrow-left"></i></app-button>
+            <app-button (click)="next()" [disabled]="!(canSwipeNext | async)"><i class="far fa-arrow-right"></i></app-button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,64 @@
+.game-list {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 24px;
+    gap: 24px;
+    justify-content: center;
+    align-items: center;
+    min-height: 100%;
+
+    &__item {
+        margin: 0;
+        padding: 18px;
+        list-style: none;
+        border: solid 3px white;
+        border-radius: 6px;
+        text-align: center;
+        max-width: 400px;
+        width: 100%;
+
+        a {
+            color: inherit;
+            text-decoration: inherit;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+        }
+
+        p {
+            margin: 0;
+            line-height: 1em;
+        }
+
+        &__title {
+            font-family: 'Changa';
+            font-size: 1.6em;
+            font-weight: 700;
+        }
+
+        &__description {
+            font-size: 1.1em;
+            opacity: 0.55;
+        }
+
+        &__pills {
+            display: flex;
+            gap: 12px;
+
+            &__pill {
+                font-size: 0.8em;
+                display: flex;
+                padding: 3px 8px;
+                gap: 6px;
+                border-radius: 3px;
+                align-items: center;
+                background-color: rgba(255, 255, 255, 0.2);
+                color: rgba(255, 255, 255, 0.55);
+                font-weight: 600;
+            }
+        }
+    }
+}

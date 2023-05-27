@@ -1,0 +1,11 @@
+<!-- <ng-container *ngIf="data && data.loading">
+    <p>Is loading...</p>
+</ng-container> -->
+
+<ng-container *ngIf="data && data.error">
+    <p>Error: {{data.error}}</p>
+</ng-container>
+
+<ng-container *ngIf="data && data.value || (data && (!data.loading && !data.error))">
+    <ng-content></ng-content>
+</ng-container>
