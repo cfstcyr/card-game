@@ -5,9 +5,6 @@ button.button {
 
     color: white;
     display: flex;
-    font-family: 'Changa';
-    font-weight: 700;
-    font-size: 1.6em;
     gap: 12px;
     padding: 8px 18px;
     border-radius: 8px;
@@ -21,6 +18,12 @@ button.button {
     &:disabled,
     .disabled {
         opacity: 0.55;
+    }
+
+    &:not(.button--minimal-style) {
+        font-family: 'Changa';
+        font-weight: 700;
+        font-size: 1.6em;
     }
 }
 
