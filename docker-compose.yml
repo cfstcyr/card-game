@@ -19,10 +19,7 @@ services:
   client:
     image: card-game-client:staging
     build:
-      context: ./packages/client/
-      target: prod
-      args:
-        - SERVER_URL=${SERVER_URL}
+      context: ./packages/client_v2/
     ports:
       - ${CLIENT_PORT:-3000}:80
 

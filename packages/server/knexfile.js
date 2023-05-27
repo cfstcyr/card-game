@@ -33,7 +33,7 @@ module.exports = {
     production: {
         client: 'mysql',
         connection: {
-            host: env.DB_PASSWORD,
+            host: env.DB_HOST,
             database: env.DB_DATABASE,
             user: env.DB_USER,
             password: env.DB_PASSWORD,
