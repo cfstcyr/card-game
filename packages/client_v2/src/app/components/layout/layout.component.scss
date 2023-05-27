@@ -29,6 +29,10 @@
         &--no-scroll {
             overflow: hidden;
         }
+
+        &::-webkit-scrollbar{
+            display: none;
+        }
     }
 
     @media (max-width: 600px) {
