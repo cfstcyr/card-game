@@ -53,8 +53,8 @@ export class DataService {
             )
             .subscribe((value) => {
                 if (value) {
+                    if(!found) subject.next({ value });
                     found = true;
-                    subject.next({ value });
                     this.cache.set(key, value);
                     this.isLoading$.next(false);
                 }
