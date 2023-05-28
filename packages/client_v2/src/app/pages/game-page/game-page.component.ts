@@ -1,12 +1,12 @@
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AfterViewInit, Component, HostListener, Inject, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, HostListener, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { BehaviorSubject, Observable, Subject, combineLatest, lastValueFrom, merge, tap } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, combineLatest, tap } from 'rxjs';
 import { Card } from 'src/app/models/card';
 import { Data } from 'src/app/models/data';
 import { GameWithCards } from 'src/app/models/game';
 import { SwiperComponent } from 'src/app/modules/swiper/components/swiper/swiper.component';
 import { GamesService } from 'src/app/services/game-service/games.service';
+import { shuffle } from 'src/app/utils/random';
 
 @Component({
   selector: 'app-game-page',
@@ -24,7 +24,7 @@ export class GamePageComponent implements AfterViewInit {
 
     constructor(private readonly gamesService: GamesService, private readonly route: ActivatedRoute) {
         this.route.params.subscribe((params) => {
-            this.game = this.gamesService.getGame(params['id']).pipe(tap((game) => this.cards.next(game.value?.cards ?? [])));
+            this.game = this.gamesService.getGame(params['id']).pipe(tap((game) => this.cards.next(shuffle(game.value?.cards ?? []))));
         });
     }
 
