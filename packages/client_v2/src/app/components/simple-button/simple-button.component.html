@@ -1,0 +1,5 @@
+<app-button [href]="href" [disabled]="disabled" [size]="size" [effect]="effect" (click)="click">
+    <div class="content" [ngClass]="['content--size--' + size]">
+        <ng-content></ng-content>
+    </div>
+</app-button>

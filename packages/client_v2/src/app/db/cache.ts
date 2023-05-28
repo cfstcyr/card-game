@@ -1,4 +1,4 @@
-import Dexie, { PromiseExtended, Table } from "dexie";
+import Dexie, { Table } from "dexie";
 import { Observable, from, map } from "rxjs";
 
 export class Cache extends Dexie {

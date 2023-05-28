@@ -1,6 +1,6 @@
 <app-layout [disabledScroll]="true">
     <span title class="cards-left">{{ cardsLeft | async }} cards left</span>
-    <app-button head-action href="/"><i class="far fa-times"></i></app-button>
+    <app-simple-button head-action href="/" effect="large"><i class="far fa-times"></i></app-simple-button>
 
     <app-data-renderer [data]="game | async">
         <sw-swiper>
@@ -20,10 +20,10 @@
     </app-data-renderer>
 
     <span foot-action-left></span>
-    <app-button foot-action-right (click)="previous()" [disabled]="!(canSwipePrevious | async)">
+    <app-simple-button foot-action-right effect="large" (click)="previous()" [disabled]="!(canSwipePrevious | async)">
         <i class="far fa-chevron-left"></i>
-    </app-button>
-    <app-button foot-action-right (click)="next()" [disabled]="!(canSwipeNext | async)">
+    </app-simple-button>
+    <app-simple-button foot-action-right effect="large" (click)="next()" [disabled]="!(canSwipeNext | async)">
         <i class="far fa-chevron-right"></i>
-    </app-button>
+    </app-simple-button>
 </app-layout>

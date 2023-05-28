@@ -8,15 +8,17 @@ import { Router } from '@angular/router';
 })
 export class ButtonComponent {
     @Input() href?: string;
+    @Input() queryParams: { [key: string]: any } = {};
     @Input() disabled: boolean = false;
-    @Input() minimalStyle: boolean = false;
+    @Input() size: 'default' | 'small' = 'default';
+    @Input() effect: 'large' | 'default' | 'small' = 'default';
     @Output() click: EventEmitter<MouseEvent> = new EventEmitter();
 
     constructor (private readonly router: Router) {}
 
     handleClick(event: MouseEvent): void {
         if (this.href) {
-            this.router.navigate([this.href], { replaceUrl: true });
+            this.router.navigate([this.href], { replaceUrl: true, queryParams: this.queryParams });
         }
         this.click.emit(event);
     }

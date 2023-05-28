@@ -16,6 +16,7 @@ import { GameCardComponent } from './components/game-card/game-card.component';
 import { LoadingBarModule } from '@ngx-loading-bar/core';
 import { LayoutComponent } from './components/layout/layout.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { SimpleButtonComponent } from './components/simple-button/simple-button.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     ButtonComponent,
     GameCardComponent,
     LayoutComponent,
+    SimpleButtonComponent,
   ],
   imports: [
     BrowserModule,

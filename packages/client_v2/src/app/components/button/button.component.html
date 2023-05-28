@@ -1,3 +1,3 @@
-<button class="button interactable" [ngClass]="{ 'button--minimal-style': minimalStyle }" [disabled]="disabled" (click)="handleClick($event)">
+<button class="button" [ngClass]="['button--size--' + size, 'button--effect--' + effect]" [disabled]="disabled" (click)="handleClick($event)">
     <ng-content></ng-content>
 </button>

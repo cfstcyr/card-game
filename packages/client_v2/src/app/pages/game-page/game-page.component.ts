@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, HostListener, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { BehaviorSubject, Observable, Subject, combineLatest, tap } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, combineLatest, concat, concatAll, merge, tap } from 'rxjs';
 import { Card } from 'src/app/models/card';
 import { Data } from 'src/app/models/data';
 import { GameWithCards } from 'src/app/models/game';
@@ -23,8 +23,20 @@ export class GamePageComponent implements AfterViewInit {
     cardsLeft: Subject<number> = new Subject();
 
     constructor(private readonly gamesService: GamesService, private readonly route: ActivatedRoute) {
-        this.route.params.subscribe((params) => {
-            this.game = this.gamesService.getGame(params['id']).pipe(tap((game) => this.cards.next(shuffle(game.value?.cards ?? []))));
+        combineLatest([this.route.params, this.route.queryParams]).subscribe(([params, query]) => {
+            this.game = this.gamesService.getGame(params['id']);
+
+            this.game.subscribe((game) => {
+                if (game.value) {
+                    const shuffledCards = shuffle(game.value.cards);
+                    this.cards.next(shuffledCards);
+                    this.gamesService.activeGames.set({
+                        gameId: game.value.id,
+                        cardsId: shuffledCards.map((card) => card.id),
+                        currentIndex: 0,
+                    });
+                }
+            });
         });
     }
 
@@ -47,6 +59,12 @@ export class GamePageComponent implements AfterViewInit {
             this.cardsLeft.next(Math.max(0, cards.length - index - 1));
             this.canSwipeNext.next(index < cards.length);
             this.canSwipePrevious.next(index > 0);
+        });
+
+        this.swiper && this.game && combineLatest([this.swiper.currentIndex, this.game]).subscribe(([currentIndex, game]) => {
+            if (game.value) {
+                this.gamesService.activeGames.updateCurrentIndex(game.value.id, currentIndex);
+            }
         });
     }
 

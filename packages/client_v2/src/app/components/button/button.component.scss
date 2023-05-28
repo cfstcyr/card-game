@@ -3,10 +3,10 @@
 button.button {
     @include no-select;
 
+    width: 100%;
+    height: 100%;
     color: white;
-    display: flex;
-    gap: 12px;
-    padding: 8px 18px;
+    padding: 0;
     border-radius: 8px;
     border: 0;
     text-decoration: none;
@@ -20,10 +20,49 @@ button.button {
         opacity: 0.55;
     }
 
-    &:not(.button--minimal-style) {
-        font-family: 'Changa';
-        font-weight: 700;
-        font-size: 1.6em;
+    &--size {
+        &--default {
+            padding: 8px 18px;
+        }
+
+        &--small {
+            padding: 6px 12px;
+        }
+    }
+
+    &:not(:disabled):not(.disabled) {
+        transition: ease-in scale 0.1s;
+        cursor: pointer;
+
+        @media (hover: hover) {
+            &:hover {
+                &.button--effect {
+                    &--small {
+                        scale: 1.025;
+                    }
+                    &--default {
+                        scale: 1.05;
+                    }
+                    &--large {
+                        scale: 1.1;
+                    }
+                }
+            }
+        }
+
+        &:active {
+            &.button--effect {
+                &--small {
+                    scale: 0.975;
+                }
+                &--default {
+                    scale: 0.95;
+                }
+                &--large {
+                    scale: 0.9;
+                }
+            }
+        }
     }
 }
 

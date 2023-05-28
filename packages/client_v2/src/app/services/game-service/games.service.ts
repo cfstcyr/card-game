@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable, catchError, delay, forkJoin, map, retry, t
 import { Data } from '../../models/data';
 import { Game, GameWithCards } from '../../models/game';
 import { DataService } from '../data-service/data.service';
+import { ActiveGamesDB } from 'src/app/db/active-games';
 
 @Injectable({
   providedIn: 'root'
@@ -11,11 +12,12 @@ import { DataService } from '../data-service/data.service';
 export class GamesService {
     private gameList$: BehaviorSubject<Data<Game[]>> = new BehaviorSubject<Data<Game[]>>({ loading: true });
     private games$: BehaviorSubject<Map<string, Data<GameWithCards>>> = new BehaviorSubject(new Map());
+    activeGames: ActiveGamesDB = new ActiveGamesDB();
 
     constructor(private readonly dataService: DataService) {}
 
     getGames(): Observable<Data<Game[]>> {
-        this.fetchGames().subscribe();
+        if(!this.gameList$.value.value) this.fetchGames().subscribe();
         return this.gameList$.asObservable();
     }
 
