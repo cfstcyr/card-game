@@ -1,0 +1,13 @@
+.modal {
+    &__header {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        align-items: center;
+    }
+
+    &__title {
+        margin: 0;
+        font-family: 'Changa';
+        font-size: 1.6em;
+    }
+}

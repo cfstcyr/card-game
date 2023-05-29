@@ -1,0 +1,5 @@
+<div class="modal__window" (click)="handleClickOutside($event)" [ngClass]="{ 'modal__window--click-outside': !disableClickOutside }">
+    <div class="modal__container">
+        <ng-content></ng-content>
+    </div>
+</div>

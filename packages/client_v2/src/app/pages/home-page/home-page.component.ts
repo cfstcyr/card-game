@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { BehaviorSubject, Observable, combineLatest, lastValueFrom, map } from 'rxjs';
 import { Data } from 'src/app/models/data';
 import { Game } from 'src/app/models/game';
+import { ModalService } from 'src/app/modules/modal/modal.module';
 import { GamesService } from 'src/app/services/game-service/games.service';
 
 const TITLE_VISIBLE_BREAKPOINT = 80;
@@ -17,7 +18,7 @@ export class HomePageComponent {
     hasContinueGames: Observable<boolean>;
     isTitleVisible: boolean = true;
 
-    constructor(private readonly gamesService: GamesService) {
+    constructor(private readonly gamesService: GamesService, private readonly modalService: ModalService) {
         this.games = this.gamesService.getGames();
         this.continueGames = new BehaviorSubject<(Game & { currentIndex: number; activeGameId: number })[]>([]);
         this.hasContinueGames = this.continueGames.pipe(map((games) => games.length > 0));
@@ -29,6 +30,12 @@ export class HomePageComponent {
         if (event.target instanceof Element) {
             this.isTitleVisible = event.target.scrollTop < TITLE_VISIBLE_BREAKPOINT;
         }
+    }
+
+    handleOptionsButton(): void {
+        this.modalService.push({
+            title: 'Settings',
+        });
     }
 
     removeContinueGame(gameId: number): void {
