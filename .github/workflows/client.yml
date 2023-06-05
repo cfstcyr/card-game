@@ -1,0 +1,16 @@
+name: Client
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs_on: ubuntu
+    steps:
+      - uses: actions@checkout@v3
+      - runs: |
+          cd packages/client_v2
+          npm ci
+          npm build
