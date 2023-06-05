@@ -11,4 +11,4 @@ jobs:
           cd packages/client_v2
           npm ci
           npm build
-        shell: basg
+        shell: bash
