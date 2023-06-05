@@ -3,6 +3,7 @@ version: '3.3'
 services:
   server:
     image: card-game-server:staging
+    restart: unless-stopped
     build:
       context: ./packages/server/
       target: prod
@@ -18,6 +19,7 @@ services:
 
   client:
     image: card-game-client:staging
+    restart: unless-stopped
     build:
       context: ./packages/client_v2/
     ports:
@@ -25,6 +27,7 @@ services:
 
   admin:
     image: card-game-admin:staging
+    restart: unless-stopped
     build:
       context: ./packages/admin/
       target: prod
