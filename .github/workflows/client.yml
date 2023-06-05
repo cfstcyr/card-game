@@ -7,9 +7,9 @@ on:
 
 jobs:
   build:
-    runs_on: ubuntu
+    runs_on: ubuntu-latest
     steps:
-      - uses: actions@checkout@v3
+      - uses: actions/checkout@v3
       - runs: |
           cd packages/client_v2
           npm ci
