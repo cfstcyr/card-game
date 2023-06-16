@@ -1,0 +1,14 @@
+<app-layout [disabledScroll]="false" class="instruction-page">
+    <app-simple-button head-action-left effect="large" href="/"><i class="far fa-chevron-left"></i></app-simple-button>
+
+    <h2 title class="instruction-page__head-title">{{(game | async)?.value?.name}}</h2>
+
+    <ng-container *ngIf="(game | async)?.value; let game">
+        <div class="instruction-page__content">
+            <markdown>{{game.instructions}}</markdown>
+        </div>
+    </ng-container>
+
+    <span foot-action-left></span>
+    <app-simple-button foot-action-right [href]="'/game/' + (game | async)?.value?.id">Play <i class="fas fa-arrow-right"></i></app-simple-button>
+</app-layout>

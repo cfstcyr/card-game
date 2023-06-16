@@ -16,6 +16,7 @@
 
 html {
     background-color: black;
+    color: white;
 }
 
 html, body {
@@ -27,43 +28,19 @@ html, body {
     overflow: hidden;
 }
 
-// body::after {
-//     content: '';
-//     position: absolute;
-//     top: 0;
-//     left: 0;
-//     height: 100%;
-//     width: 100%;
-//     background: radial-gradient(rgba(70, 230, 133, 0.18), transparent);
-//     z-index: -1;
-// }
+.interactable {
+    &:not(:disabled):not(.disabled) {
+        transition: ease-in scale 0.1s;
+        cursor: pointer;
 
-#root {
-    height: 100%;
-    width: 100%;
-    display: flex;
-    justify-content: stretch;
-    align-items: stretch;
-    // @include bg-primary;
+        @media (hover: hover) {
+            &:hover {
+                scale: 1.05;
+            }
+        }
 
-    & > div {
-        width: 100%;
+        &:active {
+            scale: 0.95;
+        }
     }
-}
-
-h1, h2, h3, h4, h5, h6, p, a {
-    color: white;
-}
-
-a {
-    text-decoration: none;
-}
-
-small {
-    opacity: 0.55;
-}
-
-.no-select {
-    @include no-select;
-    cursor: default;
 }

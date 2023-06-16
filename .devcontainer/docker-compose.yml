@@ -32,7 +32,7 @@ services:
     working_dir: /app
     restart: unless-stopped
     volumes:
-      - ../packages/client_v2:/app
+      - ../packages/client:/app
     network_mode: service:app
 
   admin:

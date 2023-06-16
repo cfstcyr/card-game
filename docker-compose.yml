@@ -21,7 +21,7 @@ services:
     image: card-game-client:staging
     restart: unless-stopped
     build:
-      context: ./packages/client_v2/
+      context: ./packages/client/
     ports:
       - ${CLIENT_PORT:-3000}:80
 
