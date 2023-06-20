@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, catchError, delay, forkJoin, map, retry, tap } from 'rxjs';
+import { BehaviorSubject, Observable, forkJoin, map, tap } from 'rxjs';
 import { Data } from '../../models/data';
 import { Game, GameWithCards } from '../../models/game';
 import { DataService } from '../data-service/data.service';
