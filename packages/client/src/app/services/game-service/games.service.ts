@@ -4,13 +4,14 @@ import { Data } from '../../models/data';
 import { Game, GameWithCards } from '../../models/game';
 import { DataService } from '../data-service/data.service';
 import { ActiveGamesDB } from 'src/app/db/active-games';
+import { IGameService } from './games.interface';
 
 @Injectable({
   providedIn: 'root'
 })
-export class GamesService {
+export class GamesService implements IGameService {
     private gameList$: BehaviorSubject<Data<Game[]>> = new BehaviorSubject<Data<Game[]>>({ loading: true });
-    private games$: BehaviorSubject<Map<string, Data<GameWithCards>>> = new BehaviorSubject(new Map());
+    private games$: BehaviorSubject<Map<number, Data<GameWithCards>>> = new BehaviorSubject(new Map());
     activeGames: ActiveGamesDB = new ActiveGamesDB();
 
     constructor(private readonly dataService: DataService) {}
@@ -20,7 +21,7 @@ export class GamesService {
         return this.gameList$.asObservable();
     }
 
-    getGame(id: string): Observable<Data<GameWithCards>> {
+    getGame(id: number): Observable<Data<GameWithCards>> {
         this.fetchGame(id).subscribe();
         return this.games$.pipe(map((gamesMap) => gamesMap.get(id) ?? { error: 'Game not found' }));
     }
@@ -37,7 +38,7 @@ export class GamesService {
         );
     }
 
-    fetchGame(id: string): Observable<Data<GameWithCards>> {
+    fetchGame(id: number): Observable<Data<GameWithCards>> {
         this.updateGame(id, { loading: true });
 
         return this.dataService.get<GameWithCards>(`/game/${id}`).pipe(
@@ -48,10 +49,10 @@ export class GamesService {
     }
 
     private fetchAll(games: Game[]): Observable<Data<GameWithCards>[]> {
-        return forkJoin(games.map(({ id }) => this.fetchGame(`${id}`)));
+        return forkJoin(games.map(({ id }) => this.fetchGame(id)));
     }
 
-    private updateGame(id: string, data: Data<GameWithCards>): void {
+    private updateGame(id: number, data: Data<GameWithCards>): void {
         const gamesMap = this.games$.value;
         gamesMap.set(id, data);
         this.games$.next(gamesMap);

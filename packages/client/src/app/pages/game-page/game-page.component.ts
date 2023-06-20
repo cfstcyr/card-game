@@ -24,7 +24,7 @@ export class GamePageComponent implements AfterViewInit {
 
     constructor(private readonly gamesService: GamesService, private readonly route: ActivatedRoute) {
         combineLatest([this.route.params, this.route.queryParams]).subscribe(([params, query]) => {
-            this.game = this.gamesService.getGame(params['id']);
+            this.game = this.gamesService.getGame(Number(params['id']));
 
             this.game.subscribe((game) => {
                 if (game.value) {

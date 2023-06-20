@@ -4,11 +4,11 @@ export interface Game {
     id: number;
     name: string;
     description?: string;
-    instructions?: string;
-    nsfw: boolean;
+    instructions?: string | null;
+    nsfw: boolean | number;
     mode: string;
-    image?: string;
-    color?: string;
+    image?: string | null;
+    color?: string | null;
     cardsCount: number;
 }
 
