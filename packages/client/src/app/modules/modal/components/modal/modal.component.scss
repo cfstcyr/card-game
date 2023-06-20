@@ -1,4 +1,10 @@
 .modal {
+    &__container {
+        display: grid;
+        grid-template-rows: repeat(3, auto);
+        gap: 24px;
+    }
+
     &__header {
         display: grid;
         grid-template-columns: minmax(0, 1fr) auto;
@@ -9,5 +15,15 @@
         margin: 0;
         font-family: 'Changa';
         font-size: 1.6em;
+    }
+
+    &__actions {
+        display: flex;
+        justify-content: end;
+        gap: 12px;
+
+        &:empty {
+            display: none;
+        }
     }
 }

@@ -34,7 +34,15 @@ export class HomePageComponent {
 
     handleOptionsButton(): void {
         this.modalService.push({
-            title: 'Settings',
+            title: '',
+            actions: [
+                {
+                    icon: 'flag'
+                },
+                {
+                    icon: 'flag'
+                },
+            ]
         });
     }
 

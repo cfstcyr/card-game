@@ -1,9 +1,16 @@
 <app-base-modal (clickOutside)="handleClickOutside()" [disableClickOutside]="modal.close?.disableClickOutside ?? false">
-    <div class="modal__header">
-        <h2 class="modal__title">{{ modal.title }}</h2>
-        <app-simple-button *ngIf="!modal.close?.hide" class="modal__close" (click)="handleClose()"><i [ngClass]="['far', 'fa-' + (modal.close?.icon ?? 'times')]"></i></app-simple-button>
-    </div>
-    <div class="modal__content">
-        <ng-content></ng-content>
+    <div class="modal__container">
+        <div class="modal__header">
+            <h2 class="modal__title">{{ modal.title }}</h2>
+            <app-simple-button *ngIf="!modal.close?.hide" class="modal__close" (click)="handleClose()"><i [ngClass]="['far', 'fa-' + (modal.close?.icon ?? 'times')]"></i></app-simple-button>
+        </div>
+        <div class="modal__content">
+            <ng-content></ng-content>
+        </div>
+        <div class="modal__actions">
+            <ng-container *ngFor="let action of modal.actions">
+                <app-simple-button>{{action.content}}<i *ngIf="action.icon" [ngClass]="['fas', 'fa-' + action.icon]"></i></app-simple-button>
+            </ng-container>
+        </div>
     </div>
 </app-base-modal>
