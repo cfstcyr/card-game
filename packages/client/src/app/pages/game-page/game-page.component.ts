@@ -16,10 +16,10 @@ import { shuffle } from 'src/app/utils/random';
 export class GamePageComponent implements AfterViewInit {
     @ViewChild(SwiperComponent) swiper?: SwiperComponent;
     game: Observable<Data<GameWithCards>> | undefined;
-    cards: Subject<Omit<Card, "gameId">[]> = new BehaviorSubject<Omit<Card, "gameId">[]>([]);
+    cards: BehaviorSubject<Omit<Card, "gameId">[]> = new BehaviorSubject<Omit<Card, "gameId">[]>([]);
     canSwipeNext: Subject<boolean> = new Subject();
     canSwipePrevious: Subject<boolean> = new Subject();
-    currentIndex: Subject<number> = new Subject();
+    currentIndex: BehaviorSubject<number> = new BehaviorSubject(0);
     cardsLeft: Subject<number> = new Subject();
 
     constructor(private readonly gamesService: GamesService, private readonly route: ActivatedRoute) {
@@ -74,5 +74,19 @@ export class GamePageComponent implements AfterViewInit {
 
     previous(): void {
         this.swiper?.swiper?.slidePrev();
+    }
+
+    canShare(): boolean {
+        return navigator.canShare(this.getShareContent());
+    }
+
+    share(): void {
+        navigator.share(this.getShareContent())
+    }
+
+    private getShareContent(): ShareData {
+        return {
+            text: `"${this.cards.value?.[this.currentIndex.value]?.content}"\n\nPlay Card Game on ${location.origin}.`,
+        }
     }
 }
