@@ -8,22 +8,45 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        background-color: rgba(255, 255, 255, 0.05);
-        backdrop-filter: blur(6px);
+        // background-color: rgba(255, 255, 255, 0.05);
+        // backdrop-filter: blur(6px);
         padding: 24px;
 
         &--click-outside {
             cursor: pointer;
         }
+
+        &::after {
+            position: absolute;
+            content: '';
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            backdrop-filter: blur(6px);
+        }
+
+        &::before {
+            position: absolute;
+            content: '';
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--theme-primary-contrast);
+            opacity: 0.05;
+        }
     }
 
     &__container {
-        background-color: black;
+        background-color: var(--theme-primary);
+        color: var(--theme-primary-contrast);
         padding: 24px;
         border-radius: 8px;
         width: 100%;
         box-sizing: border-box;
         max-width: 550px;
         cursor: default;
+        z-index: 1;
     }
 }

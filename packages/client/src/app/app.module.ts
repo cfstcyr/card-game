@@ -23,6 +23,7 @@ import { GamesService } from './services/game-service/games.service';
 import { environment } from 'src/environments/environment';
 import { LocalGamesService } from './services/game-service/local-games.service';
 import { SettingsComponent } from './components/settings/settings.component';
+import { ThemeModule } from './modules/theme/theme.module';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { SettingsComponent } from './components/settings/settings.component';
     LoadingBarModule,
     ModalModule,
     UiModule,
+    ThemeModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),
       // Register the ServiceWorker as soon as the application is stable

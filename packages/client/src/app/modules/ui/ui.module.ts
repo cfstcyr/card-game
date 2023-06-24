@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonComponent } from './components/button/button.component';
 import { SimpleButtonComponent } from './components/simple-button/simple-button.component';
+import { ThemeModule } from '../theme/theme.module';
 
 
 
@@ -11,7 +12,8 @@ import { SimpleButtonComponent } from './components/simple-button/simple-button.
     SimpleButtonComponent,
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    ThemeModule,
   ],
   exports: [
     ButtonComponent,

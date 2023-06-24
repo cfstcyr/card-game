@@ -5,7 +5,7 @@
         @include no-select;
         margin: 0;
         line-height: 1em;
-        font-family: 'Changa';
+        font-family: var(--theme-special-font);
         transition: ease-in translate 0.1s;
         padding: 12px 0;
 
@@ -16,7 +16,7 @@
 
     &__title {
         @include no-select;
-        font-family: 'Changa';
+        font-family: var(--theme-special-font);
         text-align: center;
         font-size: 3em;
         margin: 36px 0;
@@ -69,7 +69,7 @@
 
             &__title {
                 font-size: 1.8em;
-                font-family: 'Changa';
+                font-family: var(--theme-special-font);
                 font-weight: 700;
             }
 

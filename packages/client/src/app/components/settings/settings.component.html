@@ -1,1 +1,6 @@
-<p>settings works!</p>
+<section class="theme">
+    <h2>Theme</h2>
+    <div class="options">
+        <app-simple-button *ngFor="let theme of themes" [disabled]="theme.id === (currentTheme | async)?.id" (click)="themeService.setCurrentTheme(theme.id)">{{ theme.name }}</app-simple-button>
+    </div>
+</section>
