@@ -38,6 +38,6 @@ module "cloud-run" {
     depends_on = [ module.api, module.registry ]
 }
 
-output "name" {
-  value = module.bucket.bucket_url
-}
+# output "name" {
+#   value = module.bucket.bucket_url
+# }

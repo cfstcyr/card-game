@@ -7,3 +7,8 @@ resource "google_project_service" "cloud-run" {
   project = var.project_id
   service = "run.googleapis.com"
 }
+
+resource "google_project_service" "dns" {
+  project = var.project_id
+  service = "dns.googleapis.com"
+}

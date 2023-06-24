@@ -7,5 +7,5 @@ gcloud run deploy card-game-prod \
     --image=northamerica-northeast1-docker.pkg.dev/card-game-389821/card-game-prod/client \
     --region=northamerica-northeast1 \
     --project=card-game-389821 \
-    && gcloud run services update-traffic card-game-prod --to-latest
+    && gcloud run services update-traffic card-game-prod --region=northamerica-northeast1 --to-latest
 ```
