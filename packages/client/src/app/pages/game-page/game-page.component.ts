@@ -16,6 +16,7 @@ import { shuffle } from 'src/app/utils/random';
 export class GamePageComponent implements AfterViewInit {
     @ViewChild(SwiperComponent) swiper?: SwiperComponent;
     game: Observable<Data<GameWithCards>> | undefined;
+    currentGame?: GameWithCards;
     cards: BehaviorSubject<Omit<Card, "gameId">[]> = new BehaviorSubject<Omit<Card, "gameId">[]>([]);
     canSwipeNext: Subject<boolean> = new Subject();
     canSwipePrevious: Subject<boolean> = new Subject();
@@ -27,6 +28,8 @@ export class GamePageComponent implements AfterViewInit {
             this.game = this.gamesService.getGame(Number(params['id']));
 
             this.game.subscribe((game) => {
+                this.currentGame = game.value;
+
                 if (game.value) {
                     const shuffledCards = shuffle(game.value.cards);
                     this.cards.next(shuffledCards);
@@ -86,7 +89,7 @@ export class GamePageComponent implements AfterViewInit {
 
     private getShareContent(): ShareData {
         return {
-            text: `"${this.cards.value?.[this.currentIndex.value]?.content}"\n\nPlay Card Game on ${location.origin}.`,
+            text: `"${this.cards.value?.[this.currentIndex.value]?.content}"\n\nPlay "${this.currentGame?.name}" on ${location.origin}.`,
         }
     }
 }
