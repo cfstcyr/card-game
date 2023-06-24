@@ -22,6 +22,7 @@ import { MarkdownModule } from 'ngx-markdown';
 import { GamesService } from './services/game-service/games.service';
 import { environment } from 'src/environments/environment';
 import { LocalGamesService } from './services/game-service/local-games.service';
+import { SettingsComponent } from './components/settings/settings.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { LocalGamesService } from './services/game-service/local-games.service';
     GameCardComponent,
     LayoutComponent,
     InstructionPageComponent,
+    SettingsComponent,
   ],
   imports: [
     BrowserModule,

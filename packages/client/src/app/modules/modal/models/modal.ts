@@ -1,4 +1,10 @@
-export interface Modal {
+import { Component } from "@angular/core";
+
+export type ModalContent = {
+    new (...args: any[]): any;
+};
+
+export interface Modal<T = unknown> {
     title: string;
     actions?: ModalAction[];
     close?: Partial<{
@@ -6,6 +12,8 @@ export interface Modal {
         disableClickOutside: boolean;
         icon: string;
     }>;
+    content: ModalContent;
+    contentData?: T;
 }
 
 export interface ModalAction {

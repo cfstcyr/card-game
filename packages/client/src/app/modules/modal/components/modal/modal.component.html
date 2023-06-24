@@ -5,11 +5,11 @@
             <app-simple-button *ngIf="!modal.close?.hide" class="modal__close" (click)="handleClose()"><i [ngClass]="['far', 'fa-' + (modal.close?.icon ?? 'times')]"></i></app-simple-button>
         </div>
         <div class="modal__content">
-            <ng-content></ng-content>
+            <ng-template appDynamic></ng-template>
         </div>
-        <div class="modal__actions">
+        <div class="modal__actions" *ngIf="modal.actions">
             <ng-container *ngFor="let action of modal.actions">
-                <app-simple-button>{{action.content}}<i *ngIf="action.icon" [ngClass]="['fas', 'fa-' + action.icon]"></i></app-simple-button>
+                <app-simple-button (click)="handleAction(action.onClick)">{{action.content}}<i *ngIf="action.icon" [ngClass]="['fas', 'fa-' + action.icon]"></i></app-simple-button>
             </ng-container>
         </div>
     </div>

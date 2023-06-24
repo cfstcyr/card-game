@@ -5,6 +5,7 @@ import { UiModule } from '../ui/ui.module';
 import { BaseModalComponent } from './components/base-modal/base-modal.component';
 import { ModalFactoryComponent } from './components/modal-factory/modal-factory.component';
 import { ModalService } from './services/modal.service';
+import { DynamicModule } from '../dynamic/dynamic.module';
 
 
 
@@ -17,6 +18,7 @@ import { ModalService } from './services/modal.service';
   imports: [
     CommonModule,
     UiModule,
+    DynamicModule,
   ],
   exports: [
     ModalFactoryComponent,

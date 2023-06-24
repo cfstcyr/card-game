@@ -1,4 +1,4 @@
-import { Observable, map, of } from "rxjs";
+import { Observable, delay, map, of } from "rxjs";
 import { Data } from "src/app/models/data";
 import { Game, GameWithCards } from "src/app/models/game";
 import { IGameService } from "./games.interface";
@@ -17,7 +17,7 @@ export class LocalGamesService implements IGameService {
     }
 
     fetchGames(): Observable<Data<Game[]>> {
-        return of({ value: games.games });
+        return of({ value: games.games }).pipe(delay(10));
     }
 
     fetchGame(id: number): Observable<Data<GameWithCards>> {

@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { BehaviorSubject, Observable, combineLatest, lastValueFrom, map } from 'rxjs';
+import { SettingsComponent } from 'src/app/components/settings/settings.component';
 import { Data } from 'src/app/models/data';
 import { Game } from 'src/app/models/game';
 import { ModalService } from 'src/app/modules/modal/modal.module';
+import { ButtonComponent } from 'src/app/modules/ui/components/button/button.component';
 import { GamesService } from 'src/app/services/game-service/games.service';
 
 const TITLE_VISIBLE_BREAKPOINT = 80;
@@ -34,15 +36,8 @@ export class HomePageComponent {
 
     handleOptionsButton(): void {
         this.modalService.push({
-            title: '',
-            actions: [
-                {
-                    icon: 'flag'
-                },
-                {
-                    icon: 'flag'
-                },
-            ]
+            title: 'Options',
+            content: SettingsComponent,
         });
     }
 
