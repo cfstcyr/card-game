@@ -10,7 +10,7 @@
             <div class="game-list__item__pills">
                 <div class="game-list__item__pills__pill">
                     <i class="icon fas fa-credit-card-blank"></i>
-                    <span>{{game.cardsCount}} card<ng-container *ngIf="game.cardsCount > 1">s</ng-container></span>
+                    <span>{{game.cards.length}} card<ng-container *ngIf="game.cards.length > 1">s</ng-container></span>
                 </div>
                 <div class="game-list__item__pills__pill">
                     <i class="icon fas fa-game-console-handheld"></i> {{game.mode}}

@@ -12,9 +12,11 @@ export class GameController extends AbstractController {
 
     protected configureRouter(router: Router): void {
         router.get('/', async (req, res, next) => {
+            const { noCache = false } = req.query;
+
             try {
                 res.status(StatusCodes.OK).send(
-                    await this.gameService.getGameList(),
+                    await this.gameService.getAll(noCache as boolean),
                 );
             } catch (e) {
                 next(e);

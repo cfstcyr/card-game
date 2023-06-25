@@ -3,11 +3,13 @@ import { HttpException } from '../../models/http-exception';
 import { DatabaseService } from '../database-service/database-service';
 import { Entry } from '../../models/entry';
 import { Query } from '@google-cloud/firestore';
+import { CacheService } from '../cache-service/cache-service';
 
 export abstract class DataEntryService<T> {
     constructor(
         protected readonly databaseService: DatabaseService,
         protected readonly collectionPath: string,
+        protected readonly cacheService: CacheService,
     ) {}
 
     get db() {
@@ -18,11 +20,20 @@ export abstract class DataEntryService<T> {
         return this.databaseService.collection<T>(this.collectionPath);
     }
 
-    async getAll(): Promise<Entry<T>[]> {
-        return (await this.collection.get()).docs.map((doc) => ({
+    async getAll(noCache = false): Promise<Entry<T>[]> {
+        const cacheKey = `getAll:${this.collectionPath}`;
+        const cached = this.cacheService.get<Entry<T>[]>(cacheKey);
+
+        if (cached && !noCache) return cached;
+
+        const res = (await this.collection.get()).docs.map((doc) => ({
             id: doc.id,
             ...doc.data(),
         }));
+
+        this.cacheService.set(cacheKey, res);
+
+        return res;
     }
 
     async get(id: string): Promise<Entry<T>> {

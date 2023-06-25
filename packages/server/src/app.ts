@@ -30,8 +30,6 @@ export class Application {
 
         this.configureMiddleware();
         this.configureRoutes();
-
-        this.userService.configure();
     }
 
     listen(port: number | string) {
@@ -41,10 +39,6 @@ export class Application {
                 `🚀 Server up on port ${port} (http://localhost:${port})`,
             );
         });
-    }
-
-    async configureDatabase() {
-        await this.databaseService.client.migrate.latest();
     }
 
     private configureMiddleware() {

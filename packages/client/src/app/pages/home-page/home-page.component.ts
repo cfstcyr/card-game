@@ -16,13 +16,13 @@ const TITLE_VISIBLE_BREAKPOINT = 80;
 })
 export class HomePageComponent {
     games: Observable<Data<Game[]>>;
-    continueGames: BehaviorSubject<(Game & { currentIndex: number; activeGameId: number })[]>;
+    continueGames: BehaviorSubject<(Game & { currentIndex: number; activeGameId: string })[]>;
     hasContinueGames: Observable<boolean>;
     isTitleVisible: boolean = true;
 
     constructor(private readonly gamesService: GamesService, private readonly modalService: ModalService) {
         this.games = this.gamesService.getGames();
-        this.continueGames = new BehaviorSubject<(Game & { currentIndex: number; activeGameId: number })[]>([]);
+        this.continueGames = new BehaviorSubject<(Game & { currentIndex: number; activeGameId: string })[]>([]);
         this.hasContinueGames = this.continueGames.pipe(map((games) => games.length > 0));
 
         this.updateContinueGames();
@@ -41,7 +41,7 @@ export class HomePageComponent {
         });
     }
 
-    removeContinueGame(gameId: number): void {
+    removeContinueGame(gameId: string): void {
         this.gamesService.activeGames.remove(gameId).subscribe(() => {
             this.updateContinueGames();
         });
@@ -49,7 +49,7 @@ export class HomePageComponent {
 
     private updateContinueGames(): void {
         combineLatest([this.games, this.gamesService.activeGames.getAll()]).subscribe(([data, activeGames]) => {
-            const games: (Game & { currentIndex: number; activeGameId: number })[] = [];
+            const games: (Game & { currentIndex: number; activeGameId: string })[] = [];
 
             if (data.value) {
                 for (const { gameId, currentIndex, id } of activeGames) {

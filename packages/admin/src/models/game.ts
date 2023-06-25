@@ -9,8 +9,5 @@ export interface Game {
     mode: string;
     image?: string;
     color?: string;
-}
-
-export interface GameWithCards extends Game {
-    cards: Omit<Card, 'gameId'>[];
+    cards: Card[];
 }

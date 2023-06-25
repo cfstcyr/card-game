@@ -10,7 +10,7 @@ import { Layout } from '../layout';
 
 export const PageEditGame: React.FC = () => {
     const { id } = useParams();
-    const { games, cards, updateGame, fetchCards } = useData();
+    const { games, updateGame, fetchCards } = useData();
     const [game, setGame] = useState<Game>();
     const [name, setName] = useState(game?.name);
     const [description, setDescription] = useState(game?.description);
@@ -41,15 +41,16 @@ export const PageEditGame: React.FC = () => {
             setInstructions(game.instructions);
             setImage(game.image);
             setColor(game.color);
+            setCardsValue(game.cards.map((card) => card.content).join('\n'));
         }
     }, [game]);
 
-    useEffect(() => {
-        setCardsValue(
-            cards[Number(id)]?.data.map(({ content }) => content).join('\n') ??
-                '',
-        );
-    }, [cards]);
+    // useEffect(() => {
+    //     setCardsValue(
+    //         cards[Number(id)]?.data.map(({ content }) => content).join('\n') ??
+    //             '',
+    //     );
+    // }, [cards]);
 
     const onChangeName = useCallback(
         (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -153,8 +154,14 @@ export const PageEditGame: React.FC = () => {
                 image,
                 color,
                 cards: cardsChanged
-                    ? cardsValue?.split('\n').filter((l) => l.trim().length > 0)
-                    : undefined,
+                    ? cardsValue
+                          ?.split('\n')
+                          .filter((l) => l.trim().length > 0)
+                          .map((content, index) => ({
+                              id: `${index}`,
+                              content,
+                          }))
+                    : [],
             });
         },
         [
@@ -180,7 +187,7 @@ export const PageEditGame: React.FC = () => {
 
                 <Form.Group className="mb:12">
                     <Form.Label>Name</Form.Label>
-                    <Form.Control value={name && ''} onChange={onChangeName} />
+                    <Form.Control value={name ?? ''} onChange={onChangeName} />
                 </Form.Group>
 
                 <Form.Group className="mb:12">

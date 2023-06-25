@@ -6,7 +6,7 @@ import React, {
 } from 'react';
 import { Card } from '../../models/card';
 import { Data, defaultData, loading } from '../../models/data';
-import { Game, GameWithCards } from '../../models/game';
+import { Game } from '../../models/game';
 import { useApi } from '../api-context';
 import { DataContext } from './context';
 
@@ -80,7 +80,7 @@ export const DataProvider: React.FC<PropsWithChildren> = ({ children }) => {
         }));
 
         try {
-            const res = await get<GameWithCards>(`/game/${gameId}`);
+            const res = await get<Game>(`/game/${gameId}`);
 
             setCards((cards) => ({
                 ...cards,
