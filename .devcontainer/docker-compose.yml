@@ -25,6 +25,7 @@ services:
       DB_PASSWORD: admin
       DB_DATABASE: card_game
       JWT_SECRET: 123
+      GOOGLE_APPLICATION_CREDENTIALS: /workspaces/card-game/.gcp/credentials.json
 
   client:
     image: node:20
