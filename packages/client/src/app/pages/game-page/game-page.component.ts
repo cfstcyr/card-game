@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, HostListener, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { BehaviorSubject, Observable, Subject, combineLatest, concat, concatAll, merge, tap } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, combineLatest, concat, concatAll, delay, merge, tap } from 'rxjs';
 import { Card } from 'src/app/models/card';
 import { Data } from 'src/app/models/data';
 import { Game } from 'src/app/models/game';
@@ -27,7 +27,7 @@ export class GamePageComponent implements AfterViewInit {
         combineLatest([this.route.params, this.route.queryParams]).subscribe(([params, query]) => {
             this.game = this.gamesService.getGame(params['id']);
 
-            this.game.subscribe((game) => {
+            this.game.pipe(delay(10)).subscribe((game) => {
                 this.currentGame = game.value;
 
                 if (game.value) {
