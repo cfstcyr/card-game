@@ -14,7 +14,7 @@ export class GameController extends AbstractController {
         router.get('/', async (req, res, next) => {
             try {
                 res.status(StatusCodes.OK).send(
-                    await this.gameService.getGames(),
+                    await this.gameService.getGameList(),
                 );
             } catch (e) {
                 next(e);
@@ -25,9 +25,7 @@ export class GameController extends AbstractController {
             const { id } = req.params;
 
             try {
-                res.status(StatusCodes.OK).send(
-                    await this.gameService.getGame(id),
-                );
+                res.status(StatusCodes.OK).send(await this.gameService.get(id));
             } catch (e) {
                 next(e);
             }
@@ -36,7 +34,7 @@ export class GameController extends AbstractController {
         router.post('/', async (req, res, next) => {
             try {
                 res.status(StatusCodes.CREATED).send(
-                    await this.gameService.createGame(req.body),
+                    await this.gameService.add(req.body),
                 );
             } catch (e) {
                 next(e);
@@ -46,7 +44,7 @@ export class GameController extends AbstractController {
         router.patch('/:id', async (req, res, next) => {
             try {
                 res.status(StatusCodes.OK).send(
-                    await this.gameService.updateGame(req.params.id, req.body),
+                    await this.gameService.update(req.params.id, req.body),
                 );
             } catch (e) {
                 next(e);
@@ -58,7 +56,7 @@ export class GameController extends AbstractController {
 
             try {
                 res.status(StatusCodes.NO_CONTENT).send(
-                    await this.gameService.deleteGame(id),
+                    await this.gameService.delete(id),
                 );
             } catch (e) {
                 next(e);

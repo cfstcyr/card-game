@@ -14,7 +14,7 @@ export const DataProvider: React.FC<PropsWithChildren> = ({ children }) => {
     const { get, delete: apiDelete, post, patch } = useApi();
     const [games, setGames] = useState<Data<Game[]>>(defaultData([]));
     const [cards, setCards] = useState<{
-        [K: number]: Data<Omit<Card, 'gameId'>[]>;
+        [K: string]: Data<Omit<Card, 'gameId'>[]>;
     }>({});
 
     const fetchGames = useCallback(async () => {
@@ -71,12 +71,12 @@ export const DataProvider: React.FC<PropsWithChildren> = ({ children }) => {
         [],
     );
 
-    const fetchCards = useCallback(async (gameId: string | number) => {
-        const id = Number(gameId);
-
+    const fetchCards = useCallback(async (gameId: string) => {
         setCards((cards) => ({
             ...cards,
-            [id]: cards[id] ? loading(cards[id]) : defaultData([], true),
+            [gameId]: cards[gameId]
+                ? loading(cards[gameId])
+                : defaultData([], true),
         }));
 
         try {
@@ -84,7 +84,11 @@ export const DataProvider: React.FC<PropsWithChildren> = ({ children }) => {
 
             setCards((cards) => ({
                 ...cards,
-                [id]: { ...cards[id], loading: false, data: res.data.cards },
+                [gameId]: {
+                    ...cards[gameId],
+                    loading: false,
+                    data: res.data.cards,
+                },
             }));
         } catch (e) {
             setGames((g) => ({ ...g, loading: false, error: String(e) }));

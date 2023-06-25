@@ -8,7 +8,7 @@ import { Game } from '../../models/game';
 import { Layout } from '../layout';
 
 const GameRow: React.FC<{ game: Game }> = ({ game }) => {
-    const { deleteGame, updateGame, fetchGames } = useData();
+    const { deleteGame, updateGame } = useData();
     const [name, setName] = useState(game.name);
     const [description, setDescription] = useState(game.description ?? '');
 
@@ -63,7 +63,7 @@ const GameRow: React.FC<{ game: Game }> = ({ game }) => {
 export const PageHome: React.FC = () => {
     const { games, deleteGame, fetchGames } = useData();
 
-    const onDeleteGame = async (gameId: string | number) => {
+    const onDeleteGame = async (gameId: string) => {
         if (confirm(`Delete game ${gameId}?`)) {
             await deleteGame(gameId);
         }

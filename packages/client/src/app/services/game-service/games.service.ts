@@ -30,6 +30,7 @@ export class GamesService implements IGameService {
         return this.dataService.get<Game[]>('/game').pipe(
             tap((games) => {
                 this.gameList$.next(games);
+                console.log(games);
 
                 if (games.value) {
                     this.fetchAll(games.value).subscribe();

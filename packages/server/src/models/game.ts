@@ -1,7 +1,7 @@
 import { Card } from './card';
+import { Entry } from './entry';
 
 export interface Game {
-    id: number;
     name: string;
     description?: string;
     instructions?: string;
@@ -11,7 +11,7 @@ export interface Game {
     color?: string;
 }
 
-export interface GameListItem extends Game {
+export interface GameListItem extends Entry<Game> {
     cardsCount: number;
 }
 

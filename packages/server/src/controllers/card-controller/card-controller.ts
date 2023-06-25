@@ -14,7 +14,7 @@ export class CardController extends AbstractController {
         router.get('/', async (req, res, next) => {
             try {
                 res.status(StatusCodes.OK).send(
-                    await this.cardService.getCards(),
+                    await this.cardService.getAll(),
                 );
             } catch (e) {
                 next(e);
@@ -24,20 +24,11 @@ export class CardController extends AbstractController {
         router.post('/', async (req, res, next) => {
             try {
                 res.status(StatusCodes.CREATED).send(
-                    await this.cardService.createCard(req.body),
+                    await this.cardService.add(req.body),
                 );
             } catch (e) {
                 next(e);
             }
         });
-
-        // router.delete('/reset', async (req, res, next) => {
-        //     try {
-        //         await this.cardService.deleteAll();
-        //         res.status(StatusCodes.NO_CONTENT).send();
-        //     } catch (e) {
-        //         next(e);
-        //     }
-        // });
     }
 }

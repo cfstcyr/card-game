@@ -1,10 +1,12 @@
 import knex, { Knex } from 'knex';
 import { singleton } from 'tsyringe';
 import { env } from '../../utils/environment';
+import { CollectionReference, Firestore } from '@google-cloud/firestore';
 
 @singleton()
 export class DatabaseService {
     client: Knex;
+    db: Firestore;
 
     constructor() {
         this.client = knex({
@@ -18,5 +20,12 @@ export class DatabaseService {
                 multipleStatements: true,
             },
         });
+        this.db = new Firestore();
+    }
+
+    collection<T>(collectionPath: string): CollectionReference<T> {
+        return this.db.collection(
+            `environment/${env.NODE_ENV}/${collectionPath}`,
+        ) as CollectionReference<T>;
     }
 }

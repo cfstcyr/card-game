@@ -24,7 +24,7 @@ export const PageEditGame: React.FC = () => {
 
     useEffect(() => {
         if (id) {
-            const game = games.data.find((g) => g.id === Number(id));
+            const game = games.data.find((g) => g.id === id);
             if (game) {
                 setGame(game);
                 fetchCards(id);
