@@ -1,4 +1,4 @@
-.theme {
+section {
     h2 {
         margin-top: 0;
     }
@@ -7,5 +7,9 @@
         display: flex;
         gap: 12px;
         flex-wrap: wrap;
+    }
+
+    &:not(:last-child) {
+        margin-bottom: 36px;
     }
 }

@@ -7,7 +7,7 @@ gcloud auth configure-docker us-central1-docker.pkg.dev
 
 # Server =====
 
-docker buildx build --platform linux/amd64 --push -t us-central1-docker.pkg.dev/card-game-389821/card-game-prod/server .
+docker buildx build --platform linux/amd64 --push --target prod -t us-central1-docker.pkg.dev/card-game-389821/card-game-prod/server .
 
 gcloud run deploy card-game-server-prod \
         --image=us-central1-docker.pkg.dev/card-game-389821/card-game-prod/client \

@@ -4,3 +4,10 @@
         <app-simple-button *ngFor="let theme of themes" [disabled]="theme.id === (currentTheme | async)?.id" (click)="themeService.setCurrentTheme(theme.id)">{{ theme.name }}</app-simple-button>
     </div>
 </section>
+
+<section class="cache">
+    <h2>Cache</h2>
+    <div class="options">
+        <app-simple-button (click)="clearCache()">Clear cache</app-simple-button>
+    </div>
+</section>
