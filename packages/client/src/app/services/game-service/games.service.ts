@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, forkJoin, map, tap } from 'rxjs';
+import { BehaviorSubject, Observable, delay, forkJoin, map, tap } from 'rxjs';
 import { Data } from '../../models/data';
 import { Game } from '../../models/game';
 import { DataService } from '../data-service/data.service';
@@ -23,7 +23,7 @@ export class GamesService implements IGameService {
 
     getGame(id: string): Observable<Data<Game>> {
         if(!this.gameList$.value.value) this.fetchGames().subscribe();
-        return this.gameList$.pipe(map((games) => {
+        return this.gameList$.pipe(delay(10), map((games) => {
             const game = games.value?.find((game) => game.id === id);
 
             return game ? { value: game } : { error: 'Game not found' };
