@@ -22,6 +22,9 @@ import { MarkdownModule } from 'ngx-markdown';
 import { GamesService } from './services/game-service/games.service';
 import { environment } from 'src/environments/environment';
 import { LocalGamesService } from './services/game-service/local-games.service';
+import { SettingsComponent } from './components/settings/settings.component';
+import { ThemeModule } from './modules/theme/theme.module';
+import { AlertModule } from './modules/alert/alert.module';
 
 @NgModule({
   declarations: [
@@ -33,6 +36,7 @@ import { LocalGamesService } from './services/game-service/local-games.service';
     GameCardComponent,
     LayoutComponent,
     InstructionPageComponent,
+    SettingsComponent,
   ],
   imports: [
     BrowserModule,
@@ -43,6 +47,8 @@ import { LocalGamesService } from './services/game-service/local-games.service';
     LoadingBarModule,
     ModalModule,
     UiModule,
+    ThemeModule,
+    AlertModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),
       // Register the ServiceWorker as soon as the application is stable

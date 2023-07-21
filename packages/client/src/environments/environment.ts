@@ -1,4 +1,4 @@
 export const environment = {
-    BASE_URL: 'http://api.card.cfstcyr.com',
-    LOCAL_DATA: true,
+    BASE_URL: 'https://card-game-server-prod-guqcsz3edq-uc.a.run.app',
+    LOCAL_DATA: false,
 };

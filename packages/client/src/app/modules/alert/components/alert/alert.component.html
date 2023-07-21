@@ -1,0 +1,13 @@
+<div 
+    class="alert"
+    [ngClass]="{'alert--can-dismiss': alert.canDismiss}"
+    (click)="handleClose()"
+    [ngStyle]="{ borderColor: alert.color }"
+>
+    <i 
+        *ngIf="alert.icon"
+        class="alert__icon {{ getIconPrefix() }} fa-{{alert.icon}}"
+        [ngStyle]="{ color: alert.color }"
+    ></i>
+    <div class="alert__content">{{ alert.content }}</div>
+</div>

@@ -23,7 +23,6 @@ EXPOSE 3000
 ENV PORT 3000
 ENV NODE_ENV production
 RUN npm ci --production && npm cache clean --force
-COPY ./migrations migrations
 COPY --from=builder /app/dist dist
 COPY public dist/public
 CMD ["npm", "start"]

@@ -1,5 +1,4 @@
 export interface Card {
-    gameId: number;
-    id: number;
+    id: string;
     content: string;
 }

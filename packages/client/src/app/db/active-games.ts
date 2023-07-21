@@ -3,13 +3,13 @@ import { Observable, Subject, from, map, tap } from "rxjs";
 
 interface ActiveGame {
     currentIndex: number;
-    gameId: number;
-    cardsId: number[];
+    gameId: string;
+    cardsId: string[];
     date: Date;
 }
 
 export class ActiveGamesDB extends Dexie {
-    private activeGames!: Table<ActiveGame & { id: number }, number>;
+    private activeGames!: Table<ActiveGame & { id: string }, string>;
 
     constructor() {
         super('active-games');
@@ -19,23 +19,23 @@ export class ActiveGamesDB extends Dexie {
         });
     }
 
-    set(activeGame: Omit<ActiveGame, 'date'>): Observable<number> {
+    set(activeGame: Omit<ActiveGame, 'date'>): Observable<string> {
         return from(this.activeGames.put({ ...activeGame, id: activeGame.gameId, date: new Date() }, activeGame.gameId));
     }
 
-    get(gameId: number): Observable<ActiveGame & { id: number } | undefined> {
+    get(gameId: string): Observable<ActiveGame & { id: string } | undefined> {
         return from(this.activeGames.get(gameId));
     }
 
-    remove(gameId: number): Observable<void> {
+    remove(gameId: string): Observable<void> {
         return from(this.activeGames.delete(gameId));
     }
 
-    getAll(): Observable<(ActiveGame & { id: number })[]> {
+    getAll(): Observable<(ActiveGame & { id: string })[]> {
         return from(this.activeGames.toArray()).pipe(map((games) => games.sort((a, b) => a.date < b.date ? 1 : -1))) as any;
     }
 
-    updateCurrentIndex(gameId: number, currentIndex: number): Observable<boolean> {
+    updateCurrentIndex(gameId: string, currentIndex: number): Observable<boolean> {
         const s = new Subject<boolean>();
 
         this.get(gameId).subscribe((activeGame) => {

@@ -1,0 +1,26 @@
+.alert {
+    background-color: var(--theme-button);
+    color: var(--theme-button-contrast);
+    display: flex;
+    padding: 12px 18px;
+    border-radius: 4px;
+    gap: 24px;
+    align-items: center;
+    max-width: 330px;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+    pointer-events: auto;
+    border-left: solid 5px transparent;
+
+    &__content {
+        flex-grow: 1;
+    }
+
+    &--can-dismiss {
+        cursor: pointer;
+        transition: ease-in scale 0.1s;
+
+        &:active {
+            scale: 0.975;
+        }
+    }
+}

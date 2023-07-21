@@ -47,6 +47,12 @@
         }
     }
 
+    &--safe-area {
+        @media all and (display-mode: standalone) {
+            height: calc(100% - 36px);
+        }
+    }
+
     @media (max-width: 600px) {
         &__head,
         &__foot {
@@ -56,9 +62,5 @@
                 padding: 12px 0;
             }
         }
-    }
-
-    @media all and (display-mode: standalone) {
-        height: calc(100% - 24px);
     }
 }

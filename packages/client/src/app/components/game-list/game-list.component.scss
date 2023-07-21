@@ -28,8 +28,8 @@
         text-align: center;
         width: 100%;
         box-sizing: border-box;
-        background: rgb(17, 17, 17);
-        color: inherit;
+        background: var(--theme-button);
+        color: var(--theme-button-contrast);
         text-decoration: inherit;
         display: flex;
         flex-direction: column;
@@ -43,7 +43,7 @@
         }
 
         &__title {
-            font-family: 'Changa';
+            font-family: var(--theme-special-font);
             font-size: 1.6em;
             font-weight: 700;
         }
@@ -58,16 +58,29 @@
             gap: 6px;
 
             &__pill {
+                position: relative;
                 font-size: 0.8em;
                 display: flex;
-                padding: 3px 8px;
+                padding: 4px 8px;
                 gap: 6px;
-                border-radius: 3px;
                 align-items: center;
-                background-color: rgba(255, 255, 255, 0.075);
-                color: rgba(255, 255, 255, 0.55);
+                color: var(--theme-button-contrast);
+                opacity: 0.75;
                 font-weight: 600;
                 white-space: nowrap;
+
+                &::before {
+                    position: absolute;
+                    content: '';
+                    top: 0;
+                    left: 0;
+                    bottom: 0;
+                    right: 0;
+                    background-color: var(--theme-button-contrast);
+                    opacity: 0.1;
+                    z-index: -1;
+                    border-radius: 3px;
+                }
             }
         }
     }

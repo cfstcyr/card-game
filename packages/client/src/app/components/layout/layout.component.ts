@@ -8,5 +8,6 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class LayoutComponent {
     @Input() disabledScroll: boolean = false;
     @Input() showTitleOnSroll: boolean = true;
+    @Input() safeArea: boolean = true;
     @Output() scroll: EventEmitter<Event> = new EventEmitter<Event>();
 }

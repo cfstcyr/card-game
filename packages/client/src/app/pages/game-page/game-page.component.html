@@ -19,7 +19,10 @@
         </sw-swiper>
     </app-data-renderer>
 
-    <span foot-action-left></span>
+    <app-simple-button foot-action-left effect="large" (click)="share()" [disabled]="!canShare()">
+        <i class="fas fa-share"></i>
+    </app-simple-button>
+
     <app-simple-button foot-action-right effect="large" (click)="previous()" [disabled]="!(canSwipePrevious | async)">
         <i class="far fa-chevron-left"></i>
     </app-simple-button>

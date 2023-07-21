@@ -7,6 +7,8 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ../..:/workspaces:cached
+    environment:
+      GOOGLE_APPLICATION_CREDENTIALS: /workspaces/card-game/.gcp/credentials.json
     command: sleep infinity
 
   server:
@@ -16,6 +18,7 @@ services:
     restart: unless-stopped
     volumes:
       - ../packages/server:/app
+      - ../.gcp:/.gcp
     network_mode: service:app
     environment:
       PORT: 5500
@@ -25,6 +28,7 @@ services:
       DB_PASSWORD: admin
       DB_DATABASE: card_game
       JWT_SECRET: 123
+      GOOGLE_APPLICATION_CREDENTIALS: /.gcp/credentials.json
 
   client:
     image: node:20

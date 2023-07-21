@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, EMPTY, Observable, Subject, catchError, delay, merge, repeat, retry } from 'rxjs';
+import { BehaviorSubject, EMPTY, Observable, Subject, catchError, delay, firstValueFrom, merge, repeat, retry } from 'rxjs';
 import { Cache } from 'src/app/db/cache';
 import { Data } from 'src/app/models/data';
 
@@ -40,25 +40,31 @@ export class DataService {
         this.isLoading$.next(true);
         let found = false;
 
-        merge(this.cache.get<T>(key), request.pipe(retry({ count: 1, delay: 1000 })))
-            .pipe(
-                catchError((error, caught) => {
-                    if (found) {
-                        return EMPTY;
-                    } else {
-                        subject.next({ error });
-                        return caught;
-                    }
-                }),
-            )
-            .subscribe((value) => {
-                if (value) {
-                    if(!found) subject.next({ value });
-                    found = true;
-                    this.cache.set(key, value);
+        (async () => {
+            try {
+                const cachedValue = await firstValueFrom(this.cache.get<T>(key));
+
+                if (cachedValue) {
+                    subject.next({ value: cachedValue });
+                    this.isLoading$.next(false);
+                    return;
+                }
+            } catch (error) {
+                subject.next({ error });
+            }
+
+            try {
+                const fetchValue = await firstValueFrom(request.pipe(retry({ count: 1, delay: 1000 })));
+
+                if (fetchValue) {
+                    subject.next({ value: fetchValue });
+                    this.cache.set(key, fetchValue);
                     this.isLoading$.next(false);
                 }
-            });
+            } catch (error) {
+                subject.next({ error });
+            }
+        })();
 
         return subject.asObservable();
     }

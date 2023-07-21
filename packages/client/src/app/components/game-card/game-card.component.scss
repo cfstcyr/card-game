@@ -1,14 +1,14 @@
 .game-card {
     height: 100%;
-    color: white;
     font-size: 2em;
     font-weight: bold;
     padding: 24px;
     text-align: center;
     overflow-y: auto;
     box-sizing: border-box;
-    font-family: changa;
+    font-family: var(--theme-special-font);
     cursor: grab;
+    display: flex;
 
     &__content {
         min-height: 100%;
@@ -19,14 +19,31 @@
         margin: 0 auto;
     }
 
+    &.theme {
+        &--blue,
+        &--green {
+            align-items: center;
+            .game-card__content {
+                background-color: var(--theme-button);
+                color: var(--theme-button-contrast);
+                min-height: fit-content;
+                padding: 48px 24px;
+                border-radius: 12px;
+                box-sizing: border-box;
+                box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.132);
+            }
+        }
+    }
+
     &--system {
         font-size: 1.7em;
-        color: rgba(white, 0.55);
-        font-family: nunito;
         font-weight: 500;
+        font-style: italic;
+        opacity: 0.55;
     }
     
     &:active {
         cursor: grabbing;
     }
+
 }

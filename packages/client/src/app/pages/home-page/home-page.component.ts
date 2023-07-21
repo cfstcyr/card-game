@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { BehaviorSubject, Observable, combineLatest, lastValueFrom, map } from 'rxjs';
+import { SettingsComponent } from 'src/app/components/settings/settings.component';
 import { Data } from 'src/app/models/data';
 import { Game } from 'src/app/models/game';
 import { ModalService } from 'src/app/modules/modal/modal.module';
+import { ButtonComponent } from 'src/app/modules/ui/components/button/button.component';
 import { GamesService } from 'src/app/services/game-service/games.service';
 
 const TITLE_VISIBLE_BREAKPOINT = 80;
@@ -14,13 +16,13 @@ const TITLE_VISIBLE_BREAKPOINT = 80;
 })
 export class HomePageComponent {
     games: Observable<Data<Game[]>>;
-    continueGames: BehaviorSubject<(Game & { currentIndex: number; activeGameId: number })[]>;
+    continueGames: BehaviorSubject<(Game & { currentIndex: number; activeGameId: string })[]>;
     hasContinueGames: Observable<boolean>;
     isTitleVisible: boolean = true;
 
     constructor(private readonly gamesService: GamesService, private readonly modalService: ModalService) {
         this.games = this.gamesService.getGames();
-        this.continueGames = new BehaviorSubject<(Game & { currentIndex: number; activeGameId: number })[]>([]);
+        this.continueGames = new BehaviorSubject<(Game & { currentIndex: number; activeGameId: string })[]>([]);
         this.hasContinueGames = this.continueGames.pipe(map((games) => games.length > 0));
 
         this.updateContinueGames();
@@ -34,19 +36,12 @@ export class HomePageComponent {
 
     handleOptionsButton(): void {
         this.modalService.push({
-            title: '',
-            actions: [
-                {
-                    icon: 'flag'
-                },
-                {
-                    icon: 'flag'
-                },
-            ]
+            title: 'Options',
+            content: SettingsComponent,
         });
     }
 
-    removeContinueGame(gameId: number): void {
+    removeContinueGame(gameId: string): void {
         this.gamesService.activeGames.remove(gameId).subscribe(() => {
             this.updateContinueGames();
         });
@@ -54,7 +49,7 @@ export class HomePageComponent {
 
     private updateContinueGames(): void {
         combineLatest([this.games, this.gamesService.activeGames.getAll()]).subscribe(([data, activeGames]) => {
-            const games: (Game & { currentIndex: number; activeGameId: number })[] = [];
+            const games: (Game & { currentIndex: number; activeGameId: string })[] = [];
 
             if (data.value) {
                 for (const { gameId, currentIndex, id } of activeGames) {

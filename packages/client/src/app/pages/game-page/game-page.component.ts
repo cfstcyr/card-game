@@ -1,9 +1,9 @@
 import { AfterViewInit, Component, HostListener, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { BehaviorSubject, Observable, Subject, combineLatest, concat, concatAll, merge, tap } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, combineLatest, concat, concatAll, delay, merge, tap } from 'rxjs';
 import { Card } from 'src/app/models/card';
 import { Data } from 'src/app/models/data';
-import { GameWithCards } from 'src/app/models/game';
+import { Game } from 'src/app/models/game';
 import { SwiperComponent } from 'src/app/modules/swiper/components/swiper/swiper.component';
 import { GamesService } from 'src/app/services/game-service/games.service';
 import { shuffle } from 'src/app/utils/random';
@@ -15,18 +15,21 @@ import { shuffle } from 'src/app/utils/random';
 })
 export class GamePageComponent implements AfterViewInit {
     @ViewChild(SwiperComponent) swiper?: SwiperComponent;
-    game: Observable<Data<GameWithCards>> | undefined;
-    cards: Subject<Omit<Card, "gameId">[]> = new BehaviorSubject<Omit<Card, "gameId">[]>([]);
+    game: Observable<Data<Game>> | undefined;
+    currentGame?: Game;
+    cards: BehaviorSubject<Omit<Card, "gameId">[]> = new BehaviorSubject<Omit<Card, "gameId">[]>([]);
     canSwipeNext: Subject<boolean> = new Subject();
     canSwipePrevious: Subject<boolean> = new Subject();
-    currentIndex: Subject<number> = new Subject();
+    currentIndex: BehaviorSubject<number> = new BehaviorSubject(0);
     cardsLeft: Subject<number> = new Subject();
 
     constructor(private readonly gamesService: GamesService, private readonly route: ActivatedRoute) {
         combineLatest([this.route.params, this.route.queryParams]).subscribe(([params, query]) => {
-            this.game = this.gamesService.getGame(Number(params['id']));
+            this.game = this.gamesService.getGame(params['id']);
 
-            this.game.subscribe((game) => {
+            this.game.pipe(delay(10)).subscribe((game) => {
+                this.currentGame = game.value;
+
                 if (game.value) {
                     const shuffledCards = shuffle(game.value.cards);
                     this.cards.next(shuffledCards);
@@ -74,5 +77,19 @@ export class GamePageComponent implements AfterViewInit {
 
     previous(): void {
         this.swiper?.swiper?.slidePrev();
+    }
+
+    canShare(): boolean {
+        return navigator.canShare(this.getShareContent());
+    }
+
+    share(): void {
+        navigator.share(this.getShareContent())
+    }
+
+    private getShareContent(): ShareData {
+        return {
+            text: `"${this.cards.value?.[this.currentIndex.value]?.content}"\n\nPlay "${this.currentGame?.name}" on ${location.origin}.`,
+        }
     }
 }

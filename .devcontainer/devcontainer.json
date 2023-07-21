@@ -19,20 +19,14 @@
 	// Configure tool-specific properties.
 	"customizations": {
 		"vscode": {
-			"extensions": ["ms-azuretools.vscode-docker", "ms-vscode.makefile-tools", "angular.ng-template"]
+			"extensions": ["ms-azuretools.vscode-docker", "ms-vscode.makefile-tools", "angular.ng-template", "HashiCorp.terraform"]
 		}
 	},
 	"features": {
-		"ghcr.io/devcontainers/features/docker-in-docker:2": {
-			"moby": true,
-			"azureDnsAutoDetection": true,
-			"installDockerBuildx": true,
-			"version": "latest",
-			"dockerDashComposeVersion": "none"
-		},
-		"ghcr.io/devcontainers-contrib/features/angular-cli:2": {
-			"version": "16.0.1"
-		}
+		"ghcr.io/devcontainers/features/docker-in-docker:2": {},
+		"ghcr.io/devcontainers-contrib/features/angular-cli:2": {},
+		"ghcr.io/dhoeric/features/google-cloud-cli:1": {},
+		"ghcr.io/devcontainers-contrib/features/terraform-asdf:2": {}
 	},
 	"portsAttributes": {
 		"4200": {

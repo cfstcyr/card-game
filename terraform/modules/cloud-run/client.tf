@@ -20,3 +20,19 @@ resource "google_cloud_run_v2_service_iam_member" "client_access_by_public" {
   role = "roles/run.invoker"
   member = "allUsers"
 }
+
+resource "google_cloud_run_domain_mapping" "domain_mapping_1" {
+  for_each = toset(["card", "cards"])
+
+  location = var.region
+  name     = "${each.value}.cfstcyr.com"
+
+  metadata {
+    namespace = var.project_id
+  }
+
+  spec {
+    force_override = true
+    route_name     = google_cloud_run_v2_service.client.name
+  }
+}

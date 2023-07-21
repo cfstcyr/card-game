@@ -1,4 +1,4 @@
-<div class="layout">
+<div class="layout" [ngClass]="{'layout--safe-area': safeArea}">
     <div class="layout__head">
         <div class="layout__actions layout__head__actions layout__head__actions__left">
             <ng-content select="[head-action-left]"></ng-content>
