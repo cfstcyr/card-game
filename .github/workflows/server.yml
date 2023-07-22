@@ -9,7 +9,7 @@ defaults:
   run:
     shell: bash
 
-environment:
+env:
   PROJECT: card-game-389821
   APP: card-game-prod
   SERVICE: server
