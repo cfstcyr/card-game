@@ -30,8 +30,8 @@ export class GamesService implements IGameService {
         }))
     }
 
-    fetchGames(): Observable<Data<Game[]>> {
-        return this.dataService.get<Game[]>('/game').pipe(
+    fetchGames(noCache: boolean = false): Observable<Data<Game[]>> {
+        return this.dataService.get<Game[]>('/game' + (noCache ? '?noCache=1' : '')).pipe(
             tap((games) => {
                 this.gameList$.next(games);
 

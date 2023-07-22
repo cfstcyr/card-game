@@ -50,6 +50,7 @@ export abstract class DataEntryService<T> {
 
     async add(entry: T): Promise<Entry<T>> {
         const res = await this.collection.add(entry);
+        this.cacheService.invalidate();
 
         return { id: res.id, ...entry };
     }
@@ -61,6 +62,7 @@ export abstract class DataEntryService<T> {
         delete updated.id;
 
         await this.collection.doc(id).set(updated);
+        this.cacheService.invalidate();
 
         return { id, ...updated };
     }
@@ -84,6 +86,7 @@ export abstract class DataEntryService<T> {
             batch.delete(doc.ref);
         });
         await batch.commit();
+        this.cacheService.invalidate();
 
         return this.deleteQueryBatch(query);
     }

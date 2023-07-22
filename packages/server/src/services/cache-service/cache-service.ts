@@ -60,4 +60,9 @@ export class CacheService {
 
         this.cache.delete(key);
     }
+
+    invalidate(): void {
+        this.cache.clear();
+        this.tags.clear();
+    }
 }

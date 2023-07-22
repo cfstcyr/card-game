@@ -21,7 +21,7 @@ export const DataProvider: React.FC<PropsWithChildren> = ({ children }) => {
         setGames((g) => loading(g));
 
         try {
-            const res = await get<Game[]>('/game');
+            const res = await get<Game[]>('/game?noCache=1');
             setGames((g) => ({
                 ...g,
                 loading: false,

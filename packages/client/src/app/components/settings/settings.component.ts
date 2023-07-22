@@ -19,14 +19,10 @@ export class SettingsComponent {
     this.currentTheme = themeService.currentTheme;
   }
 
-  clearCache() {
+  updateContent() {
     this.dataService.clearCache();
-  }
-
-  clearCacheAndReload() {
-    this.dataService.clearCache();
-    this.gameService.fetchGames().subscribe(() => {
-      this.alertService.success('Reloaded!')
+    this.gameService.fetchGames(true).subscribe(() => {
+      this.alertService.success('Content updated!')
     });
   }
 }
