@@ -22,9 +22,12 @@ jobs:
           node-version: 19
           cache: 'npm'
           cache-dependency-path: packages/${{env.SERVICE}}/package-lock.json
-      - run: cd packages/$SERVICE
-      - run: npm ci
-      - run: npm run lint
+      - run: |
+          cd packages/$SERVICE
+          npm ci
+      - run: |
+          cd packages/$SERVICE
+          npm run lint
 
   build:
     runs-on: ubuntu-latest
@@ -35,6 +38,7 @@ jobs:
       - run: cd packages/$SERVICE
       - name: Build
         run: |
+          cd packages/$SERVICE
           docker buildx build \
             --platform linux/amd64 \
             --target prod \
