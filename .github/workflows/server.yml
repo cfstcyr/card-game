@@ -22,10 +22,12 @@ jobs:
           node-version: 19
           cache: 'npm'
           cache-dependency-path: packages/${{env.SERVICE}}/package-lock.json
-      - run: |
+      - name: Install dependencies
+        run: |
           cd packages/$SERVICE
           npm ci
-      - run: |
+      - name: Lint
+        run: |
           cd packages/$SERVICE
           npm run lint
 
