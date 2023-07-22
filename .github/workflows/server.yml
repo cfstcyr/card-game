@@ -1,0 +1,60 @@
+name: Server
+
+on:
+  push:
+    branches:
+      - main
+
+defaults:
+  run:
+    shell: bash
+
+environment:
+  PROJECT: card-game-389821
+  APP: card-game-prod
+  SERVICE: server
+  REGION: us-central1
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    needs: [lint]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 19
+          cache: 'npm'
+      - run: cd packages/$SERVICE
+      - run: npm ci
+      - run: npm run lint
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: cd packages/$SERVICE
+      - name: Build
+        run: |
+          docker buildx build \
+            --platform linux/amd64 \
+            --target prod \
+            -t $REGION-docker.pkg.dev/$PROJECT/$APP/$SERVICE \
+            .
+      - name: Push
+        run: docker push $REGION-docker.pkg.dev/$PROJECT/$APP/$SERVICE
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [build]
+    steps:
+      - run: |
+          gcloud run deploy card-game-$SERVICE-prod \
+            --image=$REGION-docker.pkg.dev/$PROJECT/$APP/$SERVICE \
+            --region=$REGION \
+            --project=$PROJECT
+      - run: |
+          gcloud run services update-traffic card-game-$SERVICE-prod \
+            --region=$REGION \
+            --project=$PROJECT \
+            --to-latest
