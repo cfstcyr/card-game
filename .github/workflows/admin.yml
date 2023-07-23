@@ -1,9 +1,9 @@
-name: Server
+name: Admin
 
 on:
   push:
     paths:
-      - packages/server/**
+      - packages/admin/**
 
 defaults:
   run:
@@ -12,7 +12,7 @@ defaults:
 env:
   PROJECT: card-game-389821
   APP: card-game-prod
-  SERVICE: server
+  SERVICE: admin
   REGION: us-central1
 
 jobs:

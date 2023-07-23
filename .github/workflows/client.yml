@@ -1,9 +1,9 @@
-name: Server
+name: Client
 
 on:
   push:
     paths:
-      - packages/server/**
+      - packages/client/**
 
 defaults:
   run:
@@ -12,31 +12,12 @@ defaults:
 env:
   PROJECT: card-game-389821
   APP: card-game-prod
-  SERVICE: server
+  SERVICE: client
   REGION: us-central1
 
 jobs:
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 19
-          cache: 'npm'
-          cache-dependency-path: packages/${{env.SERVICE}}/package-lock.json
-      - name: Install dependencies
-        run: |
-          cd packages/$SERVICE
-          npm ci
-      - name: Lint
-        run: |
-          cd packages/$SERVICE
-          npm run lint
-
   build:
     runs-on: ubuntu-latest
-    needs: [lint]
     if: github.ref == 'refs/heads/main'
     steps:
       - uses: actions/checkout@v3
@@ -74,7 +55,7 @@ jobs:
             --region=$REGION \
             --project=$PROJECT
       - run: |
-          gcloud run services update-traffic card-game-$SERVICE-prod \
+          gcloud run services update-traffic card-game-prod \
             --region=$REGION \
             --project=$PROJECT \
             --to-latest
