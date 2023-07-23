@@ -1,0 +1,87 @@
+name: Terraform
+
+on:
+  push:
+    paths:
+      - terraform/**
+      - .github/workflows/terraform.yml
+  workflow_dispatch:
+
+defaults:
+  run:
+    shell: bash
+
+env:
+  ENVIRONMENT: prod
+
+jobs:
+  fmt:
+    name: Check format
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: hashicorp/setup-terraform@v2
+      - name: Check format
+        run: |
+          cd terraform/environments/${{ env.ENVIRONMENT }}
+          terraform fmt -check
+
+  plan:
+    name: Plan
+    needs: fmt
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: hashicorp/setup-terraform@v2
+      - id: 'auth'
+        name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v1'
+        with:
+          credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
+      - name: Init
+        run: |
+          cd terraform/environments/${{ env.ENVIRONMENT }}
+          terraform init
+      - name: Plan
+        run: |
+          cd terraform/environments/${{ env.ENVIRONMENT }}
+          terraform plan -out output.tfplan
+          terraform show -no-color output.tfplan > plan.txt
+      - name: Save plan
+        uses: actions/upload-artifact@v3
+        with:
+          name: output.tfplan
+          path: terraform/environments/${{ env.ENVIRONMENT }}/output.tfplan
+      - name: Save plan (text version)
+        uses: actions/upload-artifact@v3
+        with:
+          name: plan.txt
+          path: terraform/environments/${{ env.ENVIRONMENT }}/plan.txt
+
+  apply:
+    name: Apply
+    needs: plan
+    runs-on: ubuntu-latest
+    environment: 'prod'
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v3
+      - uses: hashicorp/setup-terraform@v2
+      - id: 'auth'
+        name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v1'
+        with:
+          credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
+      - name: Init
+        run: |
+          cd terraform/environments/${{ env.ENVIRONMENT }}
+          terraform init
+      - name: Load plan
+        uses: actions/download-artifact@v3
+        with:
+          name: output.tfplan
+          path: terraform/environments/${{ env.ENVIRONMENT }}/output.tfplan
+      - name: Plan
+        run: |
+          cd terraform/environments/${{ env.ENVIRONMENT }}
+          terraform apply -state=output.tfplan -auto-approve
