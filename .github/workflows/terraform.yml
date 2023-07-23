@@ -12,27 +12,23 @@ defaults:
     shell: bash
 
 env:
-  # PROJECT: card-game-389821
-  # APP: card-game-prod
-  # SERVICE: server
-  # REGION: us-central1
   ENVIRONMENT: prod
 
 jobs:
-  # fmt:
-  #   name: Check format
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #     - uses: hashicorp/setup-terraform@v2
-  #     - name: Check format
-  #       run: |
-  #         cd terraform/environments/${{ env.ENVIRONMENT }}
-  #         terraform fmt -check
+  fmt:
+    name: Check format
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: hashicorp/setup-terraform@v2
+      - name: Check format
+        run: |
+          cd terraform/environments/${{ env.ENVIRONMENT }}
+          terraform fmt -check
 
   plan:
     name: Plan
-    # needs: fmt
+    needs: fmt
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -67,6 +63,7 @@ jobs:
     needs: plan
     runs-on: ubuntu-latest
     environment: 'prod'
+    if: github.ref == 'refs/heads/main'
     steps:
       - uses: actions/checkout@v3
       - uses: hashicorp/setup-terraform@v2
