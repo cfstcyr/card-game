@@ -5,6 +5,11 @@ terraform {
       version = "4.51.0"
     }
   }
+
+  backend "gcs" {
+   bucket  = "card-game-tf-prod"
+   prefix  = "terraform/state"
+ }
 }
 
 provider "google" {
