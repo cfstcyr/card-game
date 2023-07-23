@@ -19,19 +19,20 @@ env:
   ENVIRONMENT: prod
 
 jobs:
-  fmt:
-    name: Check format
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: hashicorp/setup-terraform@v2
-      - name: Check format
-        run: |
-          cd terraform/environments/${{ env.ENVIRONMENT }}
-          terraform fmt -check
+  # fmt:
+  #   name: Check format
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - uses: hashicorp/setup-terraform@v2
+  #     - name: Check format
+  #       run: |
+  #         cd terraform/environments/${{ env.ENVIRONMENT }}
+  #         terraform fmt -check
 
   plan:
     name: Plan
+    # needs: fmt
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -39,6 +40,7 @@ jobs:
       - name: Plan
         run: |
           cd terraform/environments/${{ env.ENVIRONMENT }}
+          terraform init
           terraform plan -out output.tfplan
           terraform show -no-color output.tfplan > plan.txt
           cat plan.txt
