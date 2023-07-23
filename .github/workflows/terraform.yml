@@ -30,6 +30,24 @@ jobs:
           cd terraform/environments/${{ env.ENVIRONMENT }}
           terraform fmt -check
 
+    plan:
+      name: Plan
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v3
+        - uses: hashicorp/setup-terraform@v2
+        - name: Plan
+          run: |
+            cd terraform/environments/${{ env.ENVIRONMENT }}
+            terraform plan -out output.tfplan
+            terraform show -no-color output.tfplan > plan.txt
+            cat plan.txt
+        - name: Save plan
+          uses: actions/upload-artifact@v3
+          with:
+            name: output.tfplan
+            path: terraform/environments/${{ env.ENVIRONMENT }}/output.tfplan
+
   # build:
   #   runs-on: ubuntu-latest
   #   needs: [lint]
