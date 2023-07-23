@@ -51,6 +51,8 @@ jobs:
             --target prod \
             -t $REGION-docker.pkg.dev/$PROJECT/$APP/$SERVICE \
             .
+      - name: Configure Docker
+        run: gcloud auth configure-docker us-central1-docker.pkg.dev
       - name: Push
         run: docker push $REGION-docker.pkg.dev/$PROJECT/$APP/$SERVICE
 
