@@ -42,13 +42,15 @@ jobs:
         uses: 'google-github-actions/auth@v1'
         with:
           credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
-      - name: Plan
+      - name: Init
         run: |
           cd terraform/environments/${{ env.ENVIRONMENT }}
           terraform init
+      - name: Plan
+        run: |
+          cd terraform/environments/${{ env.ENVIRONMENT }}
           terraform plan -out output.tfplan
           terraform show -no-color output.tfplan > plan.txt
-          cat plan.txt
       - name: Save plan
         uses: actions/upload-artifact@v3
         with:
