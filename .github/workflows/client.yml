@@ -4,6 +4,8 @@ on:
   push:
     paths:
       - packages/client/**
+      - .github/workflows/client.yml
+  workflow_dispatch:
 
 defaults:
   run:

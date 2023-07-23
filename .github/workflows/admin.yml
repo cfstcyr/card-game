@@ -4,6 +4,8 @@ on:
   push:
     paths:
       - packages/admin/**
+      - .github/workflows/admin.yml
+  workflow_dispatch:
 
 defaults:
   run:
