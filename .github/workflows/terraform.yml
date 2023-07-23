@@ -62,7 +62,7 @@ jobs:
           name: plan.txt
           path: terraform/environments/${{ env.ENVIRONMENT }}/plan.txt
 
-  plan:
+  apply:
     name: Apply
     needs: plan
     runs-on: ubuntu-latest
