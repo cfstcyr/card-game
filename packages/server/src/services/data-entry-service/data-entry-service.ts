@@ -1,93 +1,75 @@
 import { StatusCodes } from 'http-status-codes';
 import { HttpException } from '../../models/http-exception';
-import { DatabaseService } from '../database-service/database-service';
-import { Entry } from '../../models/entry';
-import { Query } from '@google-cloud/firestore';
 import { CacheService } from '../cache-service/cache-service';
+import { WithId } from 'mongodb';
+import { Model } from 'mongoose';
+import { logger } from '../../utils/logger';
 
 export abstract class DataEntryService<T> {
     constructor(
-        protected readonly databaseService: DatabaseService,
-        protected readonly collectionPath: string,
+        protected readonly model: Model<T>,
         protected readonly cacheService: CacheService,
+        private readonly disableCache: boolean = false,
     ) {}
 
-    get db() {
-        return this.databaseService.db;
-    }
+    async getAll(noCache = false): Promise<WithId<T>[]> {
+        const cacheKey = `getAll:${this.model.name}`;
+        const cached = this.cacheService.get<WithId<T>[]>(cacheKey);
 
-    get collection() {
-        return this.databaseService.collection<T>(this.collectionPath);
-    }
+        if (cached && !noCache && !this.disableCache) return cached;
 
-    async getAll(noCache = false): Promise<Entry<T>[]> {
-        const cacheKey = `getAll:${this.collectionPath}`;
-        const cached = this.cacheService.get<Entry<T>[]>(cacheKey);
-
-        if (cached && !noCache) return cached;
-
-        const res = (await this.collection.get()).docs.map((doc) => ({
-            id: doc.id,
-            ...doc.data(),
-        }));
+        const res = (await this.model.find()) as WithId<T>[];
 
         this.cacheService.set(cacheKey, res);
 
         return res;
     }
 
-    async get(id: string): Promise<Entry<T>> {
-        const entry = (await this.collection.doc(id).get()).data();
+    async get(id: string): Promise<WithId<T>> {
+        const entry = (await this.model.findById(id)) as WithId<T> | null;
 
         if (!entry)
             throw new HttpException(
-                `Cannot find entry with ID "${id}" in collection "${this.collectionPath}"`,
+                `Cannot find entry with ID "${id}" in collection "${this.model.name}"`,
                 StatusCodes.NOT_FOUND,
             );
 
-        return { id, ...entry };
+        return entry;
     }
 
-    async add(entry: T): Promise<Entry<T>> {
-        const res = await this.collection.add(entry);
+    async add(entry: T): Promise<WithId<T>> {
+        const res = (await new this.model(
+            entry,
+        ).save()) as unknown as WithId<T>;
+
         this.cacheService.invalidate();
 
-        return { id: res.id, ...entry };
+        return res;
     }
 
-    async update(id: string, mod: Partial<T>): Promise<Entry<T>> {
-        const original = await this.get(id);
-        const updated: T & { id?: string } = { ...original, ...mod };
+    async update(id: string, update: Partial<T>): Promise<WithId<T>> {
+        logger.info(
+            `Update ${this.model.name} id=${id} with ${JSON.stringify(
+                update,
+            )}.`,
+        );
 
-        delete updated.id;
+        const doc = await this.model.findByIdAndUpdate(id, update, {
+            strict: true,
+        });
 
-        await this.collection.doc(id).set(updated);
+        if (!doc)
+            throw new HttpException(
+                `Cannot find entry with ID "${id}" in collection "${this.model.name}"`,
+                StatusCodes.NOT_FOUND,
+            );
+
         this.cacheService.invalidate();
 
-        return { id, ...updated };
+        return (await this.model.findById(id)) as WithId<T>;
     }
 
     async delete(id: string): Promise<void> {
-        await this.collection.doc(id).delete();
-    }
-
-    protected async deleteQueryBatch(query: Query): Promise<void> {
-        const snapshot = await query.get();
-
-        const batchSize = snapshot.size;
-        if (batchSize === 0) {
-            // When there are no documents left, we are done
-            return;
-        }
-
-        // Delete documents in a batch
-        const batch = this.db.batch();
-        snapshot.docs.forEach((doc) => {
-            batch.delete(doc.ref);
-        });
-        await batch.commit();
-        this.cacheService.invalidate();
-
-        return this.deleteQueryBatch(query);
+        await this.model.findByIdAndDelete(id);
     }
 }

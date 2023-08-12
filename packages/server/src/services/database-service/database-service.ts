@@ -1,18 +1,20 @@
 import { singleton } from 'tsyringe';
 import { env } from '../../utils/environment';
-import { CollectionReference, Firestore } from '@google-cloud/firestore';
+import mongoose from 'mongoose';
+import { logger } from '../../utils/logger';
 
 @singleton()
 export class DatabaseService {
-    db: Firestore;
-
-    constructor() {
-        this.db = new Firestore();
+    private get url(): string {
+        return `mongodb://${env.DB_USER}:${env.DB_PASSWORD}@${env.DB_HOST}:${env.DB_PORT}/${env.DB_DATABASE}?authSource=admin`;
     }
 
-    collection<T>(collectionPath: string): CollectionReference<T> {
-        return this.db.collection(
-            `environment/${env.NODE_ENV}/${collectionPath}`,
-        ) as CollectionReference<T>;
+    async connect(): Promise<void> {
+        try {
+            await mongoose.connect(this.url);
+        } catch (e) {
+            logger.error(`Could not connect to ${this.url}.`);
+            throw e;
+        }
     }
 }

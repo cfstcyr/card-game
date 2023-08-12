@@ -13,8 +13,6 @@ import { env } from './utils/environment';
 import { resolve } from 'path';
 import { logger } from './utils/logger';
 import helmet from 'helmet';
-import { UserService } from './services/user-service/user-service';
-import { DatabaseService } from './services';
 
 @singleton()
 export class Application {
@@ -23,8 +21,6 @@ export class Application {
     constructor(
         @injectAll(SYMBOLS.controller)
         private readonly controllers: AbstractController[],
-        private readonly userService: UserService,
-        private readonly databaseService: DatabaseService,
     ) {
         this.app = express();
 
