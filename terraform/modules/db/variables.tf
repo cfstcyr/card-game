@@ -9,16 +9,15 @@ variable "project_name" {
 }
 
 variable "environment" {
-  type        = string
-  description = "Environment"
-}
-
-variable "region" {
-  type        = string
-  description = "Region"
+    type = string
+    description = "Environment"
 }
 
 variable "organization_id" {
   type = string
   description = "Mongo Atlas organization ID"
+}
+
+variable "db_password" {
+  type = string
 }

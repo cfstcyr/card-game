@@ -6,7 +6,7 @@ import { logger } from '../../utils/logger';
 @singleton()
 export class DatabaseService {
     private get url(): string {
-        return `mongodb://${env.DB_USER}:${env.DB_PASSWORD}@${env.DB_HOST}:${env.DB_PORT}/${env.DB_DATABASE}?authSource=admin`;
+        return env.DB_URI;
     }
 
     async connect(): Promise<void> {

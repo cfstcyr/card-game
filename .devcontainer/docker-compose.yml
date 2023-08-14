@@ -22,11 +22,7 @@ services:
     network_mode: service:app
     environment:
       PORT: 5500
-      DB_HOST: mongo
-      DB_PORT: 27017
-      DB_USER: root
-      DB_PASSWORD: root
-      DB_DATABASE: card_game
+      DB_URI: mongodb://root:root@mongo:27017/card_game?authSource=admin
       JWT_SECRET: 123
       GOOGLE_APPLICATION_CREDENTIALS: /.gcp/credentials.json
 

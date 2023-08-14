@@ -9,6 +9,10 @@ resource "google_cloud_run_v2_service" "server" {
       ports {
         container_port = 3000
       }
+      env {
+        name = "DB_URI"
+        value = var.db_uri
+      }
     }
   }
 }
