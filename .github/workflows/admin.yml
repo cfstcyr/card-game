@@ -48,15 +48,20 @@ jobs:
         uses: 'google-github-actions/auth@v1'
         with:
           credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
-      - name: Set environment
+      - name: Get server url
         run: |
-          echo "SERVER_URL=https://card-game-server-prod-guqcsz3edq-uc.a.run.app" >> $GITHUB_ENV
+          echo "SERVER_URL=$(gcloud run services describe card-game-server-prod \
+            --platform managed \
+            --region ${REGION} \
+            --format 'value(status.url)' \
+            --project ${PROJECT})"
       - name: Build
         run: |
           cd packages/$SERVICE
           docker buildx build \
             --platform linux/amd64 \
             --target prod \
+            --build-arg "SERVER_URL=${SERVER_URL}" \
             -t $REGION-docker.pkg.dev/$PROJECT/$APP/$SERVICE \
             .
       - name: Configure Docker
