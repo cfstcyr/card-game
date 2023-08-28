@@ -4,6 +4,36 @@ module "api" {
   project_id = var.project_id
 }
 
+module "iam" {
+  source = "../../modules/iam"
+
+  project_id   = var.project_id
+  project_name = var.project_name
+  environment  = var.environment
+}
+
+module "secrets" {
+  source = "../../modules/secrets"
+
+  project_id   = var.project_id
+  project_name = var.project_name
+  environment  = var.environment
+
+  depends_on = [module.api]
+}
+
+module "db" {
+  source = "../../modules/db"
+
+  project_id      = var.project_id
+  project_name    = var.project_name
+  environment     = var.environment
+  organization_id = var.organization_id
+  db_password     = module.secrets.db_password
+
+  depends_on = [module.api]
+}
+
 module "registry" {
   source = "../../modules/registry"
 
@@ -35,7 +65,7 @@ module "cloud-run" {
   environment   = var.environment
   repository_id = module.registry.repository_id
 
-  depends_on = [module.api, module.registry]
+  depends_on = [module.api, module.iam, module.registry, module.secrets]
 }
 
 # output "name" {

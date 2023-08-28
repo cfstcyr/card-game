@@ -9,7 +9,7 @@ interface Props extends Omit<ComponentProps<typeof Button>, 'children'> {
 export const GameButton: React.FC<Props> = ({ game, ...props }) => {
     return (
         <Button
-            to={`/game/${game.id}`}
+            to={`/game/${game._id}`}
             size="large"
             content="vertical"
             {...props}

@@ -17,3 +17,8 @@ variable "region" {
   type        = string
   description = "Region"
 }
+
+variable "organization_id" {
+  type        = string
+  description = "Mongo Atlas organization ID"
+}

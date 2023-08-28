@@ -1,7 +1,7 @@
 resource "google_cloud_run_v2_service" "client" {
   name     = "${var.project_name}-${var.environment}"
   location = var.region
-  ingress = "INGRESS_TRAFFIC_ALL"
+  ingress  = "INGRESS_TRAFFIC_ALL"
 
   template {
     containers {
@@ -15,10 +15,10 @@ resource "google_cloud_run_v2_service" "client" {
 
 resource "google_cloud_run_v2_service_iam_member" "client_access_by_public" {
   location = google_cloud_run_v2_service.client.location
-  project = google_cloud_run_v2_service.client.project
-  name = google_cloud_run_v2_service.client.name
-  role = "roles/run.invoker"
-  member = "allUsers"
+  project  = google_cloud_run_v2_service.client.project
+  name     = google_cloud_run_v2_service.client.name
+  role     = "roles/run.invoker"
+  member   = "allUsers"
 }
 
 resource "google_cloud_run_domain_mapping" "domain_mapping_1" {

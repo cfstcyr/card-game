@@ -1,7 +1,7 @@
 import { Card } from './card';
 
 export interface Game {
-    id: string;
+    _id: string;
     name: string;
     description?: string;
     instructions?: string;

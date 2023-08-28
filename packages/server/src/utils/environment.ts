@@ -12,6 +12,7 @@ const env = cleanEnv(process.env, {
     // DB_USER: str(),
     // DB_PASSWORD: str(),
     // DB_DATABASE: str(),
+    DB_URI: str(),
 
     JWT_SECRET: str({ default: 'abc' }),
 

@@ -53,7 +53,7 @@ export class HomePageComponent {
 
             if (data.value) {
                 for (const { gameId, currentIndex, id } of activeGames) {
-                    const game = data.value.find((g) => g.id === gameId);
+                    const game = data.value.find((g) => g._id === gameId);
                     if (game) {
                         games.push({ ...game, currentIndex, activeGameId: id });
                     }

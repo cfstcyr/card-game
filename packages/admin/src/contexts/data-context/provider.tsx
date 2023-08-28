@@ -47,7 +47,7 @@ export const DataProvider: React.FC<PropsWithChildren> = ({ children }) => {
         }
     }, []);
 
-    const createGame = useCallback(async (game: Omit<Game, 'id'>) => {
+    const createGame = useCallback(async (game: Omit<Game, '_id'>) => {
         setGames((g) => loading(g));
         try {
             await post<Game>('/game', game);
@@ -58,7 +58,7 @@ export const DataProvider: React.FC<PropsWithChildren> = ({ children }) => {
     }, []);
 
     const updateGame = useCallback(
-        async (gameId: string | number, game: Partial<Omit<Game, 'id'>>) => {
+        async (gameId: string | number, game: Partial<Omit<Game, '_id'>>) => {
             setGames((g) => loading(g));
 
             try {

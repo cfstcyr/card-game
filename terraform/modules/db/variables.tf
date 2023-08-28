@@ -13,11 +13,11 @@ variable "environment" {
   description = "Environment"
 }
 
-variable "region" {
+variable "organization_id" {
   type        = string
-  description = "Region"
+  description = "Mongo Atlas organization ID"
 }
 
-variable "repository_id" {
+variable "db_password" {
   type = string
 }

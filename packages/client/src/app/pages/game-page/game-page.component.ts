@@ -34,7 +34,7 @@ export class GamePageComponent implements AfterViewInit {
                     const shuffledCards = shuffle(game.value.cards);
                     this.cards.next(shuffledCards);
                     this.gamesService.activeGames.set({
-                        gameId: game.value.id,
+                        gameId: game.value._id,
                         cardsId: shuffledCards.map((card) => card.id),
                         currentIndex: 0,
                     });
@@ -66,7 +66,7 @@ export class GamePageComponent implements AfterViewInit {
 
         this.swiper && this.game && combineLatest([this.swiper.currentIndex, this.game]).subscribe(([currentIndex, game]) => {
             if (game.value) {
-                this.gamesService.activeGames.updateCurrentIndex(game.value.id, currentIndex);
+                this.gamesService.activeGames.updateCurrentIndex(game.value._id, currentIndex);
             }
         });
     }

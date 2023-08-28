@@ -12,12 +12,3 @@ variable "environment" {
   type        = string
   description = "Environment"
 }
-
-variable "region" {
-  type        = string
-  description = "Region"
-}
-
-variable "repository_id" {
-  type = string
-}
