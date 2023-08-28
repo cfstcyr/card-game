@@ -54,7 +54,7 @@ jobs:
             --platform managed \
             --region ${REGION} \
             --format 'value(status.url)' \
-            --project ${PROJECT})"
+            --project ${PROJECT})" >> $GITHUB_ENV
       - name: Build
         run: |
           cd packages/$SERVICE
