@@ -48,10 +48,12 @@ jobs:
         uses: 'google-github-actions/auth@v1'
         with:
           credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
+      - name: Set environment
+        run: |
+          echo "SERVER_URL=https://card-game-server-prod-guqcsz3edq-uc.a.run.app" >> $GITHUB_ENV
       - name: Build
         run: |
           cd packages/$SERVICE
-          export SERVER_URL="https://card-game-server-prod-guqcsz3edq-uc.a.run.app"
           docker buildx build \
             --platform linux/amd64 \
             --target prod \
