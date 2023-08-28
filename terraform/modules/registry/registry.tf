@@ -1,7 +1,7 @@
 resource "google_artifact_registry_repository" "registry" {
-  location = var.region
+  location      = var.region
   repository_id = "${var.project_name}-${var.environment}"
-  format = "DOCKER"
+  format        = "DOCKER"
 }
 
 output "repository_id" {

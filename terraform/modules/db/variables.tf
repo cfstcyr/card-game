@@ -9,12 +9,12 @@ variable "project_name" {
 }
 
 variable "environment" {
-    type = string
-    description = "Environment"
+  type        = string
+  description = "Environment"
 }
 
 variable "organization_id" {
-  type = string
+  type        = string
   description = "Mongo Atlas organization ID"
 }
 

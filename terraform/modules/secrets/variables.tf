@@ -9,6 +9,6 @@ variable "project_name" {
 }
 
 variable "environment" {
-    type = string
-    description = "Environment"
+  type        = string
+  description = "Environment"
 }

@@ -19,19 +19,19 @@ module "secrets" {
   project_name = var.project_name
   environment  = var.environment
 
-  depends_on = [ module.api ]
+  depends_on = [module.api]
 }
 
 module "db" {
   source = "../../modules/db"
 
-  project_id   = var.project_id
-  project_name = var.project_name
-  environment  = var.environment
+  project_id      = var.project_id
+  project_name    = var.project_name
+  environment     = var.environment
   organization_id = var.organization_id
-  db_password = module.secrets.db_password
+  db_password     = module.secrets.db_password
 
-  depends_on = [ module.api ]
+  depends_on = [module.api]
 }
 
 module "registry" {

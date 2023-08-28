@@ -1,5 +1,5 @@
 data "google_service_account" "service_account" {
-  account_id   = "${var.project_name}-${var.environment}-svc"
+  account_id = "${var.project_name}-${var.environment}-svc"
 }
 
 resource "google_secret_manager_secret_iam_member" "secret-access" {

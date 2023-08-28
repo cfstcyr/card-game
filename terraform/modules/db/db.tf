@@ -1,16 +1,16 @@
 resource "mongodbatlas_project" "project" {
-    name = "${var.project_id}-${var.environment}"
-    org_id = var.organization_id
+  name   = "${var.project_id}-${var.environment}"
+  org_id = var.organization_id
 }
 
 resource "mongodbatlas_cluster" "cluster" {
-  project_id              = mongodbatlas_project.project.id
-  name                    = var.project_name
+  project_id = mongodbatlas_project.project.id
+  name       = var.project_name
 
   # Provider Settings "block"
-  provider_name = "TENANT"
-  backing_provider_name = "AWS"
-  provider_region_name = "US_EAST_1"
+  provider_name               = "TENANT"
+  backing_provider_name       = "AWS"
+  provider_region_name        = "US_EAST_1"
   provider_instance_size_name = "M0"
 }
 
@@ -31,7 +31,7 @@ resource "mongodbatlas_database_user" "user" {
   }
 
   scopes {
-    name   = mongodbatlas_cluster.cluster.name
+    name = mongodbatlas_cluster.cluster.name
     type = "CLUSTER"
   }
 }

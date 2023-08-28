@@ -7,8 +7,8 @@ resource "google_secret_manager_secret" "db_password" {
 }
 
 resource "random_password" "db_password_value" {
-  length           = 30
-  special          = false
+  length  = 30
+  special = false
 }
 
 resource "google_secret_manager_secret_version" "db_password_version" {
@@ -18,5 +18,5 @@ resource "google_secret_manager_secret_version" "db_password_version" {
 }
 
 output "db_password" {
-    value = random_password.db_password_value.result
+  value = random_password.db_password_value.result
 }
