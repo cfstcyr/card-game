@@ -15,7 +15,7 @@ const GameRow: React.FC<{ game: Game }> = ({ game }) => {
     const onChangeName = useCallback(
         (e: React.ChangeEvent<HTMLInputElement>) => {
             setName(e.target.value);
-            updateGame(game.id, { name: e.target.value });
+            updateGame(game._id, { name: e.target.value });
         },
         [name, description],
     );
@@ -23,7 +23,7 @@ const GameRow: React.FC<{ game: Game }> = ({ game }) => {
     const onChangeDescription = useCallback(
         (e: React.ChangeEvent<HTMLInputElement>) => {
             setDescription(e.target.value);
-            updateGame(game.id, { description: e.target.value });
+            updateGame(game._id, { description: e.target.value });
         },
         [name, description],
     );
@@ -32,14 +32,14 @@ const GameRow: React.FC<{ game: Game }> = ({ game }) => {
         e.preventDefault();
         e.stopPropagation();
 
-        deleteGame(String(game.id));
+        deleteGame(String(game._id));
     }, []);
 
     return (
         <div className="mb:36">
             <div className="d:flex gap:12px mb:12">
                 <Form.Control
-                    value={game.id}
+                    value={game._id}
                     style={{ width: '20%', maxWidth: 30, minWidth: 20 }}
                     readOnly
                     plaintext
@@ -81,11 +81,11 @@ export const PageHome: React.FC = () => {
                 </thead>
                 <tbody>
                     {games.data.map((game) => (
-                        <tr key={game.id}>
-                            <td>{game.id}</td>
+                        <tr key={game._id}>
+                            <td>{game._id}</td>
                             <td>{game.name}</td>
                             <td className="d:flex gap:12 justify-content:end">
-                                <Link to={`/game/${game.id}`}>
+                                <Link to={`/game/${game._id}`}>
                                     <Button size="sm">
                                         <Icon icon="pen" />
                                     </Button>
@@ -93,7 +93,7 @@ export const PageHome: React.FC = () => {
                                 <Button
                                     variant="danger"
                                     size="sm"
-                                    onClick={() => onDeleteGame(game.id)}
+                                    onClick={() => onDeleteGame(game._id)}
                                 >
                                     <Icon icon="trash" />
                                 </Button>

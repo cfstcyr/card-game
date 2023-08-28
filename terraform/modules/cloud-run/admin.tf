@@ -9,6 +9,11 @@ resource "google_cloud_run_v2_service" "admin" {
       ports {
         container_port = 80
       }
+
+      env {
+        name = "REACT_APP_SERVER_URL"
+        value = google_cloud_run_v2_service.server.uri
+      }
     }
   }
 }

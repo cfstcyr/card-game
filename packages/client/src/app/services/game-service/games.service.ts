@@ -24,7 +24,7 @@ export class GamesService implements IGameService {
     getGame(id: string): Observable<Data<Game>> {
         if(!this.gameList$.value.value) this.fetchGames().subscribe();
         return this.gameList$.pipe(delay(10), map((games) => {
-            const game = games.value?.find((game) => game.id === id);
+            const game = games.value?.find((game) => game._id === id);
 
             return game ? { value: game } : { error: 'Game not found' };
         }))

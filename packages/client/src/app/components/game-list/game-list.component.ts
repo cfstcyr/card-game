@@ -18,6 +18,6 @@ export class GameListComponent {
     }
 
     navigateToGame(game: Game): void {
-        this.router.navigate([game.instructions ? `/game/instructions/${game.id}` : `/game/${game.id}`], { replaceUrl: true });
+        this.router.navigate([game.instructions ? `/game/instructions/${game._id}` : `/game/${game._id}`], { replaceUrl: true });
     }
 }

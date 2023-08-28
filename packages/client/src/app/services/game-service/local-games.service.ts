@@ -20,6 +20,6 @@ export class LocalGamesService implements IGameService {
     }
 
     fetchGame(id: string): Observable<Data<Game>> {
-        return this.fetchGames().pipe(map((games) => games.value?.find((game) => game.id === id)), map((game) => game ? { value: game as Game } : { error: 'Game not found' }))
+        return this.fetchGames().pipe(map((games) => games.value?.find((game) => game._id === id)), map((game) => game ? { value: game as Game } : { error: 'Game not found' }))
     }
 }

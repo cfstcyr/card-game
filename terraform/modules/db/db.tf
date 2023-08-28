@@ -14,7 +14,7 @@ resource "mongodbatlas_cluster" "cluster" {
   provider_instance_size_name = "M0"
 }
 
-resource "mongodbatlas_database_user" "test" {
+resource "mongodbatlas_database_user" "user" {
   username           = "${var.project_name}-user"
   password           = var.db_password
   project_id         = mongodbatlas_project.project.id
@@ -36,8 +36,8 @@ resource "mongodbatlas_database_user" "test" {
   }
 }
 
-output "mongodb_uri" {
-    # value = mongodbatlas_cluster.cluster.connection_strings[0].standard
-    # value = mongodbatlas_cluster.cluser.
-    value = "mongodb://${mongodbatlas_database_user.test.username}:${var.db_password}@${mongodbatlas_cluster.cluster.name}.${mongodbatlas_cluster.cluster.cluster_id}.mongodb.net/?retryWrites=true&w=majority"
-}
+# resource "mongodbatlas_project_ip_access_list" "ip_access_public" {
+#   project_id = mongodbatlas_project.project.id
+#   ip_address = "0.0.0.0"
+#   comment    = "Public access"
+# }

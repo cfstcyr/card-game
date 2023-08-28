@@ -4,6 +4,8 @@ resource "google_cloud_run_v2_service" "server" {
   ingress = "INGRESS_TRAFFIC_ALL"
 
   template {
+    service_account = data.google_service_account.service_account.email
+
     containers {
       image = "${var.region}-docker.pkg.dev/${var.project_id}/${var.repository_id}/server"
       ports {
@@ -11,7 +13,12 @@ resource "google_cloud_run_v2_service" "server" {
       }
       env {
         name = "DB_URI"
-        value = var.db_uri
+        value_source {
+          secret_key_ref {
+            secret = data.google_secret_manager_secret.db_uri.secret_id
+            version = "latest"
+          } 
+        }
       }
     }
   }

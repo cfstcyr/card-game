@@ -24,7 +24,7 @@ export const PageEditGame: React.FC = () => {
 
     useEffect(() => {
         if (id) {
-            const game = games.data.find((g) => g.id === id);
+            const game = games.data.find((g) => g._id === id);
             if (game) {
                 setGame(game);
                 fetchCards(id);
@@ -145,7 +145,7 @@ export const PageEditGame: React.FC = () => {
 
             if (!game) return;
 
-            updateGame(game.id, {
+            updateGame(game._id, {
                 name,
                 description,
                 mode,
@@ -182,7 +182,7 @@ export const PageEditGame: React.FC = () => {
             <Form onSubmit={onSubmit}>
                 <Form.Group className="mb:12">
                     <Form.Label>ID</Form.Label>
-                    <Form.Control value={game.id} readOnly />
+                    <Form.Control value={game._id} readOnly />
                 </Form.Group>
 
                 <Form.Group className="mb:12">

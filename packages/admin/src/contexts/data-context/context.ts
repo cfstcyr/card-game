@@ -9,8 +9,8 @@ interface DataContextInterface {
 
     fetchGames(): Promise<void>;
     deleteGame(gameId: string): Promise<void>;
-    createGame(game: Omit<Game, 'id'>): Promise<void>;
-    updateGame(gameId: string, game: Partial<Omit<Game, 'id'>>): Promise<void>;
+    createGame(game: Omit<Game, '_id'>): Promise<void>;
+    updateGame(gameId: string, game: Partial<Omit<Game, '_id'>>): Promise<void>;
     fetchCards(gameId: string): Promise<void>;
 }
 
