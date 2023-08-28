@@ -55,6 +55,7 @@ jobs:
             --platform linux/amd64 \
             --target prod \
             -t $REGION-docker.pkg.dev/$PROJECT/$APP/$SERVICE \
+            -e REACT_APP_SERVER_URL "https://card-game-server-prod-guqcsz3edq-uc.a.run.app"
             .
       - name: Configure Docker
         run: gcloud auth configure-docker us-central1-docker.pkg.dev
