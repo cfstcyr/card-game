@@ -12,4 +12,26 @@ section {
     &:not(:last-child) {
         margin-bottom: 36px;
     }
+
+    &.theme {
+        .options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+
+            app-simple-button {
+                height: 2fr;
+                text-align: center;
+
+                &::ng-deep {
+                    button {
+                        padding: 30px 12px;
+                        .content {
+                            display: block;
+                            text-align: center;
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

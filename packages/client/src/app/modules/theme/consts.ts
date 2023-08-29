@@ -50,18 +50,6 @@ export const THEMES_LIST: Theme[] = [
         },
     },
     {
-        name: 'Purple',
-        id: 'purple',
-        palette: {
-            primary: '#9F4DB6',
-            primaryContrast: 'white',
-            button: 'white',
-            buttonContrast: 'black',
-
-            specialFont: 'nunito',
-        },
-    },
-    {
         name: 'Red',
         id: 'red',
         palette: {
@@ -73,4 +61,40 @@ export const THEMES_LIST: Theme[] = [
             specialFont: 'nunito',
         },
     },
+    {
+        name: '8Bits',
+        id: '8bits',
+        palette: {
+            primary: 'black',
+            primaryContrast: 'rgb(38, 196, 38)',
+            button: '#0d0d0d',
+            buttonContrast: 'rgb(38, 196, 38)',
+
+            specialFont: 'handjet',
+        }
+    },
+    {
+        name: 'Balloons',
+        id: 'balloons',
+        palette: {
+            primary: '#5941B0',
+            primaryContrast: 'white',
+            button: 'white',
+            buttonContrast: '#5941B0',
+
+            specialFont: 'DynaPuff',
+        }
+    },
+    {
+        name: '3D',
+        id: '3d',
+        palette: {
+            primary: 'black',
+            primaryContrast: 'white',
+            button: '#0f0f0c',
+            buttonContrast: '#FAE26C',
+
+            specialFont: 'nabla',
+        }
+    }, 
 ]
