@@ -22,6 +22,5 @@ export class ButtonComponent {
             this.router.navigate([this.href], { replaceUrl: true, queryParams: this.queryParams });
         }
         this.click.emit(event);
-        console.log(this.btnStyle)
     }
 }

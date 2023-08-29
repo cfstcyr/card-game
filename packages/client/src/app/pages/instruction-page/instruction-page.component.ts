@@ -16,7 +16,6 @@ export class InstructionPageComponent {
   constructor(private readonly gamesService: GamesService, private readonly route: ActivatedRoute) {
       combineLatest([this.route.params, this.route.queryParams]).subscribe(([params, query]) => {
           this.game = this.gamesService.getGame(params['id']);
-          this.game.subscribe(console.log)
       });
   }
 }

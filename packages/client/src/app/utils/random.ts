@@ -37,8 +37,6 @@ export function randomGroups<T>(array: T[], groupsSize = 2): T[][] {
         }
 
         groups.push(group);
-
-        console.log(copy, array.length >= groupsSize, groupsSize);
     }
 
     return groups;
