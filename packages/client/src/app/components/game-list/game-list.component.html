@@ -1,6 +1,10 @@
 <ng-container *ngIf="games | async; let games">
-    <div *ngIf="games.error" class="error-container">
+    <div *ngIf="games.error" class="message-container">
         <p>Erreur lors du chargement</p> 
+    </div>
+
+    <div *ngIf="isLoading | async" class="message-container">
+        <p class="pulse">Loading...</p>
     </div>
 
     <ul class="game-list">
