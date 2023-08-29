@@ -1,5 +1,5 @@
 <app-layout [disabledScroll]="true">
-    <span title class="cards-left">{{ cardsLeft | async }} cards left</span>
+    <span title class="cards-left">{{ (cardsLeft | async) ?? 0 }} cards left</span>
     <app-simple-button head-action-right href="/" effect="large"><i class="far fa-times"></i></app-simple-button>
 
     <app-data-renderer [data]="game | async">
