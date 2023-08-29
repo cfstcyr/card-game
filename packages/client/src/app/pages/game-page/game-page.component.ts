@@ -38,8 +38,6 @@ export class GamePageComponent implements AfterViewInit {
                     this.isLoading.next(false)
                 }
 
-                // console.log('GAME', game)
-
                 this.currentGame = game.value;
 
                 if (game.value) {
