@@ -7,4 +7,5 @@ import { ButtonComponent } from '../button/button.component';
   styleUrls: ['./simple-button.component.scss']
 })
 export class SimpleButtonComponent extends ButtonComponent {
+  @Input() contentStyle: {[K: string]: any} = {}
 }

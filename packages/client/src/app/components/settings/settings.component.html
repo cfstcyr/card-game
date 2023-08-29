@@ -1,7 +1,13 @@
 <section class="theme">
     <h2>Theme</h2>
     <div class="options">
-        <app-simple-button *ngFor="let theme of themes" [disabled]="theme.id === (currentTheme | async)?.id" (click)="themeService.setCurrentTheme(theme.id)">{{ theme.name }}</app-simple-button>
+        <app-simple-button
+            *ngFor="let theme of themes"
+            [disabled]="theme.id === (currentTheme | async)?.id"
+            (click)="themeService.setCurrentTheme(theme.id)"
+            [btnStyle]="{ backgroundColor: theme.palette.primary }"
+            [contentStyle]="{ color: theme.palette.primaryContrast, fontFamily: theme.palette.specialFont}"
+        >{{ theme.name }}</app-simple-button>
     </div>
 </section>
 

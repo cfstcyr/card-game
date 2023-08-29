@@ -12,6 +12,7 @@ export class ButtonComponent {
     @Input() disabled: boolean = false;
     @Input() size: 'default' | 'small' = 'default';
     @Input() effect: 'large' | 'default' | 'small' = 'default';
+    @Input() btnStyle: { [K: string]: any } = {}
     @Output() click: EventEmitter<MouseEvent> = new EventEmitter();
 
     constructor (private readonly router: Router) {}
@@ -21,5 +22,6 @@ export class ButtonComponent {
             this.router.navigate([this.href], { replaceUrl: true, queryParams: this.queryParams });
         }
         this.click.emit(event);
+        console.log(this.btnStyle)
     }
 }

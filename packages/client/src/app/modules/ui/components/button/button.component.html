@@ -1,3 +1,9 @@
-<button class="button" [ngClass]="['button--size--' + size, 'button--effect--' + effect]" [disabled]="disabled" (click)="handleClick($event)">
-    <ng-content></ng-content>
+<button
+    [ngStyle]="btnStyle"
+    class="button"
+    [ngClass]="['button--size--' + size, 'button--effect--' + effect]"
+    [disabled]="disabled"
+    (click)="handleClick($event)"
+>
+    <ng-content [ngStyle]="{ color: 'orange' }"></ng-content>
 </button>

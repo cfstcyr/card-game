@@ -41,8 +41,31 @@ export const THEMES_LIST: Theme[] = [
         name: 'Green',
         id: 'green',
         palette: {
-            // primary: '#3bd16f',
             primary: '#3bab62',
+            primaryContrast: 'white',
+            button: 'white',
+            buttonContrast: 'black',
+
+            specialFont: 'nunito',
+        },
+    },
+    {
+        name: 'Purple',
+        id: 'purple',
+        palette: {
+            primary: '#9F4DB6',
+            primaryContrast: 'white',
+            button: 'white',
+            buttonContrast: 'black',
+
+            specialFont: 'nunito',
+        },
+    },
+    {
+        name: 'Red',
+        id: 'red',
+        palette: {
+            primary: '#dd5656',
             primaryContrast: 'white',
             button: 'white',
             buttonContrast: 'black',
