@@ -17,6 +17,7 @@ export class GamesService implements IGameService {
     constructor(private readonly dataService: DataService) {}
 
     getGames(): Observable<Data<GameListItem[]>> {
+        console.log('getGames')
         if(!this.gameList$.value.value) this.fetchGames().subscribe();
         return this.gameList$.asObservable();
     }
