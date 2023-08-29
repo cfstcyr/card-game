@@ -26,6 +26,11 @@ resource "mongodbatlas_database_user" "user" {
   }
 
   roles {
+    role_name     = "readWriteAnyDatabase"
+    database_name = "admin"
+  }
+
+  roles {
     role_name     = "readAnyDatabase"
     database_name = "admin"
   }
