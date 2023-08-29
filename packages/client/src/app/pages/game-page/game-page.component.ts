@@ -81,8 +81,6 @@ export class GamePageComponent implements AfterViewInit {
                 this.gamesService.activeGames.updateCurrentIndex(game.value._id, currentIndex);
             }
         });
-
-        this.currentIndex.subscribe((i) => console.log('index', i))
     }
 
     get getIsLoading(): Observable<boolean> {
