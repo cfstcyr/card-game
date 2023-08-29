@@ -80,7 +80,7 @@ export class GamePageComponent implements AfterViewInit {
     }
 
     canShare(): boolean {
-        return navigator.canShare(this.getShareContent());
+        return navigator.canShare?.(this.getShareContent()) ?? false;
     }
 
     share(): void {
