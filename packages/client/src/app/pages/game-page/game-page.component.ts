@@ -80,16 +80,24 @@ export class GamePageComponent implements AfterViewInit {
     }
 
     canShare(): boolean {
-        return navigator.canShare?.(this.getShareContent()) ?? false;
+        const content = this.getShareContent();
+
+        if (!content) return false;
+
+        return navigator.canShare?.(content) ?? false;
     }
 
-    share(): void {
-        navigator.share(this.getShareContent())
-    }
-
-    private getShareContent(): ShareData {
-        return {
-            text: `"${this.cards.value?.[this.currentIndex.value]?.content}"\n\nPlay "${this.currentGame?.name}" on ${location.origin}.`,
+    async share(): Promise<void> {
+        if(this.canShare()) {
+            try {
+                await navigator.share(this.getShareContent());
+            } catch {}
         }
+    }
+
+    private getShareContent(): ShareData | undefined {
+        return this.cards.value?.[this.currentIndex.value] ? {
+            text: `"${this.cards.value?.[this.currentIndex.value]?.content}"\n\nPlay "${this.currentGame?.name}" on ${location.origin}.`,
+        } : undefined
     }
 }
