@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, HostListener, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject, Observable, Subject, combineLatest, concat, concatAll, debounce, debounceTime, delay, merge, tap } from 'rxjs';
+import { END_OF_GAME_MESSAGES } from 'src/app/constants/messages';
 import { Card } from 'src/app/models/card';
 import { Data } from 'src/app/models/data';
 import { Game } from 'src/app/models/game';
@@ -17,7 +18,7 @@ export class GamePageComponent implements AfterViewInit {
     @ViewChild(SwiperComponent) swiper?: SwiperComponent;
     game: BehaviorSubject<Data<Game>> = new BehaviorSubject<Data<Game>>({ loading: true });;
     currentGame?: Game;
-    cards: BehaviorSubject<Omit<Card, "gameId">[]> = new BehaviorSubject<Omit<Card, "gameId">[]>([]);
+    cards: BehaviorSubject<Omit<Card, "gameId">[] | undefined> = new BehaviorSubject<Omit<Card, "gameId">[] | undefined>(undefined);
     canSwipeNext: Subject<boolean> = new Subject();
     canSwipePrevious: Subject<boolean> = new Subject();
     currentIndex: BehaviorSubject<number> = new BehaviorSubject(0);
@@ -25,8 +26,11 @@ export class GamePageComponent implements AfterViewInit {
     isLoading: BehaviorSubject<boolean> = new BehaviorSubject(true);
     cardsLeftMessage: BehaviorSubject<string> = new BehaviorSubject('');
     cardsLeftMessageDebounce = this.cardsLeftMessage.pipe(debounceTime(100));
+    endOfGameMessage: string;
 
     constructor(private readonly gamesService: GamesService, private readonly route: ActivatedRoute) {
+        this.endOfGameMessage = END_OF_GAME_MESSAGES[Math.floor(Math.random() * END_OF_GAME_MESSAGES.length)];
+
         combineLatest([this.route.params, this.route.queryParams]).subscribe(([params, query]) => {
             this.gamesService.getGame(params['id']).subscribe((game) => this.game.next(game));
 
@@ -79,8 +83,8 @@ export class GamePageComponent implements AfterViewInit {
 
         combineLatest([this.swiper.currentIndex, this.cards]).subscribe(([index, cards]) => {
             this.currentIndex.next(index);
-            this.cardsLeft.next(Math.max(0, cards.length - index - 1));
-            this.canSwipeNext.next(index < cards.length);
+            this.cardsLeft.next(Math.max(0, (cards?.length ?? 0) - index - 1));
+            this.canSwipeNext.next(index < (cards?.length ?? 0));
             this.canSwipePrevious.next(index > 0);
         });
 

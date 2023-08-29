@@ -4,12 +4,22 @@
 
     <app-data-renderer [data]="game | async">
         <sw-swiper>
-            <sw-slide *ngFor="let card of cards | async">
-                <app-game-card [card]="card"></app-game-card>
-            </sw-slide>
-            <sw-slide>
-                <app-game-card [isSystem]="true">You've reached the end</app-game-card>
-            </sw-slide>
+            <ng-container *ngIf="(cards | async) as cardsValue">
+                <sw-slide *ngFor="let card of cardsValue">
+                    <app-game-card [card]="card"></app-game-card>
+                </sw-slide>
+                <sw-slide>
+                    <app-game-card [isSystem]="true">
+                        <div class="end-of-game">
+                            <p>{{endOfGameMessage}}</p>
+                            <app-simple-button 
+                                href="/"
+                                size="small"
+                            ><i class="far fa-arrow-left"></i> Play another game</app-simple-button>
+                        </div>
+                    </app-game-card>
+                </sw-slide>
+            </ng-container>
         </sw-swiper>
 
         <sw-swiper error>
