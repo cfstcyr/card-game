@@ -4,10 +4,10 @@ import { Button, Form, Spinner, Table } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { Icon } from '../../components';
 import { useData } from '../../contexts/data-context/context';
-import { Game } from '../../models/game';
+import { Game, GameListItem } from '../../models/game';
 import { Layout } from '../layout';
 
-const GameRow: React.FC<{ game: Game }> = ({ game }) => {
+const GameRow: React.FC<{ game: GameListItem }> = ({ game }) => {
     const { deleteGame, updateGame } = useData();
     const [name, setName] = useState(game.name);
     const [description, setDescription] = useState(game.description ?? '');
@@ -76,6 +76,7 @@ export const PageHome: React.FC = () => {
                     <tr>
                         <th>#</th>
                         <th>Name</th>
+                        <th>Cards count</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -84,6 +85,7 @@ export const PageHome: React.FC = () => {
                         <tr key={game._id}>
                             <td>{game._id}</td>
                             <td>{game.name}</td>
+                            <td>{game.cardsCount}</td>
                             <td className="d:flex gap:12 justify-content:end">
                                 <Link to={`/game/${game._id}`}>
                                     <Button size="sm">

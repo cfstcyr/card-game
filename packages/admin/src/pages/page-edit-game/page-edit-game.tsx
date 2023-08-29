@@ -5,13 +5,13 @@ import { Button, Form } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import { UPLOADCARE_API_KEY } from '../../constants/keys';
 import { useData } from '../../contexts/data-context/context';
-import { Game } from '../../models/game';
+import { Game, GameListItem } from '../../models/game';
 import { Layout } from '../layout';
 
 export const PageEditGame: React.FC = () => {
     const { id } = useParams();
-    const { games, updateGame, fetchCards } = useData();
-    const [game, setGame] = useState<Game>();
+    const { games, cards, updateGame, fetchCards } = useData();
+    const [game, setGame] = useState<GameListItem>();
     const [name, setName] = useState(game?.name);
     const [description, setDescription] = useState(game?.description);
     const [mode, setMode] = useState(game?.mode);
@@ -33,6 +33,14 @@ export const PageEditGame: React.FC = () => {
     }, [id, games]);
 
     useEffect(() => {
+        (async () => {
+            if (id) {
+                await fetchCards(id);
+            }
+        })();
+    }, [id]);
+
+    useEffect(() => {
         if (game) {
             setName(game.name);
             setDescription(game.description);
@@ -41,9 +49,17 @@ export const PageEditGame: React.FC = () => {
             setInstructions(game.instructions);
             setImage(game.image);
             setColor(game.color);
-            setCardsValue(game.cards.map((card) => card.content).join('\n'));
+            // setCardsValue(game.cards.map((card) => card.content).join('\n'));
         }
     }, [game]);
+
+    useEffect(() => {
+        if (cards && id && cards[id]) {
+            setCardsValue(
+                cards[id].data.map((card) => card.content).join('\n'),
+            );
+        }
+    }, [cards, id]);
 
     // useEffect(() => {
     //     setCardsValue(

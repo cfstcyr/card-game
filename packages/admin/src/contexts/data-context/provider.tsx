@@ -6,13 +6,13 @@ import React, {
 } from 'react';
 import { Card } from '../../models/card';
 import { Data, defaultData, loading } from '../../models/data';
-import { Game } from '../../models/game';
+import { Game, GameListItem } from '../../models/game';
 import { useApi } from '../api-context';
 import { DataContext } from './context';
 
 export const DataProvider: React.FC<PropsWithChildren> = ({ children }) => {
     const { get, delete: apiDelete, post, patch } = useApi();
-    const [games, setGames] = useState<Data<Game[]>>(defaultData([]));
+    const [games, setGames] = useState<Data<GameListItem[]>>(defaultData([]));
     const [cards, setCards] = useState<{
         [K: string]: Data<Omit<Card, 'gameId'>[]>;
     }>({});
@@ -21,7 +21,7 @@ export const DataProvider: React.FC<PropsWithChildren> = ({ children }) => {
         setGames((g) => loading(g));
 
         try {
-            const res = await get<Game[]>('/game?noCache=1');
+            const res = await get<GameListItem[]>('/game?noCache=1');
             setGames((g) => ({
                 ...g,
                 loading: false,

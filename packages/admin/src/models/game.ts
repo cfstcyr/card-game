@@ -11,3 +11,5 @@ export interface Game {
     color?: string;
     cards: Card[];
 }
+
+export type GameListItem = Omit<Game, 'cards'> & { cardsCount: number };

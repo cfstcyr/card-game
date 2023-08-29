@@ -1,10 +1,10 @@
 import React from 'react';
 import { Card } from '../../models/card';
 import { Data } from '../../models/data';
-import { Game } from '../../models/game';
+import { Game, GameListItem } from '../../models/game';
 
 interface DataContextInterface {
-    games: Data<Game[]>;
+    games: Data<GameListItem[]>;
     cards: { [K: string]: Data<Omit<Card, 'gameId'>[]> };
 
     fetchGames(): Promise<void>;
