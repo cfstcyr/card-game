@@ -67,18 +67,25 @@ export class GamePageComponent implements AfterViewInit {
     }
 
     ngAfterViewInit(): void {
-        this.swiper && combineLatest([this.swiper.currentIndex, this.cards]).subscribe(([index, cards]) => {
-            this.currentIndex.next(index);
-            this.cardsLeft.next(Math.max(0, cards.length - index - 1));
-            this.canSwipeNext.next(index < cards.length);
-            this.canSwipePrevious.next(index > 0);
-        });
-
-        this.swiper && this.game && combineLatest([this.swiper.currentIndex, this.game]).subscribe(([currentIndex, game]) => {
-            if (game.value) {
-                this.gamesService.activeGames.updateCurrentIndex(game.value._id, currentIndex);
+        const init = () => {
+            if(!this.swiper) {
+                setTimeout(init, 100);
+                return;
             }
-        });
+
+            combineLatest([this.swiper.currentIndex, this.cards]).subscribe(([index, cards]) => {
+                this.currentIndex.next(index);
+                this.cardsLeft.next(Math.max(0, cards.length - index - 1));
+                this.canSwipeNext.next(index < cards.length);
+                this.canSwipePrevious.next(index > 0);
+            });
+
+            this.game && combineLatest([this.swiper.currentIndex, this.game]).subscribe(([currentIndex, game]) => {
+                if (game.value) {
+                    this.gamesService.activeGames.updateCurrentIndex(game.value._id, currentIndex);
+                }
+            });
+        }
     }
 
     get getIsLoading(): Observable<boolean> {
