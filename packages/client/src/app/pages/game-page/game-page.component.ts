@@ -15,7 +15,7 @@ import { shuffle } from 'src/app/utils/random';
 })
 export class GamePageComponent implements AfterViewInit {
     @ViewChild(SwiperComponent) swiper?: SwiperComponent;
-    game: Observable<Data<Game>> | undefined;
+    game: BehaviorSubject<Data<Game>> = new BehaviorSubject<Data<Game>>({ loading: true });;
     currentGame?: Game;
     cards: BehaviorSubject<Omit<Card, "gameId">[]> = new BehaviorSubject<Omit<Card, "gameId">[]>([]);
     canSwipeNext: Subject<boolean> = new Subject();
@@ -27,10 +27,10 @@ export class GamePageComponent implements AfterViewInit {
 
     constructor(private readonly gamesService: GamesService, private readonly route: ActivatedRoute) {
         combineLatest([this.route.params, this.route.queryParams]).subscribe(([params, query]) => {
-            this.game = this.gamesService.getGame(params['id']);
+            this.gamesService.getGame(params['id']).subscribe((game) => this.game.next(game));
 
             this.game.pipe(delay(10)).subscribe((game) => {
-                if(this.currentGame && this.currentGame._id == game.value?._id) return;
+                if(this.currentGame?._id == game.value?._id) return;
 
                 if(game.loading) {
                     this.isLoading.next(true)
@@ -67,25 +67,22 @@ export class GamePageComponent implements AfterViewInit {
     }
 
     ngAfterViewInit(): void {
-        const init = () => {
-            if(!this.swiper) {
-                setTimeout(init, 100);
-                return;
+        if (!this.swiper) throw new Error('Swiper must be preset');
+
+        combineLatest([this.swiper.currentIndex, this.cards]).subscribe(([index, cards]) => {
+            this.currentIndex.next(index);
+            this.cardsLeft.next(Math.max(0, cards.length - index - 1));
+            this.canSwipeNext.next(index < cards.length);
+            this.canSwipePrevious.next(index > 0);
+        });
+
+        combineLatest([this.swiper.currentIndex, this.game]).subscribe(([currentIndex, game]) => {
+            if (game.value) {
+                this.gamesService.activeGames.updateCurrentIndex(game.value._id, currentIndex);
             }
+        });
 
-            combineLatest([this.swiper.currentIndex, this.cards]).subscribe(([index, cards]) => {
-                this.currentIndex.next(index);
-                this.cardsLeft.next(Math.max(0, cards.length - index - 1));
-                this.canSwipeNext.next(index < cards.length);
-                this.canSwipePrevious.next(index > 0);
-            });
-
-            this.game && combineLatest([this.swiper.currentIndex, this.game]).subscribe(([currentIndex, game]) => {
-                if (game.value) {
-                    this.gamesService.activeGames.updateCurrentIndex(game.value._id, currentIndex);
-                }
-            });
-        }
+        this.currentIndex.subscribe((i) => console.log('index', i))
     }
 
     get getIsLoading(): Observable<boolean> {
