@@ -18,7 +18,7 @@ export abstract class DataEntryService<T> {
 
         if (cached && !noCache && !this.disableCache) return cached;
 
-        const res = (await this.model.find()) as WithId<T>[];
+        const res = (await this.model.find().sort('name')) as WithId<T>[];
 
         this.cacheService.set(cacheKey, res);
 
