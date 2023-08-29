@@ -17,8 +17,6 @@ export class GameListComponent {
     constructor(private readonly gamesService: GamesService, private readonly router: Router) {
         this.games = this.gamesService.getGames();
         this.isLoading = this.games.pipe(debounceTime(100), map((res) => !!res.loading));
-
-        this.isLoading.subscribe(console.log)
     }
 
     navigateToGame(game: GameListItem): void {
