@@ -23,7 +23,8 @@ export class GamePageComponent implements AfterViewInit {
     currentIndex: BehaviorSubject<number> = new BehaviorSubject(0);
     cardsLeft: Subject<number> = new Subject();
     isLoading: BehaviorSubject<boolean> = new BehaviorSubject(true);
-    isLoadingDebounce = this.isLoading.pipe(debounceTime(100))
+    cardsLeftMessage: BehaviorSubject<string> = new BehaviorSubject('');
+    cardsLeftMessageDebounce = this.cardsLeftMessage.pipe(debounceTime(100));
 
     constructor(private readonly gamesService: GamesService, private readonly route: ActivatedRoute) {
         combineLatest([this.route.params, this.route.queryParams]).subscribe(([params, query]) => {
@@ -50,6 +51,13 @@ export class GamePageComponent implements AfterViewInit {
                     });
                 }
             });
+        });
+
+        this.isLoading.subscribe((isLoading) => {
+            if(isLoading) this.cardsLeftMessage.next('Loading...');
+        });
+        this.cardsLeft.subscribe((index) => {
+            this.cardsLeftMessage.next(`${index} cards left`);
         });
     }
 
