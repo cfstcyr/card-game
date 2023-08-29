@@ -5,7 +5,7 @@ import { Button, Form } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import { UPLOADCARE_API_KEY } from '../../constants/keys';
 import { useData } from '../../contexts/data-context/context';
-import { Game, GameListItem } from '../../models/game';
+import { GameListItem } from '../../models/game';
 import { Layout } from '../layout';
 
 export const PageEditGame: React.FC = () => {
@@ -49,7 +49,6 @@ export const PageEditGame: React.FC = () => {
             setInstructions(game.instructions);
             setImage(game.image);
             setColor(game.color);
-            // setCardsValue(game.cards.map((card) => card.content).join('\n'));
         }
     }, [game]);
 
@@ -60,13 +59,6 @@ export const PageEditGame: React.FC = () => {
             );
         }
     }, [cards, id]);
-
-    // useEffect(() => {
-    //     setCardsValue(
-    //         cards[Number(id)]?.data.map(({ content }) => content).join('\n') ??
-    //             '',
-    //     );
-    // }, [cards]);
 
     const onChangeName = useCallback(
         (e: React.ChangeEvent<HTMLInputElement>) => {
