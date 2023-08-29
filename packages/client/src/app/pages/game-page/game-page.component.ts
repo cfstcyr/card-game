@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, HostListener, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { BehaviorSubject, Observable, Subject, combineLatest, concat, concatAll, delay, merge, tap } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, combineLatest, concat, concatAll, debounce, debounceTime, delay, merge, tap } from 'rxjs';
 import { Card } from 'src/app/models/card';
 import { Data } from 'src/app/models/data';
 import { Game } from 'src/app/models/game';
@@ -22,12 +22,24 @@ export class GamePageComponent implements AfterViewInit {
     canSwipePrevious: Subject<boolean> = new Subject();
     currentIndex: BehaviorSubject<number> = new BehaviorSubject(0);
     cardsLeft: Subject<number> = new Subject();
+    isLoading: BehaviorSubject<boolean> = new BehaviorSubject(true);
+    isLoadingDebounce = this.isLoading.pipe(debounceTime(100))
 
     constructor(private readonly gamesService: GamesService, private readonly route: ActivatedRoute) {
         combineLatest([this.route.params, this.route.queryParams]).subscribe(([params, query]) => {
             this.game = this.gamesService.getGame(params['id']);
 
             this.game.pipe(delay(10)).subscribe((game) => {
+                if(this.currentGame && this.currentGame._id == game.value?._id) return;
+
+                if(game.loading) {
+                    this.isLoading.next(true)
+                } else {
+                    this.isLoading.next(false)
+                }
+
+                // console.log('GAME', game)
+
                 this.currentGame = game.value;
 
                 if (game.value) {
@@ -69,6 +81,10 @@ export class GamePageComponent implements AfterViewInit {
                 this.gamesService.activeGames.updateCurrentIndex(game.value._id, currentIndex);
             }
         });
+    }
+
+    get getIsLoading(): Observable<boolean> {
+        return this.isLoading.pipe(debounceTime(10));
     }
 
     next(): void {

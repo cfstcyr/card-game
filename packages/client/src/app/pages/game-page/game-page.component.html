@@ -1,22 +1,25 @@
 <app-layout [disabledScroll]="true">
-    <span title class="cards-left">{{ (cardsLeft | async) ?? 0 }} cards left</span>
+    <span title class="cards-left" *ngIf="!(isLoadingDebounce | async)">{{ (cardsLeft | async) ?? 0 }} cards left</span>
+    <span title class="cards-left pulse" *ngIf="isLoadingDebounce | async">Loading...</span>
     <app-simple-button head-action-right href="/" effect="large"><i class="far fa-times"></i></app-simple-button>
 
     <app-data-renderer [data]="game | async">
-        <sw-swiper>
-            <sw-slide *ngFor="let card of cards | async">
-                <app-game-card [card]="card"></app-game-card>
-            </sw-slide>
-            <sw-slide>
-                <app-game-card [isSystem]="true">You've reached the end</app-game-card>
-            </sw-slide>
-        </sw-swiper>
-
-        <sw-swiper error>
-            <sw-slide>
-                <app-game-card [isSystem]="true">Error loading game</app-game-card>
-            </sw-slide>
-        </sw-swiper>
+        <ng-container *ngIf="currentGame">
+            <sw-swiper>
+                <sw-slide *ngFor="let card of cards | async">
+                    <app-game-card [card]="card"></app-game-card>
+                </sw-slide>
+                <sw-slide>
+                    <app-game-card [isSystem]="true">You've reached the end</app-game-card>
+                </sw-slide>
+            </sw-swiper>
+    
+            <sw-swiper error>
+                <sw-slide>
+                    <app-game-card [isSystem]="true">Error loading game</app-game-card>
+                </sw-slide>
+            </sw-swiper>
+        </ng-container>
     </app-data-renderer>
 
     <app-simple-button foot-action-left effect="large" (click)="share()" [disabled]="!canShare()">

@@ -44,3 +44,17 @@ html, body {
         }
     }
 }
+
+@keyframes pulse {
+    0% { scale: 1 }
+    50% { scale: 1.05 }
+    100% { scale: 1 }
+}
+
+.pulse {
+    display: inline-block;
+    animation-name: pulse;
+    animation-duration: 2s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+}
