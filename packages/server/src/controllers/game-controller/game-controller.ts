@@ -16,7 +16,7 @@ export class GameController extends AbstractController {
 
             try {
                 res.status(StatusCodes.OK).send(
-                    await this.gameService.getAll(noCache as boolean),
+                    await this.gameService.getAllGames(noCache as boolean),
                 );
             } catch (e) {
                 next(e);

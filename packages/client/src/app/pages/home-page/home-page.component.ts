@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { BehaviorSubject, Observable, combineLatest, lastValueFrom, map } from 'rxjs';
 import { SettingsComponent } from 'src/app/components/settings/settings.component';
 import { Data } from 'src/app/models/data';
-import { Game } from 'src/app/models/game';
+import { Game, GameListItem } from 'src/app/models/game';
 import { ModalService } from 'src/app/modules/modal/modal.module';
 import { ButtonComponent } from 'src/app/modules/ui/components/button/button.component';
 import { GamesService } from 'src/app/services/game-service/games.service';
@@ -15,14 +15,14 @@ const TITLE_VISIBLE_BREAKPOINT = 80;
     styleUrls: ['./home-page.component.scss']
 })
 export class HomePageComponent {
-    games: Observable<Data<Game[]>>;
-    continueGames: BehaviorSubject<(Game & { currentIndex: number; activeGameId: string })[]>;
+    games: Observable<Data<GameListItem[]>>;
+    continueGames: BehaviorSubject<(GameListItem & { currentIndex: number; activeGameId: string })[]>;
     hasContinueGames: Observable<boolean>;
     isTitleVisible: boolean = true;
 
     constructor(private readonly gamesService: GamesService, private readonly modalService: ModalService) {
         this.games = this.gamesService.getGames();
-        this.continueGames = new BehaviorSubject<(Game & { currentIndex: number; activeGameId: string })[]>([]);
+        this.continueGames = new BehaviorSubject<(GameListItem & { currentIndex: number; activeGameId: string })[]>([]);
         this.hasContinueGames = this.continueGames.pipe(map((games) => games.length > 0));
 
         this.updateContinueGames();
@@ -49,7 +49,7 @@ export class HomePageComponent {
 
     private updateContinueGames(): void {
         combineLatest([this.games, this.gamesService.activeGames.getAll()]).subscribe(([data, activeGames]) => {
-            const games: (Game & { currentIndex: number; activeGameId: string })[] = [];
+            const games: (GameListItem & { currentIndex: number; activeGameId: string })[] = [];
 
             if (data.value) {
                 for (const { gameId, currentIndex, id } of activeGames) {

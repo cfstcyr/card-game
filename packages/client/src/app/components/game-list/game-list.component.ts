@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Data } from 'src/app/models/data';
-import { Game } from 'src/app/models/game';
+import { GameListItem } from 'src/app/models/game';
 import { GamesService } from 'src/app/services/game-service/games.service';
 
 @Component({
@@ -11,13 +11,13 @@ import { GamesService } from 'src/app/services/game-service/games.service';
     styleUrls: ['./game-list.component.scss']
 })
 export class GameListComponent {
-    games: Observable<Data<Game[]>>;
+    games: Observable<Data<GameListItem[]>>;
 
     constructor(private readonly gamesService: GamesService, private readonly router: Router) {
         this.games = this.gamesService.getGames();
     }
 
-    navigateToGame(game: Game): void {
+    navigateToGame(game: GameListItem): void {
         this.router.navigate([game.instructions ? `/game/instructions/${game._id}` : `/game/${game._id}`], { replaceUrl: true });
     }
 }

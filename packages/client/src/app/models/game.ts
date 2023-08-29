@@ -9,6 +9,7 @@ export interface Game {
     mode: string;
     image?: string | null;
     color?: string | null;
-    cardsCount: number;
     cards: Card[];
 }
+
+export type GameListItem = Omit<Game, 'cards'> & { cardsCount: number };

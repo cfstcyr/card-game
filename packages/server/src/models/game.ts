@@ -12,6 +12,8 @@ export interface IGame {
     cards: ICard[];
 }
 
+export type IGameListItem = Omit<IGame, 'cards'> & { cardsCount: number };
+
 const gameSchema = new Schema<IGame>({
     name: { type: String, required: true, trim: true },
     description: { type: String, trim: true },

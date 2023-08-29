@@ -2,7 +2,7 @@ import { StatusCodes } from 'http-status-codes';
 import { HttpException } from '../../models/http-exception';
 import { CacheService } from '../cache-service/cache-service';
 import { WithId } from 'mongodb';
-import { Model } from 'mongoose';
+import { FilterQuery, Model, ProjectionType } from 'mongoose';
 import { logger } from '../../utils/logger';
 
 export abstract class DataEntryService<T> {
@@ -12,13 +12,22 @@ export abstract class DataEntryService<T> {
         private readonly disableCache: boolean = false,
     ) {}
 
-    async getAll(noCache = false): Promise<WithId<T>[]> {
-        const cacheKey = `getAll:${this.model.name}`;
+    async getAll(
+        filter: FilterQuery<T> = {},
+        projection: ProjectionType<T> | undefined = undefined,
+        sort: string | undefined = 'name',
+        noCache = false,
+    ): Promise<WithId<T>[]> {
+        const cacheKey = `getAll:${this.model.name}:${JSON.stringify(
+            filter,
+        )}:${JSON.stringify(projection)}:${sort}`;
         const cached = this.cacheService.get<WithId<T>[]>(cacheKey);
 
         if (cached && !noCache && !this.disableCache) return cached;
 
-        const res = (await this.model.find().sort('name')) as WithId<T>[];
+        const res = (await this.model
+            .find(filter, projection)
+            .sort(sort)) as WithId<T>[];
 
         this.cacheService.set(cacheKey, res);
 

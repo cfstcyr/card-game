@@ -19,9 +19,6 @@ import { ModalModule } from './modules/modal/modal.module';
 import { UiModule } from './modules/ui/ui.module';
 import { InstructionPageComponent } from './pages/instruction-page/instruction-page.component';
 import { MarkdownModule } from 'ngx-markdown';
-import { GamesService } from './services/game-service/games.service';
-import { environment } from 'src/environments/environment';
-import { LocalGamesService } from './services/game-service/local-games.service';
 import { SettingsComponent } from './components/settings/settings.component';
 import { ThemeModule } from './modules/theme/theme.module';
 import { AlertModule } from './modules/alert/alert.module';
@@ -61,9 +58,6 @@ import { AlertModule } from './modules/alert/alert.module';
     provide: HTTP_INTERCEPTORS,
     useClass: ApiInterceptor,
     multi: true,
-  }, {
-    provide: GamesService,
-    useClass: environment.LOCAL_DATA ? LocalGamesService : GamesService,
   }],
   bootstrap: [AppComponent]
 })

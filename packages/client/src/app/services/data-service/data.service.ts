@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, EMPTY, Observable, Subject, catchError, delay, firstValueFrom, merge, repeat, retry } from 'rxjs';
+import { BehaviorSubject, Observable, firstValueFrom, retry } from 'rxjs';
 import { Cache } from 'src/app/db/cache';
 import { Data } from 'src/app/models/data';
 
@@ -70,6 +70,6 @@ export class DataService {
     }
 
     private getKey(method: string, url: string): string {
-        return `${method}::${url}`;
+        return `${method}::${url.replace(/\?.*/g, '')}`;
     }
 }
