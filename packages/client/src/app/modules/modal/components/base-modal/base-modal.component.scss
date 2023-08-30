@@ -49,4 +49,18 @@
         z-index: 1;
         overflow-y: auto;
     }
+
+    @media screen and (max-width: 500px) {
+        &__window {
+            padding: 0;
+            padding-top: 36px;
+            align-items: end;
+        }
+
+        &__container {
+            border-radius: 0px;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+    }
 }
