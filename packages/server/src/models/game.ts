@@ -10,6 +10,8 @@ export interface IGame {
     image?: string;
     color?: string;
     cards: ICard[];
+    parent?: string;
+    children?: string[];
 }
 
 export type IGameListItem = Omit<IGame, 'cards'> & { cardsCount: number };
@@ -21,6 +23,8 @@ const gameSchema = new Schema<IGame>({
     nsfw: { type: Boolean, default: false },
     mode: { type: String, default: 'default' },
     cards: [{ id: String, content: String }],
+    parent: { type: Schema.Types.ObjectId, ref: 'Game', default: undefined },
+    children: [{ type: Schema.Types.ObjectId, ref: 'Game' }],
 });
 
 export const Game = model<IGame>('Game', gameSchema);

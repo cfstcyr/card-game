@@ -9,6 +9,7 @@ import { Data, defaultData, loading } from '../../models/data';
 import { Game, GameListItem } from '../../models/game';
 import { useApi } from '../api-context';
 import { DataContext } from './context';
+import { AxiosError } from 'axios';
 
 export const DataProvider: React.FC<PropsWithChildren> = ({ children }) => {
     const { get, delete: apiDelete, post, patch } = useApi();
@@ -66,6 +67,13 @@ export const DataProvider: React.FC<PropsWithChildren> = ({ children }) => {
                 await fetchGames();
             } catch (e) {
                 setGames((g) => ({ ...g, loading: false, error: String(e) }));
+
+                if (e instanceof AxiosError) {
+                    console.error(e);
+                    alert(e.message + ':\n\n' + e.response?.data.message);
+                } else {
+                    alert(e);
+                }
             }
         },
         [],

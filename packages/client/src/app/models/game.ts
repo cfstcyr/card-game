@@ -10,6 +10,8 @@ export interface Game {
     image?: string | null;
     color?: string | null;
     cards: Card[];
+    parent?: string;
+    children?: string[];
 }
 
 export type GameListItem = Omit<Game, 'cards'> & { cardsCount: number };

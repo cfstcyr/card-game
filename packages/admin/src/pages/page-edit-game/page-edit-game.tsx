@@ -19,6 +19,7 @@ export const PageEditGame: React.FC = () => {
     const [instructions, setInstructions] = useState(game?.instructions);
     const [image, setImage] = useState(game?.image);
     const [color, setColor] = useState(game?.image);
+    const [parent, setParent] = useState(game?.parent);
     const [cardsChanged, setCardChanged] = useState(false);
     const [cardsValue, setCardsValue] = useState<string>('');
 
@@ -49,6 +50,7 @@ export const PageEditGame: React.FC = () => {
             setInstructions(game.instructions);
             setImage(game.image);
             setColor(game.color);
+            setParent(game.parent);
         }
     }, [game]);
 
@@ -88,6 +90,14 @@ export const PageEditGame: React.FC = () => {
         (e: React.ChangeEvent<HTMLInputElement>) => {
             if (!game) return;
             setNsfw(e.target.checked);
+        },
+        [game],
+    );
+
+    const onChangeParent = useCallback(
+        (e: React.ChangeEvent<HTMLSelectElement>) => {
+            if (!game) return;
+            setParent(e.target.value);
         },
         [game],
     );
@@ -133,7 +143,8 @@ export const PageEditGame: React.FC = () => {
             game?.nsfw !== nsfw ||
             game?.instructions !== instructions ||
             game?.image !== image ||
-            game?.color !== color
+            game?.color !== color ||
+            game?.parent !== parent
         );
     }, [
         cardsChanged,
@@ -145,6 +156,7 @@ export const PageEditGame: React.FC = () => {
         image,
         color,
         description,
+        parent,
     ]);
 
     const onSubmit = useCallback(
@@ -152,6 +164,8 @@ export const PageEditGame: React.FC = () => {
             e.preventDefault();
 
             if (!game) return;
+
+            console.log(parent);
 
             updateGame(game._id, {
                 name,
@@ -161,15 +175,14 @@ export const PageEditGame: React.FC = () => {
                 instructions,
                 image,
                 color,
-                cards: cardsChanged
-                    ? cardsValue
-                          ?.split('\n')
-                          .filter((l) => l.trim().length > 0)
-                          .map((content, index) => ({
-                              id: `${index}`,
-                              content,
-                          }))
-                    : [],
+                parent,
+                cards: cardsValue
+                    ?.split('\n')
+                    .filter((l) => l.trim().length > 0)
+                    .map((content, index) => ({
+                        id: `${index}`,
+                        content,
+                    })),
             });
         },
         [
@@ -182,6 +195,7 @@ export const PageEditGame: React.FC = () => {
             image,
             color,
             cardsValue,
+            parent,
         ],
     );
 
@@ -226,6 +240,26 @@ export const PageEditGame: React.FC = () => {
                         name="nsfw"
                         onChange={onChangeNSFW}
                     />
+                </Form.Group>
+
+                <Form.Group className="mb:12">
+                    <Form.Label>Parent</Form.Label>
+                    <Form.Select
+                        name="parent"
+                        value={parent ?? undefined}
+                        onChange={onChangeParent}
+                    >
+                        <option>None</option>
+                        {games.data.map((g) => (
+                            <option
+                                value={g._id}
+                                key={g._id}
+                                disabled={g._id == game._id}
+                            >
+                                {g.name}
+                            </option>
+                        ))}
+                    </Form.Select>
                 </Form.Group>
 
                 <Form.Group className="mb:12">

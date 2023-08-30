@@ -1,4 +1,4 @@
-<ng-container *ngIf="games | async; let games">
+<ng-container *ngIf="displayGames | async; let games">
     <div *ngIf="games.error" class="message-container">
         <p>Erreur lors du chargement</p> 
     </div>
@@ -8,21 +8,38 @@
     </div>
 
     <ul class="game-list">
-        <li *ngFor="let game of games.value" (click)="navigateToGame(game)" class="game-list__item interactable">
+        <li 
+            *ngFor="let game of games.value"
+            (click)="game.hasChildren ? undefined : navigateToGame(game)"
+            class="game-list__item"
+            [ngClass]="{ 'game-list__item--has-children': game.hasChildren, interactable: !game.hasChildren }"
+        >
             <p class="game-list__item__title">{{game.name}}</p>
             <p class="game-list__item__description">{{game.description}}</p>
-            <div class="game-list__item__pills">
-                <div class="game-list__item__pills__pill">
-                    <i class="icon fas fa-credit-card-blank"></i>
-                    <span>{{game.cardsCount}} card<ng-container *ngIf="game.cardsCount > 1">s</ng-container></span>
+
+            <ng-container *ngIf="game.hasChildren">
+                <ul class="game-list__item__children">
+                    <li *ngFor="let child of game.childrenGames" class="game-list__item__children__item interactable" (click)="navigateToGame(child)">
+                        <p class="game-list__item__children__item__title">{{child.name}}</p>
+                        <p class="game-list__item__children__item__description">{{child.description}}</p>
+                    </li>
+                </ul>
+            </ng-container>
+
+            <ng-container *ngIf="!game.hasChildren">
+                <div class="game-list__item__pills">
+                    <div class="game-list__item__pills__pill">
+                        <i class="icon fas fa-credit-card-blank"></i>
+                        <span>{{game.cardsCount}} card<ng-container *ngIf="game.cardsCount > 1">s</ng-container></span>
+                    </div>
+                    <div class="game-list__item__pills__pill">
+                        <i class="icon fas fa-game-console-handheld"></i> {{game.mode}}
+                    </div>
+                    <div class="game-list__item__pills__pill" *ngIf="game.nsfw">
+                        <i class="icon far fa-exclamation-square "></i> NSFW
+                    </div>
                 </div>
-                <div class="game-list__item__pills__pill">
-                    <i class="icon fas fa-game-console-handheld"></i> {{game.mode}}
-                </div>
-                <div class="game-list__item__pills__pill" *ngIf="game.nsfw">
-                    <i class="icon far fa-exclamation-square "></i> NSFW
-                </div>
-            </div>
+            </ng-container>
         </li>
     </ul>
 </ng-container>

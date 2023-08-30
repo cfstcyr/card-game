@@ -77,6 +77,7 @@ export const PageHome: React.FC = () => {
                         <th>#</th>
                         <th>Name</th>
                         <th>Cards count</th>
+                        <th>Parent</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -86,6 +87,7 @@ export const PageHome: React.FC = () => {
                             <td>{game._id}</td>
                             <td>{game.name}</td>
                             <td>{game.cardsCount}</td>
+                            <td>{game.parent}</td>
                             <td className="d:flex gap:12 justify-content:end">
                                 <Link to={`/game/${game._id}`}>
                                     <Button size="sm">

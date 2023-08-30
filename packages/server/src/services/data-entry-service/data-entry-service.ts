@@ -2,7 +2,7 @@ import { StatusCodes } from 'http-status-codes';
 import { HttpException } from '../../models/http-exception';
 import { CacheService } from '../cache-service/cache-service';
 import { WithId } from 'mongodb';
-import { FilterQuery, Model, ProjectionType } from 'mongoose';
+import mongoose, { FilterQuery, Model, ProjectionType } from 'mongoose';
 import { logger } from '../../utils/logger';
 
 export abstract class DataEntryService<T> {
@@ -16,6 +16,7 @@ export abstract class DataEntryService<T> {
         filter: FilterQuery<T> = {},
         projection: ProjectionType<T> | undefined = undefined,
         sort: string | undefined = 'name',
+        populate: string | string[] | undefined = undefined,
         noCache = false,
     ): Promise<WithId<T>[]> {
         const cacheKey = `getAll:${this.model.name}:${JSON.stringify(
@@ -25,9 +26,15 @@ export abstract class DataEntryService<T> {
 
         if (cached && !noCache && !this.disableCache) return cached;
 
-        const res = (await this.model
+        let query: mongoose.Query<unknown, unknown> = this.model
             .find(filter, projection)
-            .sort(sort)) as WithId<T>[];
+            .sort(sort);
+
+        if (populate) {
+            query = query.populate(populate);
+        }
+
+        const res = (await query) as WithId<T>[];
 
         this.cacheService.set(cacheKey, res);
 
