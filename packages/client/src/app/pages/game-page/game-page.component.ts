@@ -1,5 +1,5 @@
-import { AfterViewInit, Component, HostListener, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { AfterViewInit, ChangeDetectorRef, Component, HostListener, ViewChild } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
 import { BehaviorSubject, Observable, Subject, combineLatest, concat, concatAll, debounce, debounceTime, delay, merge, tap } from 'rxjs';
 import { END_OF_GAME_MESSAGES } from 'src/app/constants/messages';
 import { Card } from 'src/app/models/card';
@@ -28,41 +28,13 @@ export class GamePageComponent implements AfterViewInit {
     cardsLeftMessageDebounce = this.cardsLeftMessage.pipe(debounceTime(100));
     endOfGameMessage: string;
 
-    constructor(private readonly gamesService: GamesService, private readonly route: ActivatedRoute) {
+    constructor(private readonly gamesService: GamesService, private readonly route: ActivatedRoute, private cdr: ChangeDetectorRef) {
         this.endOfGameMessage = END_OF_GAME_MESSAGES[Math.floor(Math.random() * END_OF_GAME_MESSAGES.length)];
 
-        combineLatest([this.route.params, this.route.queryParams]).subscribe(([params, query]) => {
-            this.gamesService.getGame(params['id']).subscribe((game) => this.game.next(game));
-
-            this.game.pipe(delay(10)).subscribe((game) => {
-                if(this.currentGame?._id == game.value?._id) return;
-
-                if(game.loading) {
-                    this.isLoading.next(true)
-                } else {
-                    this.isLoading.next(false)
-                }
-
-                this.currentGame = game.value;
-
-                if (game.value) {
-                    const shuffledCards = shuffle(game.value.cards);
-                    this.cards.next(shuffledCards);
-                    this.gamesService.activeGames.set({
-                        gameId: game.value._id,
-                        cardsId: shuffledCards.map((card) => card.id),
-                        currentIndex: 0,
-                    });
-                }
-            });
-        });
-
-        this.isLoading.subscribe((isLoading) => {
-            if(isLoading) this.cardsLeftMessage.next('Loading...');
-        });
-        this.cardsLeft.subscribe((index) => {
-            this.cardsLeftMessage.next(`${index} cards left`);
-        });
+        this.isLoading.subscribe((isLoading) => this.handleLoadingUpdate(isLoading));
+        this.cardsLeft.subscribe((cardsLeft) => this.handleCardsLeftUpdate(cardsLeft));
+        this.game.subscribe((game) => this.handleGameChange(game));
+        combineLatest([this.route.params, this.route.queryParams]).subscribe(([params, query]) => this.handlePageLoad(params, query));
     }
 
     @HostListener('document:keydown', ['$event'])
@@ -79,7 +51,7 @@ export class GamePageComponent implements AfterViewInit {
     }
 
     ngAfterViewInit(): void {
-        if (!this.swiper) throw new Error('Swiper must be preset');
+        if (!this.swiper) throw new Error('Swiper must be prenset');
 
         combineLatest([this.swiper.currentIndex, this.cards]).subscribe(([index, cards]) => {
             this.currentIndex.next(index);
@@ -93,6 +65,42 @@ export class GamePageComponent implements AfterViewInit {
                 this.gamesService.activeGames.updateCurrentIndex(game.value._id, currentIndex);
             }
         });
+
+        this.cdr.detectChanges();
+    }
+
+    handlePageLoad(params: Params, query: Params): void {
+        this.gamesService.getGame(params['id']).subscribe((game) => this.game.next(game));
+    }
+
+    handleLoadingUpdate(isLoading: boolean): void {
+        if(isLoading) this.cardsLeftMessage.next('Loading...');
+    }
+
+    handleCardsLeftUpdate(cardsLeft: number): void {
+        this.cardsLeftMessage.next(`${cardsLeft} cards left`);
+    }
+
+    handleGameChange(game: Data<Game>): void {
+        if(this.currentGame?._id == game.value?._id) return;
+            
+        if(game.loading) {
+            this.isLoading.next(true)
+        } else {
+            this.isLoading.next(false)
+        }
+        
+        this.currentGame = game.value;
+        
+        if (game.value) {
+            const shuffledCards = shuffle(game.value.cards);
+            this.cards.next(shuffledCards);
+            this.gamesService.activeGames.set({
+                gameId: game.value._id,
+                cardsId: shuffledCards.map((card) => card.id),
+                currentIndex: 0,
+            });
+        }
     }
 
     get getIsLoading(): Observable<boolean> {
@@ -100,11 +108,15 @@ export class GamePageComponent implements AfterViewInit {
     }
 
     next(): void {
-        this.swiper?.swiper?.slideNext();
+        if (!this.swiper) throw new Error('Swiper not on page');
+        if (!this.swiper.swiper.value) throw new Error('Swiper not initiated');
+        this.swiper?.swiper.value?.slideNext();
     }
 
     previous(): void {
-        this.swiper?.swiper?.slidePrev();
+        if (!this.swiper) throw new Error('Swiper not on page');
+        if (!this.swiper.swiper.value) throw new Error('Swiper not initiated');
+        this.swiper?.swiper.value?.slidePrev();
     }
 
     canShare(): boolean {
