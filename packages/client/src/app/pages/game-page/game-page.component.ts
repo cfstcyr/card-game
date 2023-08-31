@@ -27,7 +27,6 @@ export class GamePageComponent implements AfterViewInit, OnDestroy {
     cardsLeft: Subject<number> = new Subject();
     isLoading: BehaviorSubject<boolean> = new BehaviorSubject(true);
     cardsLeftMessage: BehaviorSubject<string> = new BehaviorSubject('');
-    cardsLeftMessageDebounce = this.cardsLeftMessage.pipe(debounceTime(100));
     endOfGameMessage: string;
 
     constructor(private readonly gamesService: GamesService, private readonly route: ActivatedRoute, private cdr: ChangeDetectorRef) {
