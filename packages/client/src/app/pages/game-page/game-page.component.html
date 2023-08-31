@@ -2,8 +2,8 @@
     <span title class="cards-left">{{ cardsLeftMessageDebounce | async }}</span>
 
     <app-simple-button head-action-right (click)="toggleFullScreen()" *ngIf="canFullScreen()">
-        <i class="far fa-expand-wide" *ngIf="isFullScreen()"></i>
-        <i class="far fa-compress-wide" *ngIf="!isFullScreen()"></i>
+        <i class="far fa-expand-wide" *ngIf="!isFullScreen()"></i>
+        <i class="far fa-compress-wide" *ngIf="isFullScreen()"></i>
     </app-simple-button>
     <app-simple-button head-action-right href="/" effect="large"><i class="far fa-times"></i></app-simple-button>
 
