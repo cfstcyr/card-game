@@ -46,4 +46,13 @@
         cursor: grabbing;
     }
 
+    &::after {
+        content: "";
+        height: 100%;
+        width: 100%;
+        background-color: transparent;
+        opacity: 0.5;
+        position: absolute;
+        pointer-events: all;
+    }
 }
