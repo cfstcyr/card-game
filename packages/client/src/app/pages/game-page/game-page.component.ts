@@ -1,6 +1,7 @@
-import { AfterViewInit, ChangeDetectorRef, Component, HostListener, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, HostListener, OnDestroy, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { BehaviorSubject, Observable, Subject, combineLatest, concat, concatAll, debounce, debounceTime, delay, merge, tap } from 'rxjs';
+import screenfull from 'screenfull';
 import { END_OF_GAME_MESSAGES } from 'src/app/constants/messages';
 import { Card } from 'src/app/models/card';
 import { Data } from 'src/app/models/data';
@@ -15,7 +16,7 @@ import { share, canShare } from 'src/app/utils/share';
   templateUrl: './game-page.component.html',
   styleUrls: ['./game-page.component.scss'],
 })
-export class GamePageComponent implements AfterViewInit {
+export class GamePageComponent implements AfterViewInit, OnDestroy {
     @ViewChild(SwiperComponent) swiper?: SwiperComponent;
     game: BehaviorSubject<Data<Game>> = new BehaviorSubject<Data<Game>>({ loading: true });;
     currentGame?: Game;
@@ -70,6 +71,12 @@ export class GamePageComponent implements AfterViewInit {
         this.cdr.detectChanges();
     }
 
+    ngOnDestroy(): void {
+        if(screenfull.isEnabled && screenfull.isFullscreen) {
+            screenfull.exit();
+        }
+    }
+
     handlePageLoad(params: Params, query: Params): void {
         this.gamesService.getGame(params['id']).subscribe((game) => this.game.next(game));
     }
@@ -122,6 +129,24 @@ export class GamePageComponent implements AfterViewInit {
 
     canShare(): boolean {
         return canShare(this.getShareContent());
+    }
+
+    canFullScreen(): boolean {
+        return screenfull.isEnabled;
+    }
+
+    isFullScreen(): boolean {
+        return screenfull.isFullscreen;
+    }
+
+    toggleFullScreen(): void {
+        if(screenfull.isEnabled) {
+            if(screenfull.isFullscreen) {
+                screenfull.exit();
+            } else {
+                screenfull.request();
+            }
+        }
     }
 
     async share(): Promise<void> {
