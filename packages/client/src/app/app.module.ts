@@ -22,6 +22,7 @@ import { MarkdownModule } from 'ngx-markdown';
 import { SettingsComponent } from './components/settings/settings.component';
 import { ThemeModule } from './modules/theme/theme.module';
 import { AlertModule } from './modules/alert/alert.module';
+import { TapModule } from './modules/tap/tap.module';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { AlertModule } from './modules/alert/alert.module';
     LoadingBarModule,
     ModalModule,
     UiModule,
+    TapModule,
     ThemeModule,
     AlertModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
