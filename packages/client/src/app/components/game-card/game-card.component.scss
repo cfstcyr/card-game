@@ -46,7 +46,7 @@
         cursor: grabbing;
     }
 
-    &::after {
+    &:not(.game-card--system)::after {
         content: "";
         height: 100%;
         width: 100%;
