@@ -97,4 +97,16 @@ export const THEMES_LIST: Theme[] = [
             specialFont: 'nabla',
         }
     }, 
+    {
+        name: 'We\'re not really strangers',
+        id: 'wnrs',
+        palette: {
+            primary: 'white',
+            primaryContrast: '#B12423',
+            button: '#B12423',
+            buttonContrast: 'white',
+
+            specialFont: "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif",
+        }
+    }
 ]

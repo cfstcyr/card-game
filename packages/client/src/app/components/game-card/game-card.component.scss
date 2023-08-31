@@ -21,7 +21,8 @@
 
     &.theme {
         &--blue,
-        &--green {
+        &--green,
+        &--red {
             align-items: center;
             .game-card__content {
                 background-color: var(--theme-button);
