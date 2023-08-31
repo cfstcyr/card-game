@@ -29,7 +29,7 @@ export class SwiperComponent implements AfterViewInit {
             if (!swiper) return;
 
             swiper.on('realIndexChange', (swiper) => {
-                this.currentIndex.next(swiper.activeIndex);
+                this.currentIndex.next(swiper.realIndex);
             });
         });
     }
