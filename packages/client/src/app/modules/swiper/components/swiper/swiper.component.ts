@@ -36,11 +36,7 @@ export class SwiperComponent implements AfterViewInit {
         },
     }
 
-    constructor(private cdr: ChangeDetectorRef) {
-        this.swiper.subscribe((swiper) => {
-            if(swiper) console.log(swiper);
-        })
-    }
+    constructor(private cdr: ChangeDetectorRef) {}
     
     ngAfterViewInit(): void {
         this.cdr.detectChanges();
