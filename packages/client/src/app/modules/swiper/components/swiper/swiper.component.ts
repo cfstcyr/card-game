@@ -22,27 +22,25 @@ export class SwiperComponent implements AfterViewInit {
     currentIndex: Subject<number> = new BehaviorSubject(0);
     swiper: BehaviorSubject<Swiper | undefined> = new BehaviorSubject<Swiper | undefined>(undefined);
 
-    protected config: SwiperOptions = {
-        on: {
-            activeIndexChange: (swiper) => {
-                this.currentIndex.next(swiper.activeIndex);
-            },
-            init: (swiper) => {
-                if (!this.swiper.value) this.swiper.next(swiper);
-            },
-            beforeInit: (swiper) => {
-                if (!this.swiper.value) this.swiper.next(swiper);
-            },
-        },
-    }
+    protected config: SwiperOptions = {}
 
-    constructor(private cdr: ChangeDetectorRef) {}
+    constructor(private cdr: ChangeDetectorRef) {
+        this.swiper.subscribe((swiper) => {
+            if (!swiper) return;
+
+            swiper.on('activeIndexChange', (swiper) => {
+                this.currentIndex.next(swiper.activeIndex);
+            });
+        });
+    }
     
     ngAfterViewInit(): void {
         this.cdr.detectChanges();
+
         if (!this.swiper.value) {
             if (!this.swiperElement) throw new Error('Swiper not found on page');
             if (!this.swiperElement.nativeElement.swiper) throw new Error('Swiper not initialized properly');
+
             this.swiper.next(this.swiperElement.nativeElement.swiper);
         }
     }
