@@ -8,6 +8,7 @@ import { Game } from 'src/app/models/game';
 import { SwiperComponent } from 'src/app/modules/swiper/components/swiper/swiper.component';
 import { GamesService } from 'src/app/services/game-service/games.service';
 import { shuffle } from 'src/app/utils/random';
+import { share, canShare } from 'src/app/utils/share';
 
 @Component({
   selector: 'app-game-page',
@@ -120,19 +121,11 @@ export class GamePageComponent implements AfterViewInit {
     }
 
     canShare(): boolean {
-        const content = this.getShareContent();
-
-        if (!content) return false;
-
-        return navigator.canShare?.(content) ?? false;
+        return canShare(this.getShareContent());
     }
 
     async share(): Promise<void> {
-        if(this.canShare()) {
-            try {
-                await navigator.share(this.getShareContent());
-            } catch {}
-        }
+        return share(this.getShareContent());
     }
 
     private getShareContent(): ShareData | undefined {
