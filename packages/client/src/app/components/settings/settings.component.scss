@@ -17,12 +17,18 @@ section {
         .options {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
+            justify-content: stretch;
 
             app-simple-button {
-                height: 2fr;
+                aspect-ratio: 16/9;
                 text-align: center;
+                display: flex;
+                width: 100%;
 
                 &::ng-deep {
+                    app-button {
+                        width: 100%;
+                    }
                     button {
                         padding: 30px 12px;
                         .content {

@@ -2,7 +2,7 @@ import { Theme } from "./models";
 
 export const THEMES_LIST: Theme[] = [
     {
-        name: 'Black',
+        name: 'Classic Black',
         id: 'black',
         palette: {
             primary: 'black',
@@ -14,7 +14,7 @@ export const THEMES_LIST: Theme[] = [
         }
     },
     {
-        name: 'White',
+        name: 'Classic White',
         id: 'white',
         palette: {
             primary: 'rgb(252, 252, 252)',
@@ -26,7 +26,7 @@ export const THEMES_LIST: Theme[] = [
         }
     },
     {
-        name: 'Blue',
+        name: 'Colorful Blue',
         id: 'blue',
         palette: {
             primary: 'rgb(16, 101, 250)',
@@ -38,7 +38,7 @@ export const THEMES_LIST: Theme[] = [
         },
     },
     {
-        name: 'Green',
+        name: 'Colorful Green',
         id: 'green',
         palette: {
             primary: '#3bab62',
@@ -50,7 +50,7 @@ export const THEMES_LIST: Theme[] = [
         },
     },
     {
-        name: 'Red',
+        name: 'Colorful Red',
         id: 'red',
         palette: {
             primary: '#dd5656',
