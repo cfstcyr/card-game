@@ -1,6 +1,6 @@
 {
   "name": "Card Game",
-  "short_name": "card-game",
+  "short_name": "Card Game",
   "theme_color": "black",
   "background_color": "black",
   "display": "standalone",
