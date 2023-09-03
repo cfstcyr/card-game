@@ -22,6 +22,7 @@ import { MarkdownModule } from 'ngx-markdown';
 import { SettingsComponent } from './components/settings/settings.component';
 import { ThemeModule } from './modules/theme/theme.module';
 import { AlertModule } from './modules/alert/alert.module';
+import { AddToHomescreenComponent } from './components/add-to-homescreen/add-to-homescreen.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { AlertModule } from './modules/alert/alert.module';
     LayoutComponent,
     InstructionPageComponent,
     SettingsComponent,
+    AddToHomescreenComponent,
   ],
   imports: [
     BrowserModule,

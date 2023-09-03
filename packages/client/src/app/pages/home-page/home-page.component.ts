@@ -6,6 +6,7 @@ import { Game, GameListItem } from 'src/app/models/game';
 import { ModalService } from 'src/app/modules/modal/modal.module';
 import { ButtonComponent } from 'src/app/modules/ui/components/button/button.component';
 import { GamesService } from 'src/app/services/game-service/games.service';
+import { share } from 'src/app/utils/share';
 
 const TITLE_VISIBLE_BREAKPOINT = 80;
 
@@ -39,6 +40,11 @@ export class HomePageComponent {
             title: 'Options',
             content: SettingsComponent,
         });
+    }
+
+    share(): void {
+        console.log(location);
+        share({ url: location.host });
     }
 
     // removeContinueGame(gameId: string): void {

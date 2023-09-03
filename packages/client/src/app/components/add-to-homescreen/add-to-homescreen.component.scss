@@ -1,0 +1,54 @@
+@import '../../../styles/helper';
+
+.add-to-homescreen {
+    @include no-select;
+    
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 18px;
+    padding: 18px;
+    border-radius: 8px;
+    width: 100%;
+    box-sizing: border-box;
+    background: var(--theme-button);
+    color: var(--theme-button-contrast);
+    text-decoration: inherit;
+
+    &__image {
+        img {
+            height: 48px;
+            width: auto;
+            border-radius: 12px;
+        }
+    }
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+
+        &__title,
+        &__description {
+            line-height: 1em;
+            margin: 0;
+        }
+
+        &__title {
+            font-family: var(--theme-special-font);
+            font-size: 1.6em;
+            font-weight: 700;
+        }
+
+        &__description {
+            font-size: 1.1em;
+            opacity: 0.55;
+        }
+    }
+}
+
+hr {
+    margin-bottom: 0;
+    margin-top: 24px;
+    border-color: var(--theme-button);
+    border-style: solid;
+}
