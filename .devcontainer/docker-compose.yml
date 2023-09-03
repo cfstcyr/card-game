@@ -28,7 +28,7 @@ services:
 
   client:
     image: node:20
-    command: npm start
+    command: npx ng serve --disable-host-check
     working_dir: /app
     restart: unless-stopped
     volumes:
