@@ -1,0 +1,18 @@
+.standalone {
+    &--only {
+        @media all and (display-mode: standalone) {
+            display: inherit;
+        }
+        @media all and not (display-mode: standalone) {
+            display: none;
+        }
+    }
+    &--not {
+        @media all and (display-mode: standalone) {
+            display: none;
+        }
+        @media all and not (display-mode: standalone) {
+            display: inherit;
+        }
+    }
+}
