@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { DeviceDetectorService } from 'ngx-device-detector';
 import { isRunningStandalone } from 'src/app/utils/display';
 
 @Component({
@@ -9,7 +10,7 @@ import { isRunningStandalone } from 'src/app/utils/display';
 export class AddToHomescreenComponent {
     display: boolean;
 
-    constructor() {
-        this.display = isRunningStandalone();
+    constructor(deviceService: DeviceDetectorService) {
+        this.display = !isRunningStandalone() && deviceService.isMobile();
     }
 }
