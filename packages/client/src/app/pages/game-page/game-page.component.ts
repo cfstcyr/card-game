@@ -18,7 +18,7 @@ import { share, canShare } from 'src/app/utils/share';
   styleUrls: ['./game-page.component.scss'],
 })
 export class GamePageComponent extends FullscreenComponent implements AfterViewInit {
-    @ViewChild(SwiperComponent) swiper?: SwiperComponent;
+    @ViewChild(SwiperComponent) swiperComponent?: SwiperComponent;
     gamePlayProvider: BehaviorSubject<GamePlayProvider | undefined> = new BehaviorSubject<GamePlayProvider | undefined>(undefined);
     canSwipeNext: Subject<boolean> = new Subject();
     canSwipePrevious: Subject<boolean> = new Subject();
@@ -60,15 +60,15 @@ export class GamePageComponent extends FullscreenComponent implements AfterViewI
     }
 
     ngAfterViewInit(): void {
-        if (!this.swiper) throw new Error('Swiper must be present');
+        if (!this.swiperComponent) throw new Error('Swiper must be present');
 
-        combineLatest([this.swiper.swiper, this.cards])
+        combineLatest([this.swiperComponent.swiper$, this.cards])
             .pipe(delay(0)) // Wait for rerender
             .subscribe(([swiper, cards]) => {
                 swiper?.update();
             });
 
-        combineLatest([this.swiper.currentIndex, this.cards]).subscribe(([index, cards]) => {
+        combineLatest([this.swiperComponent.currentIndex, this.cards]).subscribe(([index, cards]) => {
             this.currentIndex.next(index);
             this.cardsLeftMessage.next(`${Math.max(0, (cards?.length ?? 0) - index - 1)} cards left`);
             this.canSwipeNext.next(index < (cards?.length ?? 0));
@@ -87,15 +87,13 @@ export class GamePageComponent extends FullscreenComponent implements AfterViewI
     }
 
     next(): void {
-        if (!this.swiper) throw new Error('Swiper not on page');
-        if (!this.swiper.swiper.value) throw new Error('Swiper not initiated');
-        this.swiper?.swiper.value?.slideNext();
+        if (!this.swiperComponent) throw new Error('Swiper not on page');
+        this.swiperComponent.swiper.slideNext();
     }
 
     previous(): void {
-        if (!this.swiper) throw new Error('Swiper not on page');
-        if (!this.swiper.swiper.value) throw new Error('Swiper not initiated');
-        this.swiper?.swiper.value?.slidePrev();
+        if (!this.swiperComponent) throw new Error('Swiper not on page');
+        this.swiperComponent.swiper.slidePrev();
     }
 
     canShare(): Observable<boolean> {

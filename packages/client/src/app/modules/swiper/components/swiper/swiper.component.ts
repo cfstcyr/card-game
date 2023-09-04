@@ -20,12 +20,12 @@ export class SwiperComponent implements AfterViewInit {
     @ContentChildren(SlideComponent) protected slides: QueryList<SlideComponent> = new QueryList();
     @ViewChild('swiper') protected swiperElement: ElementRef<SwiperContainer> | null = null;
     currentIndex: Subject<number> = new BehaviorSubject(0);
-    swiper: BehaviorSubject<Swiper | undefined> = new BehaviorSubject<Swiper | undefined>(undefined);
+    swiper$: BehaviorSubject<Swiper | undefined> = new BehaviorSubject<Swiper | undefined>(undefined);
 
     protected config: SwiperOptions = {}
 
     constructor(private cdr: ChangeDetectorRef) {
-        this.swiper.subscribe((swiper) => {
+        this.swiper$.subscribe((swiper) => {
             if (!swiper) return;
 
             swiper.on('activeIndexChange', (swiper) => {
@@ -33,15 +33,20 @@ export class SwiperComponent implements AfterViewInit {
             });
         });
     }
+
+    get swiper(): Swiper {
+        if (!this.swiper$.value) throw new Error('Swiper not initialized');
+        return this.swiper$.value;
+    }
     
     ngAfterViewInit(): void {
         this.cdr.detectChanges();
 
-        if (!this.swiper.value) {
+        if (!this.swiper$.value) {
             if (!this.swiperElement) throw new Error('Swiper not found on page');
             if (!this.swiperElement.nativeElement.swiper) throw new Error('Swiper not initialized properly');
 
-            this.swiper.next(this.swiperElement.nativeElement.swiper);
+            this.swiper$.next(this.swiperElement.nativeElement.swiper);
         }
     }
 }
