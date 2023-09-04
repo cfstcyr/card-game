@@ -30,7 +30,7 @@ export class GamesService implements IGameService {
 
             if(this.gameList$.value.loading || this.gameList$.value.value?.find((game) => game._id == id)) return { loading: true };
 
-            return { error: 'Game not found' }
+            return { error: new Error('Game not found') }
         }));
     }
 

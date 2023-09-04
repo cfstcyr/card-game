@@ -23,6 +23,7 @@ import { SettingsComponent } from './components/settings/settings.component';
 import { ThemeModule } from './modules/theme/theme.module';
 import { AlertModule } from './modules/alert/alert.module';
 import { AddToHomescreenComponent } from './components/add-to-homescreen/add-to-homescreen.component';
+import { FullscreenComponent } from './components/fullscreen/fullscreen.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { AddToHomescreenComponent } from './components/add-to-homescreen/add-to-
     InstructionPageComponent,
     SettingsComponent,
     AddToHomescreenComponent,
+    FullscreenComponent,
   ],
   imports: [
     BrowserModule,

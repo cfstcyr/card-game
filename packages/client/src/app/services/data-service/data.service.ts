@@ -50,7 +50,7 @@ export class DataService {
                     return;
                 }
             } catch (error) {
-                subject.next({ error });
+                subject.next({ error: error as Error });
             }
 
             try {
@@ -62,7 +62,7 @@ export class DataService {
                     this.isLoading$.next(false);
                 }
             } catch (error) {
-                subject.next({ error });
+                subject.next({ error: error as Error });
             }
         })();
 

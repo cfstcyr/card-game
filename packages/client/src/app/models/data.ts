@@ -6,7 +6,7 @@ export interface DataLoading {
 
 export interface DataError {
     value?: undefined;
-    error: any;
+    error: Error;
     loading?: false;
 }
 
