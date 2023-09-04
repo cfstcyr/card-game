@@ -17,7 +17,7 @@ export class DefaultGamePlayProvider extends GamePlayProvider {
     }
 
     handleGame(game: Data<Game>) {
-        if (this.currentGameId === game.value?._id) return;
+        if (game.value && this.currentGameId === game.value._id) return;
 
         this.isLoading$.next(false);
         this.error$.next(undefined);
