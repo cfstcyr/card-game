@@ -32,33 +32,6 @@
         </ng-container>
     </sw-swiper>
 
-    <!-- <app-data-renderer [data]="game | async">
-        <sw-swiper>
-            <ng-container *ngIf="(cards | async) as cardsValue">
-                <sw-slide *ngFor="let card of cardsValue">
-                    <app-game-card [card]="card"></app-game-card>
-                </sw-slide>
-                <sw-slide>
-                    <app-game-card [isSystem]="true">
-                        <div class="end-of-game">
-                            <p>{{endOfGameMessage}}</p>
-                            <app-simple-button 
-                                href="/"
-                                size="small"
-                            ><i class="far fa-arrow-left"></i> Play another game</app-simple-button>
-                        </div>
-                    </app-game-card>
-                </sw-slide>
-            </ng-container>
-        </sw-swiper>
-
-        <sw-swiper error>
-            <sw-slide>
-                <app-game-card [isSystem]="true">Error loading game</app-game-card>
-            </sw-slide>
-        </sw-swiper>
-    </app-data-renderer> -->
-
     <app-simple-button foot-action-left effect="large" (click)="share()" [disabled]="!canShare()">
         <i class="fas fa-share"></i>
     </app-simple-button>
