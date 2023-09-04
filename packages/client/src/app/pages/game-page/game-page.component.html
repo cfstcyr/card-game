@@ -36,10 +36,10 @@
         <i class="fas fa-share"></i>
     </app-simple-button>
 
-    <app-simple-button foot-action-right effect="large" (click)="previous()" [disabled]="!(canSwipePrevious | async)">
+    <app-simple-button foot-action-right effect="large" (click)="previous()" [disabled]="!(indexProvider.hasPrevious | async)">
         <i class="far fa-chevron-left"></i>
     </app-simple-button>
-    <app-simple-button foot-action-right effect="large" (click)="next()" [disabled]="!(canSwipeNext | async)">
+    <app-simple-button foot-action-right effect="large" (click)="next()" [disabled]="!(indexProvider.hasNext| async)">
         <i class="far fa-chevron-right"></i>
     </app-simple-button>
 </app-layout>

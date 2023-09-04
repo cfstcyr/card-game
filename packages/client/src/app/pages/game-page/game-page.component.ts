@@ -8,6 +8,7 @@ import { CardDisplay } from 'src/app/models/card';
 import { SwiperComponent } from 'src/app/modules/swiper/components/swiper/swiper.component';
 import { DefaultGamePlayProvider } from 'src/app/providers/game-play-provider/default-game-play-provider';
 import { GamePlayProvider } from 'src/app/providers/game-play-provider/game-play-provider';
+import { GameIndexProvider } from 'src/app/providers/game-index-provider/game-index-provider';
 import { GamesService } from 'src/app/services/game-service/games.service';
 import { randomItem } from 'src/app/utils/random';
 import { share, canShare } from 'src/app/utils/share';
@@ -20,9 +21,7 @@ import { share, canShare } from 'src/app/utils/share';
 export class GamePageComponent extends FullscreenComponent implements AfterViewInit {
     @ViewChild(SwiperComponent) swiperComponent?: SwiperComponent;
     gamePlayProvider: BehaviorSubject<GamePlayProvider | undefined> = new BehaviorSubject<GamePlayProvider | undefined>(undefined);
-    canSwipeNext: Subject<boolean> = new Subject();
-    canSwipePrevious: Subject<boolean> = new Subject();
-    currentIndex: BehaviorSubject<number> = new BehaviorSubject(0);
+    indexProvider: GameIndexProvider = new GameIndexProvider();
     cardsLeftMessage: BehaviorSubject<string> = new BehaviorSubject('');
     cardsLeftMessageDebounce = this.cardsLeftMessage.pipe(debounceTime(25));
     endOfGameMessage: string = randomItem(END_OF_GAME_MESSAGES);
@@ -69,10 +68,9 @@ export class GamePageComponent extends FullscreenComponent implements AfterViewI
             });
 
         combineLatest([this.swiperComponent.currentIndex, this.cards]).subscribe(([index, cards]) => {
-            this.currentIndex.next(index);
-            this.cardsLeftMessage.next(`${Math.max(0, (cards?.length ?? 0) - index - 1)} cards left`);
-            this.canSwipeNext.next(index < (cards?.length ?? 0));
-            this.canSwipePrevious.next(index > 0);
+            this.indexProvider.setIndex(index);
+            this.indexProvider.setTotal(cards?.length ?? 0);
+            this.cardsLeftMessage.next(`${this.indexProvider.getItemsLeft()} cards left`);
         });
 
         this.cdr.detectChanges();
@@ -110,7 +108,7 @@ export class GamePageComponent extends FullscreenComponent implements AfterViewI
     }
 
     private getShareContent(): Observable<ShareData | undefined> {
-        return combineLatest([this.gamePlayProvider, this.cards, this.currentIndex]).pipe(mergeMap(([gamePlayProvider, cards, currentIndex]) => {
+        return combineLatest([this.gamePlayProvider, this.cards, this.indexProvider.currentIndex]).pipe(mergeMap(([gamePlayProvider, cards, currentIndex]) => {
             return cards?.[currentIndex] ? [{
                 text: `"${cards[currentIndex]?.content}"\n\nPlay ${gamePlayProvider?.getGameName()} on ${location.origin}.`,
             }] : [undefined];
