@@ -41,3 +41,7 @@ export function randomGroups<T>(array: T[], groupsSize = 2): T[][] {
 
     return groups;
 }
+
+export function randomItem<T>(array: T[]): T {
+    return array[Math.floor(Math.random() * array.length)];
+}

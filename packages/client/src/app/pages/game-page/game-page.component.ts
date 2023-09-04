@@ -9,6 +9,7 @@ import { SwiperComponent } from 'src/app/modules/swiper/components/swiper/swiper
 import { DefaultGamePlayProvider } from 'src/app/providers/game-play-provider/default-game-play-provider';
 import { GamePlayProvider } from 'src/app/providers/game-play-provider/game-play-provider';
 import { GamesService } from 'src/app/services/game-service/games.service';
+import { randomItem } from 'src/app/utils/random';
 import { share, canShare } from 'src/app/utils/share';
 
 @Component({
@@ -24,12 +25,10 @@ export class GamePageComponent extends FullscreenComponent implements AfterViewI
     currentIndex: BehaviorSubject<number> = new BehaviorSubject(0);
     cardsLeftMessage: BehaviorSubject<string> = new BehaviorSubject('');
     cardsLeftMessageDebounce = this.cardsLeftMessage.pipe(debounceTime(25));
-    endOfGameMessage: string;
+    endOfGameMessage: string = randomItem(END_OF_GAME_MESSAGES);
 
     constructor(private readonly gamesService: GamesService, private readonly route: ActivatedRoute, private cdr: ChangeDetectorRef) {
         super();
-
-        this.endOfGameMessage = END_OF_GAME_MESSAGES[Math.floor(Math.random() * END_OF_GAME_MESSAGES.length)];
 
         this.isLoading.subscribe((isLoading) => this.handleIsLoading(isLoading));
         combineLatest([this.route.params, this.route.queryParams]).subscribe(([params, query]) => this.handlePageLoad(params, query));
@@ -62,6 +61,12 @@ export class GamePageComponent extends FullscreenComponent implements AfterViewI
 
     ngAfterViewInit(): void {
         if (!this.swiper) throw new Error('Swiper must be present');
+
+        combineLatest([this.swiper.swiper, this.cards])
+            .pipe(delay(0)) // Wait for rerender
+            .subscribe(([swiper, cards]) => {
+                swiper?.update();
+            });
 
         combineLatest([this.swiper.currentIndex, this.cards]).subscribe(([index, cards]) => {
             this.currentIndex.next(index);

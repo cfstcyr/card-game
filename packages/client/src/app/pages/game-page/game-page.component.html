@@ -15,9 +15,6 @@
         </ng-container>
 
         <ng-container *ngIf="(cards | async) as cards">
-            <p *ngFor="let card of cards">
-               {{card.content}}
-            </p>
             <sw-slide *ngFor="let card of cards">
                 <app-game-card [card]="card"></app-game-card>
             </sw-slide>
