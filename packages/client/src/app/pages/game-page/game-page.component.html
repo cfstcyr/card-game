@@ -1,5 +1,5 @@
 <app-layout [disabledScroll]="true">
-    <span title class="cards-left">{{ cardsLeftMessageDebounce | async }}</span>
+    <span title class="cards-left">{{ cardsLeftMessageDisplay | async }}</span>
 
     <app-simple-button head-action-right (click)="toggleFullScreen()" *ngIf="canFullScreen()">
         <i class="far fa-expand-wide" *ngIf="!isFullScreen()"></i>

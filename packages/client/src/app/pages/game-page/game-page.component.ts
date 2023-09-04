@@ -22,7 +22,6 @@ export class GamePageComponent extends FullscreenComponent implements AfterViewI
     gamePlayProvider: BehaviorSubject<GamePlayProvider | undefined> = new BehaviorSubject<GamePlayProvider | undefined>(undefined);
     indexProvider: GameIndexProvider = new GameIndexProvider();
     cardsLeftMessage: BehaviorSubject<string> = new BehaviorSubject('');
-    cardsLeftMessageDebounce = this.cardsLeftMessage.pipe(debounceTime(25));
     endOfGameMessage: string = randomItem(END_OF_GAME_MESSAGES);
 
     constructor(private readonly gamesService: GamesService, private readonly route: ActivatedRoute, private cdr: ChangeDetectorRef) {
@@ -42,6 +41,10 @@ export class GamePageComponent extends FullscreenComponent implements AfterViewI
 
     get gameError(): Observable<string | undefined> {
         return this.gamePlayProvider.pipe(mergeMap((gamePlayProvider) => gamePlayProvider?.error ?? of(undefined)))
+    }
+
+    get cardsLeftMessageDisplay(): Observable<string> {
+        return this.cardsLeftMessage.pipe(debounceTime(25));
     }
 
     @HostListener('document:keydown', ['$event'])
@@ -94,12 +97,7 @@ export class GamePageComponent extends FullscreenComponent implements AfterViewI
     }
 
     canShare(): Observable<boolean> {
-        return combineLatest([this.gamePlayProvider, this.getShareContent()])
-            .pipe(
-                map(([gamePlayProvider, shareContent]) => {
-                    return gamePlayProvider ? canShare(shareContent) : false;
-                }),
-            )
+        return this.getShareContent().pipe(map((shareContent) => canShare(shareContent)));
     }
     
     async share(): Promise<void> {
@@ -107,10 +105,13 @@ export class GamePageComponent extends FullscreenComponent implements AfterViewI
     }
 
     private getShareContent(): Observable<ShareData | undefined> {
-        return combineLatest([this.gamePlayProvider, this.cards, this.indexProvider.currentIndex]).pipe(mergeMap(([gamePlayProvider, cards, currentIndex]) => {
-            return cards?.[currentIndex] ? [{
-                text: `"${cards[currentIndex]?.content}"\n\nPlay ${gamePlayProvider?.getGameName()} on ${location.origin}.`,
-            }] : [undefined];
-        }));
+        return combineLatest([this.gamePlayProvider, this.cards, this.indexProvider.currentIndex])
+            .pipe(
+                map(([gamePlayProvider, cards, currentIndex]) => {
+                    return cards?.[currentIndex] && gamePlayProvider ? {
+                        text: `"${cards[currentIndex]?.content}"\n\nPlay ${gamePlayProvider.getGameName()} on ${location.origin}.`,
+                    } : undefined;
+                })
+            )
     }
 }
