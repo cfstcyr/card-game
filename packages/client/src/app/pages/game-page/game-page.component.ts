@@ -1,7 +1,6 @@
-import { AfterViewInit, ChangeDetectorRef, Component, HostListener, OnDestroy, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, HostListener, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { BehaviorSubject, Observable, Subject, combineLatest, debounceTime, delay, firstValueFrom, lastValueFrom, map, mergeMap, of } from 'rxjs';
-import screenfull from 'screenfull';
+import { BehaviorSubject, Observable, combineLatest, debounceTime, delay, firstValueFrom, map, mergeMap, of } from 'rxjs';
 import { FullscreenComponent } from 'src/app/components/fullscreen/fullscreen.component';
 import { END_OF_GAME_MESSAGES } from 'src/app/constants/messages';
 import { CardDisplay } from 'src/app/models/card';
