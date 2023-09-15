@@ -9,12 +9,15 @@
 
     <ul class="game-list">
         <li
+            longPress
+            (longPressActivate)="selectGame(game)"
             *ngFor="let game of games.value"
             (click)="navigateToGame(game)"
             class="game-list__item interactable"
             [attr.data-game-id]="game._id"
             [attr.data-game-name]="game.name"
         >
+            <p>{{game.selected}}</p>
             <p class="game-list__item__title">{{game.name}}</p>
             <p class="game-list__item__description">{{game.description}}</p>
             <div class="game-list__item__pills">
@@ -31,4 +34,12 @@
             </div>
         </li>
     </ul>
+
+    <ng-container *ngIf="(gameSelectedCount | async) ?? 0 > 0; let selectedCount">
+        <app-simple-button (click)="startSelectedGames()" class="game-start-button">
+            <span class="game-start-button__content">
+                Start {{selectedCount}} game<ng-container *ngIf="(selectedCount === true ? 0: selectedCount) > 1">s</ng-container>
+            </span>
+        </app-simple-button>
+    </ng-container>
 </ng-container>

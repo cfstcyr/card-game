@@ -24,6 +24,7 @@ import { ThemeModule } from './modules/theme/theme.module';
 import { AlertModule } from './modules/alert/alert.module';
 import { AddToHomescreenComponent } from './components/add-to-homescreen/add-to-homescreen.component';
 import { FullscreenComponent } from './components/fullscreen/fullscreen.component';
+import { LongPressDirective } from './modules/utils/long-press.directive';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { FullscreenComponent } from './components/fullscreen/fullscreen.componen
     FullscreenComponent,
   ],
   imports: [
+    LongPressDirective,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
