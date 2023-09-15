@@ -1,6 +1,7 @@
 <div class="game-card" [ngClass]="{ 'game-card--system': isSystem }" appThemed>
     <div class="game-card__content">
-        {{ card && card.content }}
+        <span class="game-card__content__top">{{ card && card.contentTop }}</span>
+        <span class="game-card__content__main">{{ card && card.content }}</span>
         <ng-content></ng-content>
     </div>
 </div>

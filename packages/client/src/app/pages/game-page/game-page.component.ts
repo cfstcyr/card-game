@@ -11,6 +11,7 @@ import { GameIndexProvider } from 'src/app/providers/game-index-provider/game-in
 import { GamesService } from 'src/app/services/game-service/games.service';
 import { randomItem } from 'src/app/utils/random';
 import { share, canShare } from 'src/app/utils/share';
+import { MultiGamePlayProvider } from 'src/app/providers/game-play-provider/multi-game-provider';
 
 @Component({
   selector: 'app-game-page',
@@ -83,7 +84,12 @@ export class GamePageComponent extends FullscreenComponent implements AfterViewI
     }
 
     handlePageLoad(params: Params, query: Params): void {
-        this.gamePlayProvider.next(new DefaultGamePlayProvider(this.gamesService, params['id']));
+        const gameIdParam: string = params['id'];
+        this.gamePlayProvider.next(
+            gameIdParam.includes(',')
+                ? new MultiGamePlayProvider(this.gamesService, gameIdParam.split(','))
+                : new DefaultGamePlayProvider(this.gamesService, gameIdParam)
+            );
     }
 
     next(): void {

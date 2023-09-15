@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Card } from 'src/app/models/card';
+import { Card, CardDisplay } from 'src/app/models/card';
 
 @Component({
     selector: 'app-game-card',
@@ -7,6 +7,6 @@ import { Card } from 'src/app/models/card';
     styleUrls: ['./game-card.component.scss']
 })
 export class GameCardComponent {
-    @Input() card?: Omit<Card, 'gameId'>;
+    @Input() card?: Omit<CardDisplay, 'gameId'>;
     @Input() isSystem: boolean = false;
 }
