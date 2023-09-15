@@ -21,7 +21,7 @@ export class SettingsComponent {
 
   updateContent() {
     this.dataService.clearCache();
-    this.gameService.fetchGames(true).subscribe((result) => {
+    this.gameService.fetchGamesList(true).subscribe((result) => {
       if (result.value) {
         this.alertService.success('Content updated!');
       } else if (result.error) {

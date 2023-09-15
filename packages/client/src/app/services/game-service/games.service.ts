@@ -17,12 +17,12 @@ export class GamesService implements IGameService {
     constructor(private readonly dataService: DataService) {}
 
     getGames(): Observable<Data<GameListItem[]>> {
-        if(!this.gameList$.value.value) this.fetchGames().subscribe();
+        if(!this.gameList$.value.value) this.fetchGamesList().subscribe();
         return this.gameList$.pipe(debounceTime(10));
     }
 
     getGame(id: string): Observable<Data<Game>> {
-        if(!this.gameList$.value.value) this.fetchGames().subscribe();
+        if(!this.gameList$.value.value) this.fetchGamesList().subscribe();
         return this.games$.pipe(debounceTime(10), map((gamesMap) => {
             const game = gamesMap.get(id);
 
@@ -34,7 +34,7 @@ export class GamesService implements IGameService {
         }));
     }
 
-    fetchGames(noCache: boolean = false): Observable<Data<GameListItem[]>> {
+    fetchGamesList(noCache: boolean = false): Observable<Data<GameListItem[]>> {
         return this.dataService.get<GameListItem[]>('/game' + (noCache ? '?noCache=1' : '')).pipe(
             tap((games) => {
                 this.gameList$.next(games);

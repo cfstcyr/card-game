@@ -8,6 +8,6 @@ export interface IGameService {
 
     getGames(): Observable<Data<GameListItem[]>>;
     getGame(id: string): Observable<Data<Game>>;
-    fetchGames(): Observable<Data<GameListItem[]>>;
+    fetchGamesList(): Observable<Data<GameListItem[]>>;
     fetchGame(id: string): Observable<Data<Game>>;
 }
