@@ -9,8 +9,7 @@
 
     <ul class="game-list">
         <li
-            longPress
-            (longPressActivate)="selectGame(game)"
+            (longPress)="selectGame(game)"
             *ngFor="let game of games.value"
             (click)="navigateToGame(game)"
             class="game-list__item interactable"
