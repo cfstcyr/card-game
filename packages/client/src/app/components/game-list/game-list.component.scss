@@ -38,6 +38,10 @@
         align-items: center;
         gap: 12px;
 
+        &--selected {
+            opacity: 0.75;
+        }
+
         p {
             margin: 0;
             line-height: 1em;

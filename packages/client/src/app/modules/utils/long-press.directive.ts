@@ -14,8 +14,10 @@ export class LongPressDirective {
 
     constructor(private element: ElementRef<HTMLElement>) {
         this.element.nativeElement.addEventListener('mousedown', this.handleMouseDown.bind(this));
+        this.element.nativeElement.addEventListener('touchstart', this.handleMouseDown.bind(this));
         this.element.nativeElement.addEventListener('click', this.handleClick.bind(this), {'capture': true});
         document.addEventListener('mouseup', this.handleMouseUp.bind(this));
+        document.addEventListener('touchend', this.handleMouseUp.bind(this));
     }
 
     private handleMouseDown() {
