@@ -60,3 +60,4 @@ jobs:
             --region=$REGION \
             --project=$PROJECT \
             --to-latest
+            
