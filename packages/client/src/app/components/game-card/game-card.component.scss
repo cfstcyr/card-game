@@ -18,6 +18,7 @@
         max-width: 500px;
         margin: 0 auto;
         flex-direction: column;
+        box-shadow: var(--theme-button-shadow);
 
         &__top {
             opacity: 0.65;
@@ -28,16 +29,18 @@
     &.theme {
         &--blue,
         &--green,
-        &--red {
+        &--red,
+        &--wnrs {
             align-items: center;
+
             .game-card__content {
-                background-color: var(--theme-button);
+                background: var(--theme-button);
                 color: var(--theme-button-contrast);
-                min-height: fit-content;
+                min-height: min(100%, 240px);
+                min-width: min(100%, 400px);
                 padding: 48px 24px;
-                border-radius: 12px;
+                border-radius: calc(var(--theme-button-border-radius) * 1px);
                 box-sizing: border-box;
-                box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.132);
             }
         }
     }

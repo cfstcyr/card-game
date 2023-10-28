@@ -33,6 +33,8 @@ export const THEMES_LIST: Theme[] = [
             primaryContrast: 'white',
             button: 'white',
             buttonContrast: 'black',
+            buttonShadow: '0px 5px 10px rgba(0, 0, 0, 0.132)',
+            buttonBorderRadius: 12,
 
             specialFont: 'nunito',
         },
@@ -45,6 +47,8 @@ export const THEMES_LIST: Theme[] = [
             primaryContrast: 'white',
             button: 'white',
             buttonContrast: 'black',
+            buttonShadow: '0px 5px 10px rgba(0, 0, 0, 0.132)',
+            buttonBorderRadius: 12,
 
             specialFont: 'nunito',
         },
@@ -57,6 +61,8 @@ export const THEMES_LIST: Theme[] = [
             primaryContrast: 'white',
             button: 'white',
             buttonContrast: 'black',
+            buttonShadow: '0px 5px 10px rgba(0, 0, 0, 0.132)',
+            buttonBorderRadius: 12,
 
             specialFont: 'nunito',
         },
@@ -103,8 +109,10 @@ export const THEMES_LIST: Theme[] = [
         palette: {
             primary: 'white',
             primaryContrast: '#B12423',
-            button: '#B12423',
-            buttonContrast: 'white',
+            button: '#fafafa',
+            buttonContrast: '#B12423',
+            buttonShadow: '0px 2px 2px rgba(0, 0, 0, 0.3)',
+            buttonBorderRadius: 36,
 
             specialFont: "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif",
         }

@@ -3,6 +3,8 @@ export interface Palette {
     primaryContrast: string;
     button: string;
     buttonContrast: string;
+    buttonShadow?: string;
+    buttonBorderRadius?: number;
 
     specialFont: string;
 }

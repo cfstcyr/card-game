@@ -25,12 +25,13 @@
         margin: 0;
         padding: 18px;
         list-style: none;
-        border-radius: 8px;
+        border-radius: min(calc(var(--theme-button-border-radius) * 1px), 24px);
         text-align: center;
         width: 100%;
         box-sizing: border-box;
         background: var(--theme-button);
         color: var(--theme-button-contrast);
+        box-shadow: var(--theme-button-shadow);
         text-decoration: inherit;
         display: flex;
         flex-direction: column;

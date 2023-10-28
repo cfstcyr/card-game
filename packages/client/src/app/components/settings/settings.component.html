@@ -5,7 +5,7 @@
             *ngFor="let theme of themes"
             [disabled]="theme.id === (currentTheme | async)?.id"
             (click)="themeService.setCurrentTheme(theme.id)"
-            [btnStyle]="{ backgroundColor: theme.palette.primary }"
+            [btnStyle]="{ background: theme.palette.primary }"
             [contentStyle]="{ color: theme.palette.primaryContrast, fontFamily: theme.palette.specialFont}"
         >{{ theme.name }}</app-simple-button>
     </div>
